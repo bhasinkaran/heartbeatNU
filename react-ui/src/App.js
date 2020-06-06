@@ -122,7 +122,7 @@ function App() {
 
     })
   }
- var redirectableLogin= process.env.PORT ? `https://pure-harbor-26317.herokuapp.com/login` : `http://localhost:8888/login`;
+ var redirectableLogin= process.env.NODE_ENV === 'production' ? `https://pure-harbor-26317.herokuapp.com/login` : `http://localhost:8888/login`;
   return (
     <div className="App">
      
