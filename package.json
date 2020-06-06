@@ -14,7 +14,11 @@
     "react-ui/node_modules"
   ],
   "dependencies": {
-    "express": "^4.16.4"
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "querystring": "^0.2.0",
+    "request": "^2.88.2"
   },
   "repository": {
     "type": "git",
