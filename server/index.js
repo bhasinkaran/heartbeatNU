@@ -14,7 +14,7 @@ require('dotenv').config();
 const port = process.env.PORT || 8888;
 
 var client_id = '75dfedc5f2d847e7bfad7f2da2f9c611'; // Your client id
-var client_secret = process.env.SECRETKEY || configg; // Your secret
+var client_secret = process.env.NODE_ENV == 'production' ? process.env.SECRETKEY || configg; // Your secret
 var redirect_uri = process.env.PORT ? `https://pure-harbor-26317.herokuapp.com/callback` : `http://localhost:8888/callback`; // Your redirect uri
 
 
