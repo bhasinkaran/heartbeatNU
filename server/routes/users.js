@@ -92,7 +92,7 @@ router.route('/add').get((req,res)=>{
                              console.log("this is body3")
                              var nameofsong = body3.item.name;
                              console.log(body3);
-                             const newUser=new User({"m","nameof msong",["idmms"]});
+                             const newUser=new User({"name": displayname,"nowplaying":nameofsong,"favoriteartists": ids});
                                 newUser.save()
                                 .then(()=>res.status(200).json('User Added!'))
                                 .catch(err=>{
