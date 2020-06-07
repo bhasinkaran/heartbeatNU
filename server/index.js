@@ -117,15 +117,16 @@ app.get('/callback', function(req, res) {
 
         // use the access token to access the Spotify Web API
         request.get(options, function(error, response, body) {
-          console.log(body);
+          console.log(body.id);
         });
 
         // we can also pass the token to the browser to make requests from there
-        var redirectable=process.env.PORT ? 'http://pure-harbor-26317.herokuapp.com/#': 'http://localhost:3000/#';
+        var redirectable=process.env.PORT ? 'http://pure-harbor-26317.herokuapp.com/users/add/?': 'http://localhost:8888/users/add/?';
         res.redirect(redirectable +
         querystring.stringify({
           access_token: access_token,
-          refresh_token: refresh_token
+          refresh_token: refresh_token,
+          
         }));
     } else {
       console.log(response.statusCode);
@@ -172,11 +173,11 @@ app.get('/refresh_token', function(req, res) {
 
 
   const userRouter=require('./routes/users');
-  var bodyParser = require('body-parser')
-  app.use(bodyParser.urlencoded({
-    extended: false
-    }))
-  app.use(bodyParser.json())
+  // var bodyParser = require('body-parser')
+  // app.use(bodyParser.urlencoded({
+  //   extended: false
+  //   }))
+  // app.use(bodyParser.json())
   app.use('/users', userRouter);
 
 
