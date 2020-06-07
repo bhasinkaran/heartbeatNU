@@ -14,11 +14,7 @@ require('dotenv').config();
 const port = process.env.PORT || 8888;
 
 var client_id = '75dfedc5f2d847e7bfad7f2da2f9c611'; // Your client id
-var client_secret ='75a7c22704984f0295cf0e7fb97cc39d';
-
-// = process.env.NODE_ENV == 'production' ? process.env.SECRETKEY : configg; // Your secret
-
-
+var client_secret = '75a7c22704984f0295cf0e7fb97cc39d'; // Your secret
 var redirect_uri = process.env.PORT ? `https://pure-harbor-26317.herokuapp.com/callback` : `http://localhost:8888/callback`; // Your redirect uri
 
 
@@ -38,7 +34,7 @@ var generateRandomString = function(length) {
 };
 
 const uri = process.env.URIMONGO;
-mongoose.connect('mongodb+srv://karan:gokaran@nearify-aezuo.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true, useCreateIndex: true }
+mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true }
 );
 const connection = mongoose.connection;
 connection.once('open', () => {
@@ -173,13 +169,13 @@ app.get('/refresh_token', function(req, res) {
   });
 
 
-  // const userRouter=require('./routes/users');
-  // var bodyParser = require('body-parser')
-  // app.use(bodyParser.urlencoded({
-  //   extended: false
-  //   }))
-  // app.use(bodyParser.json())
-  // app.use('/users', userRouter);
+  const userRouter=require('./routes/users');
+  var bodyParser = require('body-parser')
+  app.use(bodyParser.urlencoded({
+    extended: false
+    }))
+  app.use(bodyParser.json())
+  app.use('/users', userRouter);
 
 
 
