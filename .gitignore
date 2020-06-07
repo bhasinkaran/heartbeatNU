@@ -1,7 +1,7 @@
 # Node build artifacts
 node_modules
 npm-debug.log
-server/configure.js
+/server/configure.js
 
 # Local development
 *.env
