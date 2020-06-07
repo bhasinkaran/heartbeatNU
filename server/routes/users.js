@@ -55,56 +55,102 @@ router.route('/add').get((req,res)=>{
       }
 
     //getting display name
-    var options = {
+    var options3 = {
         url: 'https://api.spotify.com/v1/me',
         headers: { 'Authorization': 'Bearer ' + req.query.access_token },
         json: true
       };
+      let tempp="hi"
 
-
-      request.get(options, function(error, response, body) {
+      request.get(options3, function(error, response, body) {
         console.log("this is the display name")
         console.log(body.display_name);
+        var displayname=body.display_name;
+
+        var options2 = {
+            url: 'https://api.spotify.com/v1/me/top/artists',
+            headers: { 'Authorization': 'Bearer ' + req.query.access_token },
+            json: true
+          };
+          request.get(options2, function(error, response, body2) {
+            console.log("this is not using the API")
+             var ids = body2.items.map(item=>item.id)
+             console.log(ids)
+             
+
+
+             
+      // get currently playing song
+                 var options = {
+                            url: 'https://api.spotify.com/v1/me/player',
+                            headers: { 'Authorization': 'Bearer ' + req.query.access_token },
+                            json: true
+                         };
+                    var temp=""
+                         request.get(options, function(error, response, body3) {
+                             console.log(body3);
+                             console.log("this is body3")
+                             var nameofsong = body3.item.name;
+                             console.log(body3);
+                             const newUser=new User({"m","nameof msong",["idmms"]});
+                                newUser.save()
+                                .then(()=>res.status(200).json('User Added!'))
+                                .catch(err=>{
+                                     console.log(displayname)
+                                     console.log(nameofsong)
+                                     console.log(ids)
+                                     res.status(400).json('Error: '+err)
+                                }); 
+
+
+
+                            
+                              
+                            // res.set('Content-Type', 'text/html');
+                            // res.send(`"name":${displayname}, "topartists":${ids},"nowplaying":${nameofsong}, ${temp[0]}`);
+
       });
+
+
+
+
+
+
+
+
+
+
+
+
+    });
+
+
+
+
+
+
+
+
+ });
+      console.log(tempp)
 
       //// gettting top artists
-    var options = {
-        url: 'https://api.spotify.com/v1/me/top/artists',
-        headers: { 'Authorization': 'Bearer ' + req.query.access_token },
-        json: true
-      };
-      request.get(options, function(error, response, body) {
-        console.log("this is not using the API")
-         var ids = body.items.map(item=>item.id)
-         temp.push(ids)
-      });
-var ids=[]
-      // get currently playing song
-      var options = {
-        url: 'https://api.spotify.com/v1/me/player',
-        headers: { 'Authorization': 'Bearer ' + req.query.access_token },
-        json: true
-      };
-      var nameofsong=""
-    //   request.get(options, function(error, response, body) {
-    //     console.log("this is not using the API")
-    //      nameofsong = body.item.name
-    //      temp.push(body.item.name)
-    //   });
+    
+
+
+
+
+
+
+
 
     //   console.log(temp);
-    res.status(200);
-    res.set('Content-Type', 'text/html');
-    res.send(`"name":${displayname}, "topartists":${ids},"nowplaying":${nameofsong}, ${temp[0]}`);
+   
     // console.log(temp);
 
     // res.send(name);
 
-    // const newUser=new User(displayname,);
-    // newUser.save()
-    // .then(()=>res.json('User Added!'))
-    // .catch(err=>res.status(400).json('Error: '+err));
 
-})
+});
 
 module.exports=router;

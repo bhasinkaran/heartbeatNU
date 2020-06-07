@@ -4,16 +4,19 @@ const userSchema=new Schema({
     name: {
         type: String,
         required:true,
-        trim: true,
+        unique:true
     },
     nowplaying:{
         type: String,
         required:true,
-        trim: true,
+        unique:true
+
     },
     favoriteartists:{
         type: Array,
         required:true,
+        unique:true
+
     }
 },
 {
