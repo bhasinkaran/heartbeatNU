@@ -1,18 +1,22 @@
 
 const express = require('express');
 const path = require('path');
+const configg=require('./configure.js')
 var request= require ('request');
 var cors =  require('cors');
 var querystring = require('querystring');
 var cookieParser=require('cookie-parser');
 const cluster = require('cluster');
 const numCPUs = require('os').cpus().length;
+const mongoose = require('mongoose')
 require('dotenv').config();
 // const isDev = process.env.NODE_ENV !== 'production';
 const port = process.env.PORT || 8888;
 
 var client_id = '75dfedc5f2d847e7bfad7f2da2f9c611'; // Your client id
-var client_secret = '75a7c22704984f0295cf0e7fb97cc39d'; // Your secret
+var client_secret =  configg; // Your secret
+
+// process.env.NODE_ENV == 'production' ? process.env.SECRETKEY :
 var redirect_uri = process.env.PORT ? `https://pure-harbor-26317.herokuapp.com/callback` : `http://localhost:8888/callback`; // Your redirect uri
 
 
@@ -30,6 +34,15 @@ var generateRandomString = function(length) {
   }
   return text;
 };
+
+const uri = process.env.URIMONGO;
+mongoose.connect('mongodb+srv://karan:gokaran@nearify-aezuo.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true, useCreateIndex: true }
+);
+const connection = mongoose.connection;
+connection.once('open', () => {
+  console.log("MongoDB database connection established successfully");
+}).catch(err=>console.log("THE ERROR IS"+err));
+
 
 var stateKey = 'spotify_auth_state';
 
@@ -156,6 +169,17 @@ app.get('/refresh_token', function(req, res) {
     res.set('Content-Type', 'application/json');
     res.send('{"message":"Hello from the custom server!"}');
   });
+
+
+  const userRouter=require('./routes/users');
+  var bodyParser = require('body-parser')
+  app.use(bodyParser.urlencoded({
+    extended: false
+    }))
+  app.use(bodyParser.json())
+  app.use('/users', userRouter);
+
+
 
   // All remaining requests return the React app, so it can handle routing.
   app.get('*', function(request, response) {
