@@ -1,6 +1,7 @@
 
 const express = require('express');
 const path = require('path');
+const configg=require('./configure.js')
 var request= require ('request');
 var cors =  require('cors');
 var querystring = require('querystring');
@@ -13,7 +14,7 @@ require('dotenv').config();
 const port = process.env.PORT || 8888;
 
 var client_id = '75dfedc5f2d847e7bfad7f2da2f9c611'; // Your client id
-var client_secret = '75a7c22704984f0295cf0e7fb97cc39d'; // Your secret
+var client_secret = configg; // Your secret
 var redirect_uri = process.env.PORT ? `https://pure-harbor-26317.herokuapp.com/callback` : `http://localhost:8888/callback`; // Your redirect uri
 
 
@@ -33,7 +34,7 @@ var generateRandomString = function(length) {
 };
 
 const uri = process.env.URIMONGO;
-mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true }
+mongoose.connect('mongodb+srv://karan:gokaran@nearify-aezuo.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true, useCreateIndex: true }
 );
 const connection = mongoose.connection;
 connection.once('open', () => {
@@ -177,7 +178,7 @@ app.get('/refresh_token', function(req, res) {
   app.use('/users', userRouter);
 
 
-  
+
   // All remaining requests return the React app, so it can handle routing.
   app.get('*', function(request, response) {
     response.sendFile(path.resolve(__dirname, '../react-ui/build', 'index.html'));

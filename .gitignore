@@ -2,6 +2,7 @@
 node_modules
 npm-debug.log
 
+server/configure.js
 # Local development
 *.env
 *.dev
