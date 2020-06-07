@@ -7,6 +7,7 @@ var querystring = require('querystring');
 var cookieParser=require('cookie-parser');
 const cluster = require('cluster');
 const numCPUs = require('os').cpus().length;
+const mongoose = require('mongoose')
 require('dotenv').config();
 // const isDev = process.env.NODE_ENV !== 'production';
 const port = process.env.PORT || 8888;
@@ -30,6 +31,15 @@ var generateRandomString = function(length) {
   }
   return text;
 };
+
+const uri = process.env.URIMONGO;
+mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true }
+);
+const connection = mongoose.connection;
+connection.once('open', () => {
+  console.log("MongoDB database connection established successfully");
+}).catch(err=>console.log("THE ERROR IS"+err));
+
 
 var stateKey = 'spotify_auth_state';
 
@@ -157,6 +167,17 @@ app.get('/refresh_token', function(req, res) {
     res.send('{"message":"Hello from the custom server!"}');
   });
 
+
+  const userRouter=require('./routes/users');
+  var bodyParser = require('body-parser')
+  app.use(bodyParser.urlencoded({
+    extended: false
+    }))
+  app.use(bodyParser.json())
+  app.use('/users', userRouter);
+
+
+  
   // All remaining requests return the React app, so it can handle routing.
   app.get('*', function(request, response) {
     response.sendFile(path.resolve(__dirname, '../react-ui/build', 'index.html'));
