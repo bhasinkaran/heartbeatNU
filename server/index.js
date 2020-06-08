@@ -1,7 +1,6 @@
-
 const express = require('express');
 const path = require('path');
-const configg=require('./configure.js')
+const configg =require('./configure.js')
 var request= require ('request');
 var cors =  require('cors');
 var querystring = require('querystring');
@@ -15,8 +14,6 @@ const port = process.env.PORT || 8888;
 
 var client_id = '75dfedc5f2d847e7bfad7f2da2f9c611'; // Your client id
 var client_secret =  process.env.NODE_ENV == 'production' ? process.env.SECRETKEY : configg;
-
-
 var redirect_uri = process.env.PORT ? `https://pure-harbor-26317.herokuapp.com/callback` : `http://localhost:8888/callback`; // Your redirect uri
 
 
