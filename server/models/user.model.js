@@ -8,7 +8,7 @@ const userSchema=new Schema({
     },
     nowplaying:{
         type: String,
-        required:true,
+        required:false,
         unique:true
 
     },

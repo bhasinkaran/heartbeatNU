@@ -90,6 +90,7 @@ router.route('/add').get((req,res)=>{
                          request.get(options, function(error, response, body3) {
                              console.log(body3);
                              console.log("this is body3")
+                             if(body3){
                              var nameofsong = body3.item.name;
                              console.log(body3);
                              const newUser=new User({"name": displayname,"nowplaying":nameofsong,"favoriteartists": ids});
@@ -101,7 +102,19 @@ router.route('/add').get((req,res)=>{
                                      console.log(ids)
                                      res.status(400).json('Error: '+err)
                                 }); 
+                              }
+                              else{
+                                const newUser=new User({"name": displayname,"favoriteartists": ids});
+                                newUser.save()
+                                .then(()=>res.status(200).json('User Added!'))
+                                .catch(err=>{
+                                     console.log(displayname)
+                                     console.log(nameofsong)
+                                     console.log(ids)
+                                     res.status(400).json('Error: '+err)
+                                }); 
 
+                              }
 
 
                             
