@@ -47,122 +47,82 @@ router.route('/').get((req,res)=>{
 });
 router.route('/add').get((req,res)=>{
     
-      var temp=false;
-      if( req.query )
-      {
-        temp=true;
-        // s.setAccessToken(req.query.accesstoken)
-      }
-
     //getting display name
     var options3 = {
         url: 'https://api.spotify.com/v1/me',
         headers: { 'Authorization': 'Bearer ' + req.query.access_token },
         json: true
       };
-      let tempp="hi"
 
       request.get(options3, function(error, response, body) {
         console.log("this is the display name")
         console.log(body.display_name);
         var displayname=body.display_name;
+        var email=body.email;
+        var id=body.id;
+        console.log(body);
+        User.findOne({id:id}, function(err, user){
+          if(err){
+      console.log(err);
+          }
+          else{
 
-        var options2 = {
+            if(user){
+            var url =  process.env.NODE_ENV == 'production' ? `http://pure-harbor-26317.herokuapp.com/${req.query.access_token}`: `http://localhost:3000/${req.query.access_token}`;
+            res.redirect(url);
+            console.log("came here")
+            console.log(user)
+            console.log(err)
+          }
+        
+        else{
+          var options2 = {
             url: 'https://api.spotify.com/v1/me/top/artists',
             headers: { 'Authorization': 'Bearer ' + req.query.access_token },
             json: true
           };
+          
           request.get(options2, function(error, response, body2) {
             console.log("this is not using the API")
              var ids = body2.items.map(item=>item.id)
              console.log(ids)
-             
-
-
-             
-      // get currently playing song
-                 var options = {
-                            url: 'https://api.spotify.com/v1/me/player',
+  
+                        var songs = {
+                            url: 'https://api.spotify.com/v1/me/top/tracks',
                             headers: { 'Authorization': 'Bearer ' + req.query.access_token },
                             json: true
                          };
-                    var temp=""
-                         request.get(options, function(error, response, body3) {
-                             console.log(body3);
-                             console.log("this is body3")
-                             if(body3){
-                             var nameofsong = body3.item.name;
-                             console.log(body3);
-                             const newUser=new User({"name": displayname,"nowplaying":nameofsong,"favoriteartists": ids});
-                                newUser.save()
-                                .then(()=>res.status(200).json('User Added!'))
-                                .catch(err=>{
-                                     console.log(displayname)
-                                     console.log(nameofsong)
-                                     console.log(ids)
-                                     res.status(400).json('Error: '+err)
-                                }); 
-                              }
-                              else{
-                                const newUser=new User({"name": displayname,"favoriteartists": ids});
-                                newUser.save()
-                                .then(()=>res.status(200).json('User Added!'))
-                                .catch(err=>{
-                                     console.log(displayname)
-                                     console.log(nameofsong)
-                                     console.log(ids)
-                                     res.status(400).json('Error: '+err)
-                                }); 
-
-                              }
-
-
-                            
-                              
-                            // res.set('Content-Type', 'text/html');
-                            // res.send(`"name":${displayname}, "topartists":${ids},"nowplaying":${nameofsong}, ${temp[0]}`);
+  
+                             request.get(songs, function( error, response, songsbody){
+  
+                              var topsongs=songsbody.items.map(id=>id.id);
+                              console.log(topsongs);
+  
+  
+                              const newUser=new User({"name": displayname,"favoriteartists": ids, "favoritesongs": topsongs, "id":id, "email":email });
+                              newUser.save()
+                              .then(()=>{
+                                var url =  process.env.NODE_ENV == 'production' ? `http://pure-harbor-26317.herokuapp.com/${req.query.access_token}`: `http://localhost:3000/${req.query.access_token}`;
+                                res.status(200).redirect(url);
+  
+                              })
+                              .catch(err=>{
+                                   console.log(displayname)
+                                   console.log(nameofsong)
+                                   console.log(ids)
+                                   res.status(400).json('Error: '+err)
+                              }); 
+  
+            });
+  
+        });
+  
+        }
+      }
 
       });
 
-
-
-
-
-
-
-
-
-
-
-
     });
-
-
-
-
-
-
-
-
- });
-      console.log(tempp)
-
-      //// gettting top artists
-    
-
-
-
-
-
-
-
-
-    //   console.log(temp);
-   
-    // console.log(temp);
-
-    // res.send(name);
-
 
 });
 

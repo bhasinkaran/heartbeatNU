@@ -7,28 +7,17 @@ const userSchema=new Schema({
     },
     nowplaying:{
         type: String,
+
     },
     favoriteartists:{
         type: Array,
         required:true,
-    },
-    favoritesongs:{
-        type: Array,
-        required:true,
-    },
-    email:{
-        type: String,
-        required:false
-    },
-    id:{
-        type: String,
-        required: true,
-        unique: true
+
     }
 },
 {
     timestamps: true,
 });
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model('UserNew', userSchema);
 
 module.exports=User;
