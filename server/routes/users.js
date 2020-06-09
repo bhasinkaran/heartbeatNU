@@ -66,13 +66,15 @@ router.route('/add').get((req,res)=>{
       console.log(err);
           }
           else{
+            console.log(user);
 
             if(user){
-            var url =  process.env.NODE_ENV == 'production' ? `http://pure-harbor-26317.herokuapp.com/${req.query.access_token}`: `http://localhost:3000/${req.query.access_token}`;
+              console.log("came here")
+              console.log(user)
+              console.log(err)
+            var url =  process.env.NODE_ENV == 'production' ? `http://pure-harbor-26317.herokuapp.com/#access_token=${req.query.access_token}`: `http://localhost:3000/#access_token=${req.query.access_token}`;
             res.redirect(url);
-            console.log("came here")
-            console.log(user)
-            console.log(err)
+           
           }
         
         else{
@@ -102,7 +104,7 @@ router.route('/add').get((req,res)=>{
                               const newUser=new User({"name": displayname,"favoriteartists": ids, "favoritesongs": topsongs, "id":id, "email":email });
                               newUser.save()
                               .then(()=>{
-                                var url =  process.env.NODE_ENV == 'production' ? `http://pure-harbor-26317.herokuapp.com/${req.query.access_token}`: `http://localhost:3000/${req.query.access_token}`;
+                                var url =  process.env.NODE_ENV == 'production' ? `http://pure-harbor-26317.herokuapp.com/#access_token=${req.query.access_token}`: `http://localhost:3000/#access_token=${req.query.access_token}`;
                                 res.status(200).redirect(url);
   
                               })
