@@ -18,7 +18,7 @@ const Homepage = () =>{
     }
     return hashParams;
   }
-  var hashParams=getHashParams()
+  var hashParams=getHashParams();
   var temp=false;
   if( hash!="login" )
   {
@@ -51,17 +51,29 @@ const Homepage = () =>{
 
     })
   }
+
+  function CheckLocation(){
+    navigator.geolocation.getCurrentPosition((position)=>{
+      console.log(position);
+    })
+  }
  var redirectableLogin= process.env.NODE_ENV === 'production' ? `https://pure-harbor-26317.herokuapp.com/login` : `http://localhost:8888/login`;
   
  return (
     <div className="App">
      
     {!loggedIn ? 
-
+  <div>
      <a href= {redirectableLogin } onClick = {() => setLoggedIn(true)}>
 
       <button>Log in with spotify</button> 
-      </a>:
+      </a>
+      <button onClick = {()=>CheckLocation()}>
+        geolocation test
+      </button>
+      
+      </div>
+      :
       <div>
       <div> Now Playing {nowPlaying.name}
       </div>
