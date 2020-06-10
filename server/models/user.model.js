@@ -5,9 +5,6 @@ const userSchema=new Schema({
         type: String,
         required:true,
     },
-    nowplaying:{
-        type: String,
-    },
     favoriteartists:{
         type: Array,
         required:true,
