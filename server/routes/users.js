@@ -110,7 +110,6 @@ router.route('/add').get((req,res)=>{
                               })
                               .catch(err=>{
                                    console.log(displayname)
-                                   console.log(nameofsong)
                                    console.log(ids)
                                    res.status(400).json('Error: '+err)
                               }); 
