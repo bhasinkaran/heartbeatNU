@@ -52,7 +52,7 @@ const Homepage = () =>{
     })
   }
 
-  axios.get('http://localhost:8888/users/'+id)
+  axios.get(`http://localhost:8888/users/${id}`)
       .then(response => {
        console.log(response);
       })

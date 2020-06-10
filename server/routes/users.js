@@ -127,7 +127,7 @@ router.route('/add').get((req,res)=>{
 });
 
 router.route('/:id').get((req,res)=>{
-  User.find(req.params.id)
+  User.find({id:req.params.id})
   .then(user=>res.json(user))
   .catch(err=>res.status(400).json('Error: '+err));
 });
