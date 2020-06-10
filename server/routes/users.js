@@ -40,11 +40,8 @@ router.route('/callback').get((req,res)=>{
 });
 
 // route to display all users.
-router.route('/').get((req,res)=>{
-    User.find()
-    .then(user=>res.json(user))
-    .catch(err=>res.status(400).json('Error: '+err));
-});
+
+
 router.route('/add').get((req,res)=>{
     
     //getting display name
@@ -62,8 +59,10 @@ router.route('/add').get((req,res)=>{
         var id=body.id;
         console.log(body);
         User.findOne({id:id}, function(err, user){
+          console.log(err);
+          console.log(user);
           if(err){
-      console.log(err);
+      // console.log(err);
           }
           else{
             console.log(user);
@@ -72,7 +71,7 @@ router.route('/add').get((req,res)=>{
               console.log("came here")
               console.log(user)
               console.log(err)
-            var url =  process.env.NODE_ENV == 'production' ? `http://pure-harbor-26317.herokuapp.com/${req.query.access_token}`: `http://localhost:3000/${req.query.access_token}`;
+            var url =  process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/home/${id}/${req.query.access_token}`: `http://localhost:3000/home/${id}/${req.query.access_token}`;
             res.redirect(url);
            
           }
@@ -104,7 +103,7 @@ router.route('/add').get((req,res)=>{
                               const newUser=new User({"name": displayname,"favoriteartists": ids, "favoritesongs": topsongs, "id":id, "email":email });
                               newUser.save()
                               .then(()=>{
-                                var url =  process.env.NODE_ENV == 'production' ? `http://pure-harbor-26317.herokuapp.com/${req.query.access_token}`: `http://localhost:3000/${req.query.access_token}`;
+                                var url =  process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/home/${id}/${req.query.access_token}`: `http://localhost:3000/home/${id}/${req.query.access_token}`;
                                 res.status(200).redirect(url);
   
                               })
@@ -125,6 +124,12 @@ router.route('/add').get((req,res)=>{
 
     });
 
+});
+
+router.route('/:id').get((req,res)=>{
+  User.find(req.params.id)
+  .then(user=>res.json(user))
+  .catch(err=>res.status(400).json('Error: '+err));
 });
 
 module.exports=router;

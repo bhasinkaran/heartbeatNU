@@ -7,7 +7,7 @@ import Spotify from 'spotify-web-api-js';
 const s = new Spotify();
 
 const Homepage = () =>{
-  var {hash } = useParams();
+  var {id, hash } = useParams();
   function getHashParams() {
     var x=4
     var hashParams = {};
@@ -51,6 +51,16 @@ const Homepage = () =>{
 
     })
   }
+
+  axios.get('http://localhost:8888/users/'+id)
+      .then(response => {
+       console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+
+
 
   function CheckLocation(){
     navigator.geolocation.getCurrentPosition((position)=>{

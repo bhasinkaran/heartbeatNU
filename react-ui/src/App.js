@@ -79,6 +79,7 @@ import logo from './logo.svg';
 import './App.css';
 import Spotify from 'spotify-web-api-js';
 import Homepage from './components/homepage';
+import Login from './components/login'
 import {BrowserRouter, Route} from 'react-router-dom'
 const s = new Spotify();
 
@@ -86,7 +87,8 @@ function App() {
 
   return(
     <BrowserRouter>
-      <Route exact path="/:hash"  render = {()=> <Homepage ></Homepage>} />
+      <Route exact path="/" render={()=><Login />} />
+      <Route exact path="/home/:id/:hash"  render = {()=> <Homepage ></Homepage>} />
     </BrowserRouter>
   );
  
