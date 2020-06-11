@@ -1,36 +1,16 @@
 import axios from 'axios'
-
+import {Map, Marker,Popup, TileLayer} from 'react-leaflet';
 import React, {useState} from 'react';
 import {Router , useParams} from  'react-router-dom'
-
+import "./homepage.css"
 import Spotify from 'spotify-web-api-js';
 const s = new Spotify();
 
 const Homepage = () =>{
   var {id, hash } = useParams();
-  function getHashParams() {
-    var x=4
-    var hashParams = {};
-    var e, r = /([^&;=]+)=?([^&;]*)/g,
-        q = hash.substring(1);
-    while ( e = r.exec(q)) {
-       hashParams[e[1]] = decodeURIComponent(e[2]);
-    }
-    return hashParams;
-  }
-  var hashParams=getHashParams();
-  var temp=false;
-  if( hash!="login" )
-  {
-    temp=true;
     s.setAccessToken(hash)
-  }
-
-
-  const [loggedIn, setLoggedIn]=useState(temp)
   const[nowPlaying, setNowPlaying]=useState({name: "not checked",image:""})
   const [artists,setArtists]=useState(['None'])
-  
   function getNowPlaying(){
     s.getMyCurrentPlaybackState()
       .then((response)=>{
@@ -71,19 +51,19 @@ const Homepage = () =>{
   
  return (
     <div className="App">
-     
-    {!loggedIn ? 
-  <div>
-     <a href= {redirectableLogin } onClick = {() => setLoggedIn(true)}>
-
-      <button>Log in with spotify</button> 
-      </a>
-      <button onClick = {()=>CheckLocation()}>
+     <div id="map"></div>
+     <button onClick = {()=>CheckLocation()}>
         geolocation test
       </button>
-      
-      </div>
-      :
+      <Map center={[45.4, -75.7]} zoom={12}>
+
+      <TileLayer
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+      />
+
+      </Map>
+
       <div>
       <div> Now Playing {nowPlaying.name}
       </div>
@@ -99,8 +79,9 @@ const Homepage = () =>{
       <button onClick={()=>getTopArtists()}>
         Check Top Artists
       </button>
+
       </div>
-    }
+    
     </div>
   );
 }
