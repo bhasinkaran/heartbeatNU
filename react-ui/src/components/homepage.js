@@ -2,7 +2,7 @@ import axios from 'axios'
 import {Map, Marker,Popup, TileLayer} from 'react-leaflet';
 import React, {useState} from 'react';
 import {Router , useParams} from  'react-router-dom'
-import "./homepage.css"
+import './homepage.css'
 import Spotify from 'spotify-web-api-js';
 const s = new Spotify();
 
@@ -55,14 +55,17 @@ const Homepage = () =>{
      <button onClick = {()=>CheckLocation()}>
         geolocation test
       </button>
-      <Map center={[45.4, -75.7]} zoom={12}>
-
-      <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-      />
-
-      </Map>
+      <Map center={[23,-24]} zoom={12}>
+          <TileLayer
+            url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
+            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          />
+          <Marker position={[12,23]}>
+            <Popup>
+              <span>A pretty CSS3 popup.<br/>Easily customizable.</span>
+            </Popup>
+          </Marker>
+        </Map>
 
       <div>
       <div> Now Playing {nowPlaying.name}
