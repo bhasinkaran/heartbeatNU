@@ -81,6 +81,7 @@ import Spotify from 'spotify-web-api-js';
 import Homepage from './components/homepage';
 import Login from './components/login'
 import {BrowserRouter, Route} from 'react-router-dom'
+import MapLeaflet from './components/MapLeaflet';
 const s = new Spotify();
 
 function App() {
@@ -89,6 +90,8 @@ function App() {
     <BrowserRouter>
       <Route exact path="/" render={()=><Login />} />
       <Route exact path="/home/:id/:hash"  render = {()=> <Homepage ></Homepage>} />
+      <Route exact path="/map" render={()=><MapLeaflet />} />
+
     </BrowserRouter>
   );
  
