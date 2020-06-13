@@ -17,10 +17,11 @@ function App() {
 
   return(
     <BrowserRouter>
-      <Route exact path="/signup" render={()=><Signup />} />
+      <Route exact path="/signup/:id/:access_token" render={()=><Signup />} />
       <Route exact path="/" render={()=><Login />} />
-      <Route exact path="/home/:id/:hash"  render = {()=> <Homepage ></Homepage>} />
+      <Route exact path="/home/:id/:access_token"  render = {()=> <Homepage ></Homepage>} />
       <Route exact path="/map" render={()=><MapLeaflet />} />
+
     </BrowserRouter>
   );
  

@@ -21,7 +21,20 @@ const userSchema=new Schema({
         type: String,
         required: true,
         unique: true
+    },
+    gender:{
+        type: String,
+    },
+    type:{
+        type: String,
+    },
+    phone:{
+        type: Number,
+    },
+    location:{
+        type: Array,
     }
+
 },
 {
     timestamps: true,

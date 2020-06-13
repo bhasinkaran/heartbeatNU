@@ -1,7 +1,6 @@
 const router = require('express').Router();
 const configg=require('../configure.js')
 const request = require('request')
-
 let User = require('../models/user.model');
 let Spotify =require('spotify-web-api-node');
 var spotifyApi = new Spotify({
@@ -103,7 +102,7 @@ router.route('/add').get((req,res)=>{
                               const newUser=new User({"name": displayname,"favoriteartists": ids, "favoritesongs": topsongs, "id":id, "email":email });
                               newUser.save()
                               .then(()=>{
-                                var url =  process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/home/${id}/${req.query.access_token}`: `http://localhost:3000/home/${id}/${req.query.access_token}`;
+                                var url =  process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/signup/${id}/${req.query.access_token}`: `http://localhost:3000/signup/${id}/${req.query.access_token}`;
                                 res.status(200).redirect(url);
   
                               })
@@ -131,5 +130,19 @@ router.route('/:id').get((req,res)=>{
   .then(user=>res.json(user))
   .catch(err=>res.status(400).json('Error: '+err));
 });
+
+router.route('/signup/:id/').post((req,res)=>{
+  User.findOne({ id: req.params.id }, function (err, doc){
+    doc.gender = req.query.gender;
+    doc.type = req.query.type;
+    doc.phone=req.query.phone;
+    doc.location=req.query.location;
+     console.log(req.query.location)
+    doc.save();
+  }).then(user=>console.log(json(user))).catch(err=>res.status(400).json("Error: "+err));
+  ;
+});
+
+
 
 module.exports=router;

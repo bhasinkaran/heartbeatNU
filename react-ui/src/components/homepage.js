@@ -6,8 +6,8 @@ import Spotify from 'spotify-web-api-js';
 const s = new Spotify();
 
 const Homepage = () =>{
-  var {id, hash } = useParams();
-    s.setAccessToken(hash)
+  var {id, acces_token } = useParams();
+    s.setAccessToken(acces_token)
   const[nowPlaying, setNowPlaying]=useState({name: "not checked",image:""})
   const [artists,setArtists]=useState(['None'])
   function getNowPlaying(){

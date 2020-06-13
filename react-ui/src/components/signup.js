@@ -1,12 +1,14 @@
 import React, { useState, useContext, createRef, useEffect } from 'react';
 import { Header, Checkbox, Container, Segment, Sticky, Grid, Input, Transition, Divider, Loader } from 'semantic-ui-react';
 import { Button, Form, Icon, Message, Progress, Image } from 'semantic-ui-react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, useParams } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css';
+import axios from 'axios'
 var querystring = require('querystring');
 
 const Signup = () => {
 //   const someContext = useContext(AppState);
+  const {id, access_token} = useParams();
   const [error, setError] = useState(false);
   const [pass, setPass] = useState("");
   const [gender, setGender] = useState("");
@@ -15,16 +17,34 @@ const Signup = () => {
   const [firstName, setFirstName] = useState("")
   const [lastName, setLastName] = useState("")
   const [phone, setPhone] = useState("");
-  const [query, setQuery]=useState("");
+  const [location, setLocation] = useState(null);
   const [redirectableLogin, setRedirectableLogin]=useState("");
   const contextRef = createRef();
 
   useEffect(() => {
-    if (redirect) {
-
+    CheckPass();
+    if (redirect && location!==null) {
+      var backendroute = process.env.NODE_ENV === 'production' ? `https://pure-harbor-26317.herokuapp.com/users/signup/${id}?` : `http://localhost:8888/users/signup/${id}?`;
+      axios.post(backendroute+querystring.stringify({
+        gender: gender,
+        type: type,
+        phone: phone,
+        location: location
+      }))
+      .then(response => {
+       console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
       window.location.assign(redirectableLogin);
+
+      
     }
-  },[redirect]);
+    console.log(redirect)
+    console.log(location)
+    console.log(location!==null)
+  },[redirect, location]);
 
 
   const PageHeader = () => {
@@ -53,21 +73,23 @@ const Signup = () => {
   };
 
 
-
+  function CheckLocation(){
+    navigator.geolocation.getCurrentPosition((position)=>{
+      setLocation([position.coords.latitude, position.coords.longitude]);
+    })
+    
+  }
   function CheckPass() {
     if(gender!="" && type !="" && !isNaN(Number(phone))){
+    
       
-      var temp = process.env.NODE_ENV === 'production' ? `https://pure-harbor-26317.herokuapp.com/login?` : `http://localhost:8888/login?`;
-      temp=temp+querystring.stringify({
-        gender: gender,
-        type: type,
-        phone: phone
-      });
+    
+      var temp = process.env.NODE_ENV === 'production' ? `https://pure-harbor-26317.herokuapp.com/home/${id}/${access_token}` : `http://localhost:3000/home/${id}/${access_token}`;
+    
       setRedirectableLogin(temp);
       setRedirect(true);
     }
     else{
-     
      setError(true);
     }
    
@@ -148,7 +170,7 @@ const Signup = () => {
                     onChange={()=>setType("Both")}
                  />
                  </Form.Field>
-                  <Button color='teal' fluid size='large' onClick={() => CheckPass()}>
+                  <Button color='teal' fluid size='large' onClick={() => CheckLocation()}>
                     Continue
                  </Button>
                 </Segment>
@@ -157,7 +179,7 @@ const Signup = () => {
                   <Message
                     warning
                     floating
-                    content="This username already exists! Please choose another"
+                    content="Make sure your phone number is a number and that you've chosen your gender and type."
                     size="tiny"
                   />
                 </div> : ""}
@@ -170,7 +192,6 @@ const Signup = () => {
         </Grid>
 
 
-        {/* {redirect && redirectableLogin!=""? ()=>{functiontoredirect()} : ""} } */}
 
       </Sticky>
     </div>
