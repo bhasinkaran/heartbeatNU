@@ -33,6 +33,9 @@ const userSchema=new Schema({
     },
     location:{
         type: Array
+    },
+    chatgroups:{
+        type:Array
     }
 
 },
