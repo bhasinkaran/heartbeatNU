@@ -5,8 +5,8 @@ var request= require ('request');
 var cors =  require('cors');
 var querystring = require('querystring');
 var cookieParser=require('cookie-parser');
-const cluster = require('cluster');
-const numCPUs = require('os').cpus().length;
+// const cluster = require('cluster');
+// const numCPUs = require('os').cpus().length;
 const mongoose = require('mongoose')
 require('dotenv').config();
 // const isDev = process.env.NODE_ENV !== 'production';
@@ -170,12 +170,14 @@ app.get('/refresh_token', function(req, res) {
 
 
   const userRouter=require('./routes/users');
+  const chatRouter=require('./routes/chats');
   // var bodyParser = require('body-parser')
   // app.use(bodyParser.urlencoded({
   //   extended: false
   //   }))
   // app.use(bodyParser.json())
   app.use('/users', userRouter);
+  app.use('/chats',chatRouter);
 
 
 

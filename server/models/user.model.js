@@ -32,7 +32,7 @@ const userSchema=new Schema({
         type: Number,
     },
     location:{
-        type: Array,
+        type: Array
     }
 
 },
