@@ -2,7 +2,6 @@ import axios from 'axios'
 import {Map, Marker,Popup, TileLayer} from 'react-leaflet';
 import React, {useState} from 'react';
 import {Router , useParams} from  'react-router-dom'
-import './homepage.css'
 import Spotify from 'spotify-web-api-js';
 const s = new Spotify();
 
@@ -47,7 +46,6 @@ const Homepage = () =>{
       console.log(position);
     })
   }
- var redirectableLogin= process.env.NODE_ENV === 'production' ? `https://pure-harbor-26317.herokuapp.com/login` : `http://localhost:8888/login`;
   
  return (
     <div className="App">
