@@ -1,15 +1,18 @@
 import axios from 'axios'
 import {Map, Marker,Popup, TileLayer} from 'react-leaflet';
 import React, {useState} from 'react';
-import {Router , useParams} from  'react-router-dom'
+import {Router , useParams} from  'react-router-dom';
 import Spotify from 'spotify-web-api-js';
+const mongoose = require('mongoose');
 const s = new Spotify();
 
 const Homepage = () =>{
   var {id, acces_token } = useParams();
     s.setAccessToken(acces_token)
-  const[nowPlaying, setNowPlaying]=useState({name: "not checked",image:""})
-  const [artists,setArtists]=useState(['None'])
+  const[nowPlaying, setNowPlaying]=useState({name: "not checked",image:""});
+  const [artists,setArtists]=useState(['None']);
+  const [mongouser, settmongouser]=useState("");
+  const [allusers, setAllusers] = useState("");
   function getNowPlaying(){
     s.getMyCurrentPlaybackState()
       .then((response)=>{
@@ -31,14 +34,28 @@ const Homepage = () =>{
     })
   }
 
-  axios.get(`http://localhost:8888/users/${id}`)
+  var redirectUri= process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/users/` : `http://localhost:8888/users/`
+
+
+  axios.get(`${redirectUri}${id}`)
       .then(response => {
+       settmongouser(response);
        console.log(response);
       })
       .catch(function (error) {
         console.log(error);
-      })
+      });
 
+  axios.get(`${redirectUri}`)
+      .then(response => {
+       setAllusers(response);
+       console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+    
 
 
   function CheckLocation(){
@@ -53,18 +70,6 @@ const Homepage = () =>{
      <button onClick = {()=>CheckLocation()}>
         geolocation test
       </button>
-      <Map center={[23,-24]} zoom={12}>
-          <TileLayer
-            url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
-            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-          />
-          <Marker position={[12,23]}>
-            <Popup>
-              <span>A pretty CSS3 popup.<br/>Easily customizable.</span>
-            </Popup>
-          </Marker>
-        </Map>
-
       <div>
       <div> Now Playing {nowPlaying.name}
       </div>
@@ -80,9 +85,7 @@ const Homepage = () =>{
       <button onClick={()=>getTopArtists()}>
         Check Top Artists
       </button>
-
       </div>
-    
     </div>
   );
 }
