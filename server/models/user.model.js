@@ -36,6 +36,12 @@ const userSchema=new Schema({
     },
     chatgroups:{
         type:Array
+    },
+    image:{
+        type: String
+    },
+    url:{
+        type: String
     }
 
 },

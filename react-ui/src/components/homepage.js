@@ -39,7 +39,7 @@ const Homepage = () =>{
 
   axios.get(`${redirectUri}${id}`)
       .then(response => {
-       settmongouser(response);
+       settmongouser(response.data[0]);
        console.log(response);
       })
       .catch(function (error) {
@@ -48,14 +48,12 @@ const Homepage = () =>{
 
   axios.get(`${redirectUri}`)
       .then(response => {
-       setAllusers(response);
+       setAllusers(response.data);
        console.log(response);
       })
       .catch(function (error) {
         console.log(error);
       });
-
-    
 
 
   function CheckLocation(){

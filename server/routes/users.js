@@ -56,6 +56,8 @@ router.route('/add').get((req,res)=>{
         var displayname=body.display_name;
         var email=body.email;
         var id=body.id;
+        var image=body.images[0].url;
+        var externalurl=body.external_urls.spotify
         console.log(body);
         User.findOne({id:id}, function(err, user){
           console.log(err);
@@ -99,7 +101,7 @@ router.route('/add').get((req,res)=>{
                               console.log(topsongs);
   
   
-                              const newUser=new User({"name": displayname,"favoriteartists": ids, "favoritesongs": topsongs, "id":id, "email":email });
+                              const newUser=new User({"name": displayname,"favoriteartists": ids, "favoritesongs": topsongs, "id":id, "email":email, "image":image, "url": externalurl });
                               newUser.save()
                               .then(()=>{
                                 var url =  process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/signup/${id}/${req.query.access_token}`: `http://localhost:3000/signup/${id}/${req.query.access_token}`;
