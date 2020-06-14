@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {Map, Marker,Popup, TileLayer} from 'react-leaflet';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Router , useParams} from  'react-router-dom';
 import Spotify from 'spotify-web-api-js';
 const mongoose = require('mongoose');
@@ -8,11 +8,12 @@ const s = new Spotify();
 
 const Homepage = () =>{
   var {id, acces_token } = useParams();
-    s.setAccessToken(acces_token)
+  s.setAccessToken(acces_token)
   const[nowPlaying, setNowPlaying]=useState({name: "not checked",image:""});
   const [artists,setArtists]=useState(['None']);
   const [mongouser, settmongouser]=useState("");
   const [allusers, setAllusers] = useState("");
+  const [attractedUsers,setAttracted]=useState("");
   function getNowPlaying(){
     s.getMyCurrentPlaybackState()
       .then((response)=>{
@@ -27,8 +28,7 @@ const Homepage = () =>{
   function getTopArtists(){
     s.getMyTopArtists()
     .then((response)=>{
-      console.log(response)
-      
+      console.log(response);
       setArtists(response.items)
 
     })
@@ -36,11 +36,11 @@ const Homepage = () =>{
 
   var redirectUri= process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/users/` : `http://localhost:8888/users/`
 
-
-  axios.get(`${redirectUri}${id}`)
+useEffect( handleData, []);
+  function handleData(){
+    axios.get(`${redirectUri}${id}`)
       .then(response => {
        settmongouser(response.data[0]);
-       console.log(response);
       })
       .catch(function (error) {
         console.log(error);
@@ -49,12 +49,50 @@ const Homepage = () =>{
   axios.get(`${redirectUri}`)
       .then(response => {
        setAllusers(response.data);
-       console.log(response);
       })
       .catch(function (error) {
         console.log(error);
       });
-
+    };
+useEffect(attractedTo, [mongouser, allusers]);
+  function attractedTo(){
+      if(allusers!=""){
+        setAttracted(allusers.filter(item => item.gender == mongouser.type && item.id!=mongouser.id));
+      }
+    };
+useEffect(rankAttractedTo, [attractedTo]);
+function rankAttractedTo(){
+  function comparedistance(a,b){
+    let lat1=mongouser.location[0];
+    let lon1=mongouser.location[1];
+    let distance1=distance(lat1,lon1,a);
+    let distance2=distance(lat1,lon1,b);
+    return distance2-distance1;
+  }
+  function distance(lat1, lon1,user2) {
+    let lat2 = user2.location[0];
+    let lon2=user2.location[1];
+    if ((lat1 == lat2) && (lon1 == lon2)) {
+      return 0;
+    }
+    else {
+      var radlat1 = Math.PI * lat1/180;
+      var radlat2 = Math.PI * lat2/180;
+      var theta = lon1-lon2;
+      var radtheta = Math.PI * theta/180;
+      var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+      if (dist > 1) {
+        dist = 1;
+      }
+      dist = Math.acos(dist);
+      dist = dist * 180/Math.PI;
+      dist = dist * 60 * 1.1515;
+      return dist;
+    }
+   
+  }
+  attractedTo.sort(comparedistance)
+}
 
   function CheckLocation(){
     navigator.geolocation.getCurrentPosition((position)=>{
@@ -64,10 +102,10 @@ const Homepage = () =>{
   
  return (
     <div className="App">
-     <div id="map"></div>
-     <button onClick = {()=>CheckLocation()}>
+     {/* <div id="map"></div> */}
+     {/* <button onClick = {()=>CheckLocation()}>
         geolocation test
-      </button>
+      </button> */}
       <div>
       <div> Now Playing {nowPlaying.name}
       </div>
