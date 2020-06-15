@@ -7,14 +7,16 @@ const mongoose = require('mongoose');
 const s = new Spotify();
 
 const Homepage = () =>{
-  var {id, acces_token } = useParams();
-  s.setAccessToken(acces_token)
+  var {id, acces_token, refresh_token } = useParams();
+  s.setAccessToken(acces_token);
+  // s.setRefreshToken(refresh_token);
   const[nowPlaying, setNowPlaying]=useState({name: "not checked",image:""});
   const [artists,setArtists]=useState(['None']);
   const [mongouser, settmongouser]=useState("");
   const [allusers, setAllusers] = useState("");
   const [attractedUsers,setAttracted]=useState("");
   function getNowPlaying(){
+    s.setAccessToken(acces_token);
     s.getMyCurrentPlaybackState()
       .then((response)=>{
         // console.log(response)
@@ -23,15 +25,16 @@ const Homepage = () =>{
           image: response.item.album.images[0].url
         })
       }
-      )
+      ).catch(err=>console.log(err))
   }
   function getTopArtists(){
+    s.setAccessToken(acces_token)
     s.getMyTopArtists()
     .then((response)=>{
       console.log(response);
       setArtists(response.items)
 
-    })
+    }).catch(err=>console.log(err))
   }
 
   var redirectUri= process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/users/` : `http://localhost:8888/users/`
@@ -91,7 +94,13 @@ function rankAttractedTo(){
     }
    
   }
-  attractedTo.sort(comparedistance)
+  console.log(attractedUsers);
+  var copyUsers = attractedUsers;
+  if(attractedUsers){
+    copyUsers.sort(comparedistance);
+    setAttracted(copyUsers);
+  }
+  
 }
 
   function CheckLocation(){

@@ -72,7 +72,7 @@ router.route('/add').get((req,res)=>{
               console.log("came here")
               console.log(user)
               console.log(err)
-            var url =  process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/home/${id}/${req.query.access_token}`: `http://localhost:3000/home/${id}/${req.query.access_token}`;
+            var url =  process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/home/${id}/${req.query.access_token}/${req.query.refresh_token}`: `http://localhost:3000/home/${id}/${req.query.access_token}/${req.query.refresh_token}`;
             res.redirect(url);
            
           }
