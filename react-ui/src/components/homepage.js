@@ -1,9 +1,11 @@
 import axios from 'axios'
 import {Map, Marker,Popup, TileLayer} from 'react-leaflet';
 import React, {useState, useEffect} from 'react';
+import {Container} from 'semantic-ui-react'
 import {Router , useParams} from  'react-router-dom';
 import Spotify from 'spotify-web-api-js';
 import FavoriteArtists from './favartists'
+import PageHeader from './pageheader'
 const mongoose = require('mongoose');
 const s = new Spotify();
 
@@ -112,10 +114,10 @@ function rankAttractedTo(){
   }
  return (
     <div className="App">
-      <div>
-     
+      <PageHeader access_token={access_token} id={id}/>
+      <Container>
       {mongouser['favoriteartists'] ? <FavoriteArtists artists={mongouser['favoriteartists']} accesstoken={access_token}  /> : "" }
-      </div>
+      </Container>
     </div>
   );
 }
