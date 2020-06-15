@@ -102,7 +102,7 @@ const FavoriteArtists = ({accesstoken, artists}) =>{
     <div className="FavoriteArtists">
       <Grid>
         <Grid.Row>  
-        {artistimages.length > 15 ? indexarray.slice(0,4).map(id=><ReturnFavArtist id={id} />) : "broooooo"}
+        {artistimages.length > 15 ? indexarray.slice(0,4).map(id=><ReturnFavArtist id={id} />) : ""}
         </Grid.Row>
          <Grid.Row>  
         {artistimages.length > 15 ? array.slice(4,9).map(id=>returnSecondFavArtist(id)):""}
