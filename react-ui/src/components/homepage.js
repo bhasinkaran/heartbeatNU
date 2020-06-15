@@ -7,8 +7,9 @@ const mongoose = require('mongoose');
 const s = new Spotify();
 
 const Homepage = () =>{
-  var {id, acces_token, refresh_token } = useParams();
-  s.setAccessToken(acces_token);
+  var {id, access_token, refresh_token } = useParams();
+  console.log(access_token);
+  s.setAccessToken(access_token);
   // s.setRefreshToken(refresh_token);
   const[nowPlaying, setNowPlaying]=useState({name: "not checked",image:""});
   const [artists,setArtists]=useState(['None']);
@@ -16,7 +17,7 @@ const Homepage = () =>{
   const [allusers, setAllusers] = useState("");
   const [attractedUsers,setAttracted]=useState("");
   function getNowPlaying(){
-    s.setAccessToken(acces_token);
+    s.setAccessToken(access_token);
     s.getMyCurrentPlaybackState()
       .then((response)=>{
         // console.log(response)
@@ -28,7 +29,7 @@ const Homepage = () =>{
       ).catch(err=>console.log(err))
   }
   function getTopArtists(){
-    s.setAccessToken(acces_token)
+    s.setAccessToken(access_token)
     s.getMyTopArtists()
     .then((response)=>{
       console.log(response);
