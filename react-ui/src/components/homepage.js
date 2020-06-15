@@ -112,25 +112,8 @@ function rankAttractedTo(){
   }
  return (
     <div className="App">
-     {/* <div id="map"></div> */}
-     {/* <button onClick = {()=>CheckLocation()}>
-        geolocation test
-      </button> */}
       <div>
-      <div> Now Playing {nowPlaying.name}
-      </div>
-      <div>
-        <img src={nowPlaying.image} width="250" >
-        </img>
-      </div>
-      <div>{artists.map(obj=>obj['name'])}
-      </div>
-      <button onClick={()=>getNowPlaying()}>
-        Check Now Playing
-      </button>
-      <button onClick={()=>getTopArtists()}>
-        Check Top Artists
-      </button>
+     
       {mongouser['favoriteartists'] ? <FavoriteArtists artists={mongouser['favoriteartists']} accesstoken={access_token}  /> : "" }
       </div>
     </div>
@@ -138,3 +121,23 @@ function rankAttractedTo(){
 }
 
 export default Homepage;
+
+
+ {/* <div> Now Playing {nowPlaying.name}
+      </div> */}
+      {/* <div>
+        <img src={nowPlaying.image} width="250" >
+        </img>
+      </div>
+      <div>{artists.map(obj=>obj['name'])}
+      </div> */}
+      {/* <button onClick={()=>getNowPlaying()}>
+        Check Now Playing
+      </button>
+      <button onClick={()=>getTopArtists()}>
+        Check Top Artists
+      </button> */}
+       {/* <div id="map"></div> */}
+     {/* <button onClick = {()=>CheckLocation()}>
+        geolocation test
+      </button> */}
