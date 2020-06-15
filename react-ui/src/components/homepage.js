@@ -3,6 +3,7 @@ import {Map, Marker,Popup, TileLayer} from 'react-leaflet';
 import React, {useState, useEffect} from 'react';
 import {Router , useParams} from  'react-router-dom';
 import Spotify from 'spotify-web-api-js';
+import FavoriteArtists from './favartists'
 const mongoose = require('mongoose');
 const s = new Spotify();
 
@@ -109,7 +110,6 @@ function rankAttractedTo(){
       console.log(position);
     })
   }
-  
  return (
     <div className="App">
      {/* <div id="map"></div> */}
@@ -131,6 +131,7 @@ function rankAttractedTo(){
       <button onClick={()=>getTopArtists()}>
         Check Top Artists
       </button>
+      {mongouser['favoriteartists'] ? <FavoriteArtists artists={mongouser['favoriteartists']} accesstoken={access_token}  /> : "" }
       </div>
     </div>
   );
