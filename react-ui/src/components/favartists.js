@@ -9,7 +9,7 @@ import axios from 'axios'
 const mongoose = require('mongoose');
 const s = new Spotify();
 
-const FavoriteArtists = ({accesstoken, artists}) =>{
+const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
      const[artistnames,setNames]= useState([]);
      const[artistimages, setImages]=useState([]);
      const [isLoading, setisLoading]=useState(false);
@@ -23,7 +23,6 @@ const FavoriteArtists = ({accesstoken, artists}) =>{
      var temp = [];
      var temp2 = [];
     function initializeState() {
-       
             for(let i = 0; i<artists.length; i++){
              s.getArtist(artists[i]).then(
                      res => {
@@ -56,8 +55,10 @@ const FavoriteArtists = ({accesstoken, artists}) =>{
              console.log(imageurl);
              return(
                 <Grid.Column mobile={16} tablet={8} computer={8} id={id}> 
+                <a href={`/artist/${artists[id]}`}>
                         <Image size='huge' rounded fluid verticalAlign='middle' src={imageurl} />
                         <Header size='huge'>{artistname}</Header>
+                        </a>
                         <br></br>
                 </Grid.Column>);
        }
@@ -128,8 +129,8 @@ const FavoriteArtists = ({accesstoken, artists}) =>{
 
                 }
                 else{
+                        //if no pictures just put a black picture
                         temp.push({title: item.name, image: "https://images.unsplash.com/photo-1554050857-c84a8abdb5e2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=564&q=80", description: item.genres[0], price: item.popularity, id: item.id})
-
                 }
         }
                

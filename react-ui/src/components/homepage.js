@@ -1,17 +1,23 @@
 import axios from 'axios'
-import {Map, Marker,Popup, TileLayer} from 'react-leaflet';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {Container} from 'semantic-ui-react'
 import {Router , useParams} from  'react-router-dom';
 import Spotify from 'spotify-web-api-js';
 import FavoriteArtists from './favartists'
 import PageHeader from './pageheader'
+import {AppState} from '../context'
+
 const mongoose = require('mongoose');
 const s = new Spotify();
 
 const Homepage = () =>{
+  
   var {id, access_token, refresh_token } = useParams();
-  console.log(access_token);
+  const someContext = useContext(AppState);
+  const {userid, setuserid, accesstoken, setaccesstoken, refreshtoken, setrefreshtoken} = someContext;
+  setuserid(id);
+  setaccesstoken(access_token);
+  setrefreshtoken(refresh_token);
   s.setAccessToken(access_token);
   // s.setRefreshToken(refresh_token);
   const[nowPlaying, setNowPlaying]=useState({name: "not checked",image:""});
@@ -116,7 +122,7 @@ function rankAttractedTo(){
     <div className="App">
       <PageHeader access_token={access_token} id={id}/>
       <Container>
-      {mongouser['favoriteartists'] ? <FavoriteArtists artists={mongouser['favoriteartists']} accesstoken={access_token}  /> : "" }
+      {mongouser['favoriteartists'] ? <FavoriteArtists artists={mongouser['favoriteartists']} accesstoken={access_token}  refreshtoken={refresh_token}/> : "" }
       </Container>
     </div>
   );
