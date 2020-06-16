@@ -142,7 +142,8 @@ const FavoriteArtists = ({accesstoken, artists}) =>{
      return(
     <div className="FavoriteArtists">
       <Grid>
-      <Grid.Row >  
+      <Grid.Row stretched>  
+      <Grid.Column>
            <Search
             loading={isLoading}
             onResultSelect={(e, {result})=>setResult(result)}
@@ -151,9 +152,11 @@ const FavoriteArtists = ({accesstoken, artists}) =>{
             })}
             results={results}
             value={value}
-            fluid={true}
+            fluid
+            input={{ fluid: true }}
         //     {...this.props}
           />
+          </Grid.Column>
         </Grid.Row>
         <Grid.Row >  
         {artistimages.length > 15 ? indexarray.slice(0,2).map(id=><ReturnFavArtist id={id} />) : ""}
