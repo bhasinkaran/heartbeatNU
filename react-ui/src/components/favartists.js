@@ -1,7 +1,10 @@
 
 import React, {useState, useEffect, isValidElement} from 'react';
+import _ from 'lodash'
 import Spotify from 'spotify-web-api-js';
-import { Grid, Image, Header} from 'semantic-ui-react'
+import { Grid, Image, Header, Search} from 'semantic-ui-react'
+import axios from 'axios'
+
 
 const mongoose = require('mongoose');
 const s = new Spotify();
@@ -9,8 +12,12 @@ const s = new Spotify();
 const FavoriteArtists = ({accesstoken, artists}) =>{
      const[artistnames,setNames]= useState([]);
      const[artistimages, setImages]=useState([]);
+     const [isLoading, setisLoading]=useState(false);
+     const [result, setResult]=useState("");
      var array = [...Array(20).keys()];
      const [indexarray, setIndex]=useState(array);
+     const [value, setValue]=useState("");
+     const [results, setResults]=useState([]);
      s.setAccessToken(accesstoken);
      useEffect(initializeState, []);
      var temp = [];
@@ -42,15 +49,16 @@ const FavoriteArtists = ({accesstoken, artists}) =>{
      const ReturnFavArtist=({id}) =>{
         var artistname=artistnames[id];
         var imageurl=artistimages[id];
-        console.log(indexarray);
-        console.log(artistimages)
+        // console.log(indexarray);
+        // console.log(artistimages)
        if(imageurl)
        {
              console.log(imageurl);
              return(
-                <Grid.Column mobile={16} tablet={8} computer={4} id={id}> 
-                        <Image src={imageurl} />
+                <Grid.Column mobile={16} tablet={8} computer={8} id={id}> 
+                        <Image size='huge' rounded fluid verticalAlign='middle' src={imageurl} />
                         <Header size='huge'>{artistname}</Header>
+                        <br></br>
                 </Grid.Column>);
        }
         else{
@@ -61,15 +69,16 @@ const FavoriteArtists = ({accesstoken, artists}) =>{
      function returnSecondFavArtist(id){
         var artistname=artistnames[id];
         var imageurl=artistimages[id];
-        console.log(indexarray);
-        console.log(artistimages)
+        // console.log(indexarray);
+        // console.log(artistimages)
        if(imageurl)
        {
              console.log(imageurl);
              return(
-                <Grid.Column mobile={16} tablet={8} computer={3} id={id}> 
-                        <Image src={imageurl} />
+                <Grid.Column mobile={16} tablet={8} computer={4} id={id}> 
+                        <Image fluid rounded src={imageurl} verticalAlign='middle' />
                         <Header size='large'>{artistname}</Header>
+                        <br></br>
                 </Grid.Column>);
        }
         else{
@@ -80,15 +89,16 @@ const FavoriteArtists = ({accesstoken, artists}) =>{
      function returnThirdFavArtist(id){
         var artistname=artistnames[id];
         var imageurl=artistimages[id];
-        console.log(indexarray);
-        console.log(artistimages)
+        // console.log(indexarray);
+        // console.log(artistimages)
        if(imageurl)
        {
              console.log(imageurl);
              return(
-                <Grid.Column mobile={16} tablet={8} computer={2} id={id}> 
-                        <Image src={imageurl} />
-                        <Header size='medium'>{artistname}</Header>
+                <Grid.Column mobile={16} tablet={8} computer={4} id={id}> 
+                        <Image fluid verticalAlign='middle' rounded src={imageurl} />
+                        <Header size='medium' style={{marginBottom: "10px"}}>{artistname}</Header>
+                        <br></br>
                 </Grid.Column>);
        }
         else{
@@ -96,21 +106,80 @@ const FavoriteArtists = ({accesstoken, artists}) =>{
                 return "null";
         }
      }
-     console.log(artistnames)
+     async function  handleSearchChange(valuee)  {
+        setisLoading(true);
+        setValue(valuee);
+        console.log(valuee);
+        const url='https://api.spotify.com/v1/search'+`?q=${encodeURIComponent(valuee)}`+"&type=artist"
+        const res = await axios.get(url, {
+                headers:{
+                        "Accept": "application/json",
+                        "Content-Type": "application/json",
+                        'Authorization': 'Bearer ' + accesstoken 
+                }
+        });
+        var temp=[];
+        console.log(res);
+        for(let i=0; i<res.data.artists.items.length; i++){
+                let item=res.data.artists.items[i];
+                console.log(item);
+                if(item.images[0]){
+                        temp.push({title: item.name, image: item.images[0].url, description: item.genres[0], price: item.popularity, id: item.id})
+
+                }
+                else{
+                        temp.push({title: item.name, image: "https://images.unsplash.com/photo-1554050857-c84a8abdb5e2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=564&q=80", description: item.genres[0], price: item.popularity, id: item.id})
+
+                }
+        }
+               
+     
+        setResults(temp);
+        // console.log(temp);
+        setisLoading(false);
+     }
+//      console.log(artistnames)
      return(
-       
     <div className="FavoriteArtists">
       <Grid>
-        <Grid.Row>  
-        {artistimages.length > 15 ? indexarray.slice(0,4).map(id=><ReturnFavArtist id={id} />) : ""}
+      <Grid.Row >  
+           <Search
+            loading={isLoading}
+            onResultSelect={(e, {result})=>setResult(result)}
+            onSearchChange={_.debounce((e, {value})=>handleSearchChange(value), 500, {
+              leading: true,
+            })}
+            results={results}
+            value={value}
+            fluid={true}
+        //     {...this.props}
+          />
         </Grid.Row>
+        <Grid.Row >  
+        {artistimages.length > 15 ? indexarray.slice(0,2).map(id=><ReturnFavArtist id={id} />) : ""}
+        </Grid.Row>
+       
+        <Grid.Row >  
+        {artistimages.length > 15 ? indexarray.slice(2,4).map(id=><ReturnFavArtist id={id} />) : ""}
+        </Grid.Row>
+        
+        <Grid.Row >  
+        {artistimages.length > 15 ? indexarray.slice(4,6).map(id=><ReturnFavArtist id={id} />) : ""}
+        </Grid.Row>
+     
          <Grid.Row>  
-        {artistimages.length > 15 ? array.slice(4,9).map(id=>returnSecondFavArtist(id)):""}
-        </Grid.Row>  
+        {artistimages.length > 15 ? indexarray.slice(6,10).map(id=>returnSecondFavArtist(id)):""}
+        </Grid.Row>
+       
         <Grid.Row>  
-        {artistimages.length > 17 ? array.slice(9,17).map(id=>returnThirdFavArtist(id)):""}
+        {artistimages.length > 19 ? indexarray.slice(10,14).map(id=>returnSecondFavArtist(id)):""}
+        </Grid.Row>
+        
+        <Grid.Row>  
+        {artistimages.length > 19 ? indexarray.slice(14,21).map(id=>returnThirdFavArtist(id)):""}
         </Grid.Row>  
       </Grid>
+
     </div> 
    
         )

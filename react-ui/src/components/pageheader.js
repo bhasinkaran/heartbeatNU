@@ -6,7 +6,7 @@ const PageHeader = ({access_token, id}) => {
     return (
       <Segment
       basic
-      style={{ backgroundColor: "#006990", textAlign: "center", marginBottom: "0px" }}
+      style={{ backgroundColor: "#006990", textAlign: "center", marginBottom: "10px" }}
       fluid="true">
           <Header
             as={Link}
