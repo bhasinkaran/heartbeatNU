@@ -13,8 +13,8 @@ const s = new Spotify();
 const Homepage = () =>{
   
   var {id, access_token, refresh_token } = useParams();
-  const [context, setContext] = React.useContext(InfoContext);
-  
+  const {artists, setArtists, messages, setMessages, songs, setSongs, userid, setUserid, accesstoken, setAccesToken, refreshtoken, setRefreshtoken} = React.useContext(InfoContext);
+  setUserid(id);
   // setaccesstoken(access_token);
   // setrefreshtoken(refresh_token);
   s.setAccessToken(access_token);
@@ -28,7 +28,7 @@ const Homepage = () =>{
   useEffect(handleState, []);
   function handleState()
   {
-    setContext(context => ({ ...context, userid: id }));
+    // setContext(context => ({ ...context, userid: id }));
     console.log("Did the job!")
   }
   var redirectUri= process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/users/` : `http://localhost:8888/users/`
@@ -105,7 +105,7 @@ function rankAttractedTo(){
  return (
     <div className="App">
       <PageHeader access_token={access_token} id={id}/>
-      {context.userid}
+      {userid}
       <Container>
       {mongouser['favoriteartists'] ? <FavoriteArtists artists={mongouser['favoriteartists']} accesstoken={access_token}  refreshtoken={refresh_token}/> : "" }
       </Container>

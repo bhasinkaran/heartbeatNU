@@ -24,11 +24,18 @@ function App() {
     accesstoken: null,
     refreshtoken: null
   };
-
-  const [context, setContext] = React.useState(info);
+  const [artists, setArtists]=useState("")
+  const [messages, setMessages]=useState("")
+  const [songs, setSongs]=useState("")
+  const [userid, setUserid]=useState("")
+  const [accesstoken, setAccesToken]=useState("")
+  const [refreshtoken, setRefreshtoken]=useState("")
+  
+ 
+  // const [context, setContext] = React.useState(info);
   return(
     <BrowserRouter>
-      <InfoContext.Provider value={[context, setContext]}>
+      <InfoContext.Provider value={{artists, setArtists, messages, setMessages, songs, setSongs, userid, setUserid, accesstoken, setAccesToken, refreshtoken, setRefreshtoken}}>
         <Route exact path="/signup/:id/:access_token" render={()=><Signup />} />
         <Route exact path="/" render={()=><Login />} />
         

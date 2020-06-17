@@ -10,18 +10,17 @@ const s = new Spotify();
 
 const ArtistHomepage = () =>{
      var  {artistid } = useParams();
-     const [context, setContext] = React.useContext(InfoContext);
+     const {artists, setArtists, messages, setMessages, songs, setSongs, userid, setUserid, accesstoken, setAccesToken, refreshtoken, setRefreshtoken} = React.useContext(InfoContext);
      const [name, setName] = useState("");
      const [image, setImage]=useState("");
 //      var array = [...Array(20).keys()];
 //      const [indexarray, setIndex]=useState(array);
 //      s.setAccessToken(accesstoken);
-        console.log(context);
+        // console.log(context);
      useEffect(initializeState, []);
      function initializeState(){
      s.getArtist(artistid).then(
                 res => {
-
                            setName(res.name);
                            if(res.images[0].url){
                                 setImage(res.images[0].url);
@@ -33,7 +32,7 @@ const ArtistHomepage = () =>{
                 }).catch(err=>console.log(err));
      }
      return(
-      <InfoContext.Provider value={[context, setContext]}>
+     
 
        
     <div className="HomepageArtist">
@@ -42,14 +41,14 @@ const ArtistHomepage = () =>{
         <Grid.Row >  
         {name}
         {/* {accesstoken} */}
-        {context.userid}
+        {userid}
         <Image src={image}></Image>
         </Grid.Row>  
       </Grid>
       
 
     </div> 
-    </InfoContext.Provider>
+   
         )
 }
 
