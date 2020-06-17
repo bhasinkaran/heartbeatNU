@@ -5,7 +5,7 @@ import {Router , useParams} from  'react-router-dom';
 import Spotify from 'spotify-web-api-js';
 import FavoriteArtists from './favartists'
 import PageHeader from './pageheader'
-import {AppContext} from '../context'
+import {InfoContext} from '../App'
 
 const mongoose = require('mongoose');
 const s = new Spotify();
@@ -13,9 +13,8 @@ const s = new Spotify();
 const Homepage = () =>{
   
   var {id, access_token, refresh_token } = useParams();
-  const {posts, setPosts, artists, setArtists, messages, setMessages, songs, setSongs, userid, setUserid, accesstoken, setaccesstoken, refreshtoken, setrefreshtoken} = useContext(AppContext);
-  console.log(id);
-  setUserid(id);
+  const [context, setContext] = React.useContext(InfoContext);
+  
   // setaccesstoken(access_token);
   // setrefreshtoken(refresh_token);
   s.setAccessToken(access_token);
@@ -42,12 +41,17 @@ const Homepage = () =>{
     s.getMyTopArtists()
     .then((response)=>{
       console.log(response);
-      setArtists(response.items)
+      // setArtists(response.items)
   
 
     }).catch(err=>console.log(err))
   }
-
+  useEffect(handleState, []);
+  function handleState()
+  {
+    setContext({ ...context, userid: id });
+    console.log("Did the job!")
+  }
   var redirectUri= process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/users/` : `http://localhost:8888/users/`
 
 useEffect( handleData, []);
@@ -122,7 +126,7 @@ function rankAttractedTo(){
  return (
     <div className="App">
       <PageHeader access_token={access_token} id={id}/>
-      {userid}
+      {context.userid}
       <Container>
       {mongouser['favoriteartists'] ? <FavoriteArtists artists={mongouser['favoriteartists']} accesstoken={access_token}  refreshtoken={refresh_token}/> : "" }
       </Container>

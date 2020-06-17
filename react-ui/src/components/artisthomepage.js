@@ -4,18 +4,20 @@ import Spotify from 'spotify-web-api-js';
 import { Grid, Image, Header} from 'semantic-ui-react'
 import {Router , useParams} from  'react-router-dom';
 import {dbArtists, dbPosts} from '../firebase/firebase'
-import {AppContext} from '../context'
+import {InfoContext} from '../App'
 const mongoose = require('mongoose');
 const s = new Spotify();
 
 const ArtistHomepage = () =>{
-        const {posts, setPosts, artists, setArtists, messages, setMessages, songs, setSongs, userid, setUserid, accesstoken, setaccesstoken, refreshtoken, setrefreshtoken} = useContext(AppContext);
         var  {artistid } = useParams();
+        const [context, setContext] = React.useContext(InfoContext);
+
      const [name, setName] = useState("");
      const [image, setImage]=useState("");
 //      var array = [...Array(20).keys()];
 //      const [indexarray, setIndex]=useState(array);
 //      s.setAccessToken(accesstoken);
+        console.log(context);
      useEffect(initializeState, []);
      function initializeState(){
      s.getArtist(artistid).then(
@@ -38,8 +40,8 @@ const ArtistHomepage = () =>{
       <Grid>
         <Grid.Row >  
         {name}
-        {accesstoken}
-        {userid}
+        {/* {accesstoken} */}
+        {context.userid}
         <Image src={image}></Image>
         </Grid.Row>  
       </Grid>
