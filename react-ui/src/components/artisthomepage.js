@@ -9,9 +9,8 @@ const mongoose = require('mongoose');
 const s = new Spotify();
 
 const ArtistHomepage = () =>{
-        var  {artistid } = useParams();
-        const [context, setContext] = React.useContext(InfoContext);
-
+     var  {artistid } = useParams();
+     const [context, setContext] = React.useContext(InfoContext);
      const [name, setName] = useState("");
      const [image, setImage]=useState("");
 //      var array = [...Array(20).keys()];
@@ -34,6 +33,8 @@ const ArtistHomepage = () =>{
                 }).catch(err=>console.log(err));
      }
      return(
+      <InfoContext.Provider value={[context, setContext]}>
+
        
     <div className="HomepageArtist">
            
@@ -48,6 +49,7 @@ const ArtistHomepage = () =>{
       
 
     </div> 
+    </InfoContext.Provider>
         )
 }
 

@@ -49,7 +49,7 @@ const Homepage = () =>{
   useEffect(handleState, []);
   function handleState()
   {
-    setContext({ ...context, userid: id });
+    setContext(context => ({ ...context, userid: id }));
     console.log("Did the job!")
   }
   var redirectUri= process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/users/` : `http://localhost:8888/users/`

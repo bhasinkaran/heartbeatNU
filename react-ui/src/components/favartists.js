@@ -2,7 +2,8 @@
 import React, {useState, useEffect, isValidElement} from 'react';
 import _ from 'lodash'
 import Spotify from 'spotify-web-api-js';
-import { Grid, Image, Header, Search} from 'semantic-ui-react'
+import { Grid, Image, Header, Search, Button} from 'semantic-ui-react'
+import {Link} from 'react-router-dom'
 import axios from 'axios'
 
 
@@ -57,7 +58,7 @@ const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
                 <Grid.Column mobile={16} tablet={8} computer={8} id={id}> 
                 <a href={`/artist/${artists[id]}`}>
                         <Image size='huge' rounded fluid verticalAlign='middle' src={imageurl} />
-                        <Header size='huge'>{artistname}</Header>
+                        <Button as={Link} to={`/artist/${artists[id]}`} size='huge'>{artistname}</Button>
                         </a>
                         <br></br>
                 </Grid.Column>);
