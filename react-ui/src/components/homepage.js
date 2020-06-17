@@ -5,7 +5,7 @@ import {Router , useParams} from  'react-router-dom';
 import Spotify from 'spotify-web-api-js';
 import FavoriteArtists from './favartists'
 import PageHeader from './pageheader'
-import {AppState} from '../context'
+import {AppContext} from '../context'
 
 const mongoose = require('mongoose');
 const s = new Spotify();
@@ -13,15 +13,15 @@ const s = new Spotify();
 const Homepage = () =>{
   
   var {id, access_token, refresh_token } = useParams();
-  const someContext = useContext(AppState);
-  const {userid, setuserid, accesstoken, setaccesstoken, refreshtoken, setrefreshtoken} = someContext;
-  setuserid(id);
-  setaccesstoken(access_token);
-  setrefreshtoken(refresh_token);
+  const {posts, setPosts, artists, setArtists, messages, setMessages, songs, setSongs, userid, setUserid, accesstoken, setaccesstoken, refreshtoken, setrefreshtoken} = useContext(AppContext);
+  console.log(id);
+  setUserid(id);
+  // setaccesstoken(access_token);
+  // setrefreshtoken(refresh_token);
   s.setAccessToken(access_token);
   // s.setRefreshToken(refresh_token);
   const[nowPlaying, setNowPlaying]=useState({name: "not checked",image:""});
-  const [artists,setArtists]=useState(['None']);
+  // const [artists,setArtists]=useState(['None']);
   const [mongouser, settmongouser]=useState("");
   const [allusers, setAllusers] = useState("");
   const [attractedUsers,setAttracted]=useState("");
@@ -43,6 +43,7 @@ const Homepage = () =>{
     .then((response)=>{
       console.log(response);
       setArtists(response.items)
+  
 
     }).catch(err=>console.log(err))
   }
@@ -121,6 +122,7 @@ function rankAttractedTo(){
  return (
     <div className="App">
       <PageHeader access_token={access_token} id={id}/>
+      {userid}
       <Container>
       {mongouser['favoriteartists'] ? <FavoriteArtists artists={mongouser['favoriteartists']} accesstoken={access_token}  refreshtoken={refresh_token}/> : "" }
       </Container>
