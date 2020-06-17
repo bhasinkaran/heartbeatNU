@@ -12,8 +12,6 @@ import MapLeaflet from './components/MapLeaflet'
 import {BrowserRouter, Route} from 'react-router-dom'
 import Signup from './components/signup';
 import ArtistPage from './components/artisthomepage'
-import ChangeContext from "./components/ChangeContext";
-import ViewChange from "./components/ViewChange";
 const s = new Spotify();
 
 export const InfoContext = React.createContext();
@@ -30,28 +28,19 @@ function App() {
   const [context, setContext] = React.useState(info);
   return(
     <BrowserRouter>
+      <InfoContext.Provider value={[context, setContext]}>
         <Route exact path="/signup/:id/:access_token" render={()=><Signup />} />
         <Route exact path="/" render={()=><Login />} />
-        <InfoContext.Provider value={[context, setContext]}>
+        
         <Route exact path="/home/:id/:access_token/:refresh_token"  render = {()=> <Homepage ></Homepage>} />
-        </InfoContext.Provider>
-        <InfoContext.Provider value={[context, setContext]}>
+    
+       
         <Route exact path="/artist/:artistid"  render = {()=> <ArtistPage ></ArtistPage>} />
-        </InfoContext.Provider>
+       
         <Route exact path="/map" render={()=><MapLeaflet />} />
-     
+      </InfoContext.Provider>
     </BrowserRouter>
   );
-  // const [context, setContext] = React.useState(info);
-  // return (
-  //   <InfoContext.Provider value={[context, setContext]}>
-  //      <BrowserRouter>
-  //  <Route exact path="/check1" render={()=> <ChangeContext />} />
-  //  <Route exact path="/check2" render={()=> <ViewChange />} />
-  //       </BrowserRouter>
-      
-  //   </InfoContext.Provider>);
- 
 }
 
 export default App;

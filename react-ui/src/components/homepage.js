@@ -24,28 +24,7 @@ const Homepage = () =>{
   const [mongouser, settmongouser]=useState("");
   const [allusers, setAllusers] = useState("");
   const [attractedUsers,setAttracted]=useState("");
-  function getNowPlaying(){
-    s.setAccessToken(access_token);
-    s.getMyCurrentPlaybackState()
-      .then((response)=>{
-        // console.log(response)
-        setNowPlaying({
-          name: response.item.name,
-          image: response.item.album.images[0].url
-        })
-      }
-      ).catch(err=>console.log(err))
-  }
-  function getTopArtists(){
-    s.setAccessToken(access_token)
-    s.getMyTopArtists()
-    .then((response)=>{
-      console.log(response);
-      // setArtists(response.items)
   
-
-    }).catch(err=>console.log(err))
-  }
   useEffect(handleState, []);
   function handleState()
   {
@@ -155,3 +134,26 @@ export default Homepage;
      {/* <button onClick = {()=>CheckLocation()}>
         geolocation test
       </button> */}
+
+      // function getNowPlaying(){
+      //   s.setAccessToken(access_token);
+      //   s.getMyCurrentPlaybackState()
+      //     .then((response)=>{
+      //       // console.log(response)
+      //       setNowPlaying({
+      //         name: response.item.name,
+      //         image: response.item.album.images[0].url
+      //       })
+      //     }
+      //     ).catch(err=>console.log(err))
+      // }
+      // function getTopArtists(){
+      //   s.setAccessToken(access_token)
+      //   s.getMyTopArtists()
+      //   .then((response)=>{
+      //     console.log(response);
+      //     // setArtists(response.items)
+      
+    
+      //   }).catch(err=>console.log(err))
+      // }
