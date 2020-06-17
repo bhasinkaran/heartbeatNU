@@ -56,9 +56,10 @@ const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
              console.log(imageurl);
              return(
                 <Grid.Column mobile={16} tablet={8} computer={8} id={id}> 
-                
+                        <Link to={`/artist/${artists[id]}`} >
                         <Image size='huge' rounded fluid verticalAlign='middle' src={imageurl} />
-                        <Button as={Link} to={`/artist/${artists[id]}`} size='huge'>{artistname}</Button>
+                        <Header  size='huge'>{artistname}</Header>
+                        </Link>
                         
                         <br></br>
                 </Grid.Column>);
@@ -78,8 +79,10 @@ const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
              console.log(imageurl);
              return(
                 <Grid.Column mobile={16} tablet={8} computer={4} id={id}> 
-                        <Image fluid rounded src={imageurl} verticalAlign='middle' />
-                        <Button as={Link} to={`/artist/${artists[id]}`} size='huge'>{artistname}</Button>
+                        <Link to={`/artist/${artists[id]}`} >
+                                <Image fluid rounded src={imageurl} verticalAlign='middle' />
+                                <Header size='huge'>{artistname}</Header>
+                        </Link>
                         <br></br>
                 </Grid.Column>);
        }
@@ -98,8 +101,10 @@ const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
              console.log(imageurl);
              return(
                 <Grid.Column mobile={16} tablet={8} computer={4} id={id}> 
-                        <Image fluid verticalAlign='middle' rounded src={imageurl} />
-                        <Button as={Link} to={`/artist/${artists[id]}`} size='huge'>{artistname}</Button>
+                         <Link to={`/artist/${artists[id]}`} >
+                                <Image fluid rounded src={imageurl} verticalAlign='middle' />
+                                <Header size='huge'>{artistname}</Header>
+                        </Link>
                         <br></br>
                 </Grid.Column>);
        }
