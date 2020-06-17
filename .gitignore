@@ -3,7 +3,7 @@ node_modules
 npm-debug.log
 # /server/configure.js
 
-react-ui/src/firebase/api-Key
+/react-ui/src/firebase/api-Key
 # Local development
 *.env
 *.dev
