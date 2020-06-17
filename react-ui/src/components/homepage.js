@@ -13,10 +13,10 @@ const s = new Spotify();
 const Homepage = () =>{
   
   var {id, access_token, refresh_token } = useParams();
-  const {artists, setArtists, messages, setMessages, songs, setSongs, userid, setUserid, accesstoken, setAccesToken, refreshtoken, setRefreshtoken} = React.useContext(InfoContext);
+  const {artists, setArtists, messages, setMessages, songs, setSongs, userid, setUserid, accesstoken, setAccesToken, refreshtoken, setRefreshToken} = React.useContext(InfoContext);
   setUserid(id);
-  // setaccesstoken(access_token);
-  // setrefreshtoken(refresh_token);
+  setAccesToken(access_token); // double check on the logic behind this. 
+  setRefreshToken(refresh_token);
   s.setAccessToken(access_token);
   // s.setRefreshToken(refresh_token);
   const[nowPlaying, setNowPlaying]=useState({name: "not checked",image:""});
