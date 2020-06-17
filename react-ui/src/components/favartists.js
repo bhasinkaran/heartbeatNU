@@ -1,5 +1,6 @@
 
 import React, {useState, useEffect, isValidElement} from 'react';
+import {Redirect} from 'react-router-dom'
 import _ from 'lodash'
 import Spotify from 'spotify-web-api-js';
 import { Grid, Image, Header, Search, Button} from 'semantic-ui-react'
@@ -17,6 +18,7 @@ const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
      const [result, setResult]=useState("");
      var array = [...Array(20).keys()];
      const [indexarray, setIndex]=useState(array);
+     const [redirect, setRedirect]=useState(false);
      const [value, setValue]=useState("");
      const [results, setResults]=useState([]);
      s.setAccessToken(accesstoken);
@@ -153,7 +155,10 @@ const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
       <Grid.Column>
            <Search
             loading={isLoading}
-            onResultSelect={(e, {result})=>setResult(result)}
+            onResultSelect={(e, {result})=>{
+                    setResult(result);
+                    setRedirect(true);
+            }}
             onSearchChange={_.debounce((e, {value})=>handleSearchChange(value), 500, {
               leading: true,
             })}
@@ -189,6 +194,7 @@ const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
         {artistimages.length > 19 ? indexarray.slice(14,21).map(id=>returnThirdFavArtist(id)):""}
         </Grid.Row>  
       </Grid>
+      {redirect ? <Redirect to={`/artist/${result.id}`} push={true} /> : ""} 
 
     </div> 
    
