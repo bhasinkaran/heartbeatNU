@@ -12,8 +12,8 @@ const mongoose = require('mongoose');
 const s = new Spotify();
 
 const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
-     const[artistnames,setNames]= useState([]);
-     const[artistimages, setImages]=useState([]);
+     const [artistnames,setNames]= useState([]);
+     const [artistimages, setImages]=useState([]);
      const [isLoading, setisLoading]=useState(false);
      const [result, setResult]=useState("");
      var array = [...Array(20).keys()];

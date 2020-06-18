@@ -19,7 +19,7 @@ const ArtistHomepage = () =>{
      const [image2, setImage2]=useState("");
      const [image3, setImage3]=useState("");
      const [valuee, setValuee]=useState("");
-     if(artists && !artists[artistid]){
+     if(artists && !artists[artistid] && name){
       const constant = {
         id: artistid,
         name: name,
@@ -100,12 +100,13 @@ const ArtistHomepage = () =>{
           'posterid': user.id,
           'likes': 0,
           'replies': "None",
-          "createdAt": {'sv': 'timestamp'}
+          "createdAt": {'.sv': 'timestamp'}
           
         });
         var key=ref.key;
         if(artists[artistid]['posts']=="None"){
-          dbPosts.child(artistid).child('posts').push(key);
+          console.log("here")
+          dbPosts.child(artistid).push({'posts':key});
         }
         
        }
