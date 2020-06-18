@@ -2,7 +2,7 @@
 import React, {useState, useEffect, isValidElement, useContext} from 'react';
 import Spotify from 'spotify-web-api-js';
 import axios from 'axios'
-import { Grid, Image, Header, Container, Form, TextArea, Button, Segment, Feed, FeedContent, Icon} from 'semantic-ui-react'
+import {Divider, Grid, Image, Header, Container, Form, TextArea, Button, Segment, Feed, FeedContent, Icon} from 'semantic-ui-react'
 import {Router , useParams} from  'react-router-dom';
 import {dbArtists, dbPosts} from '../firebase/firebase'
 import {InfoContext} from '../App'
@@ -15,7 +15,7 @@ const ArtistHomepage = () =>{
      const {artists, setArtists, messages, setMessages, songs, setSongs, posts, setPosts, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshtoken} = React.useContext(InfoContext);
      const [name, setName] = useState("");
      const [image, setImage]=useState("");
-     const [poster, setPoster]=useState("");
+    //  const [poster, setPoster]=useState("");
      const [image2, setImage2]=useState("");
      const [image3, setImage3]=useState("");
      const [valuee, setValuee]=useState("");
@@ -62,13 +62,14 @@ const ArtistHomepage = () =>{
                 }).catch(err=>console.log(err));
      }
      const ReturnPost = ({id}) =>{
+       var poster=""
        if(posts && posts[id]){
         var redirectUri= process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/users/` : `http://localhost:8888/users/`
         var time= DateToTime(posts[id]['createdAt'])
          const posterid=posts[id]['posterid'];
          axios.get(`${redirectUri}${posterid}`)
          .then(response => {
-          setPoster(response.data[0]);
+          poster = response.data[0];
          })
          .catch(function (error) {
            console.log(error);
@@ -95,6 +96,7 @@ const ArtistHomepage = () =>{
          return(<div></div>)
        }
      }
+
      const Posts = ()=>{
        function handleSubmit(){
         console.log(document.getElementById("textarea").value);
@@ -111,17 +113,15 @@ const ArtistHomepage = () =>{
           console.log("here")
           dbArtists.child(artistid).child('posts').push(key);
         // }
-        
        }
       if(artists[artistid] && artists[artistid]['posts']=="None"){
-        // console.log(artists[artistid]);
+        console.log(artists[artistid]);
         // console.log(artists[artistid]['posts']=="None");
         return( 
         <div>
         <Header style={{marginTop:"10px"}} textAlign='center' as='h3'>No Posts Yet</Header>
         <Form onSubmit={()=>handleSubmit()}>
           <TextArea id="textarea" rows={2} placeholder='Add a post' /> 
-          
           <Form.Button fluid positive onClick = {()=>handleSubmit()} style={{marginTop:"10px"}}>Post</Form.Button>
         </Form>
         </div> 
@@ -129,20 +129,30 @@ const ArtistHomepage = () =>{
       }
       if(artists[artistid] && artists[artistid]['posts']!=="None"){
         console.log(Object.values(artists[artistid]['posts']));
+
         return(
+          <div>
+        
         <Grid>
           <Grid.Row>
           <Grid.Column width={3}></Grid.Column>
           <Grid.Column width={10}>
-
+          <Header style={{marginTop:"10px"}} textAlign='center' as='h3'>Add Post</Header>
+        <Form onSubmit={()=>handleSubmit()}>
+          <TextArea id="textarea" rows={2} placeholder='Add a post' /> 
+          
+          <Form.Button fluid positive onClick = {()=>handleSubmit()} style={{marginTop:"10px"}}>Post</Form.Button>
+          <Divider ></Divider>
+        </Form>
+       
               <Feed>
                  {Object.values(artists[artistid]['posts']).map(id=><ReturnPost id={id}/>)}
              </Feed>
         </Grid.Column>
         <Grid.Column width={3}></Grid.Column>
-
         </Grid.Row>
         </Grid>
+        </div> 
        
         )
         
@@ -156,7 +166,6 @@ const ArtistHomepage = () =>{
     <div className="HomepageArtist">
            
       <Container>
-        {user.id}
       <Header as='h1' content={name} textAlign='center' dividing />
       <Image src={image} centered size='medium'></Image>
       <br></br>
