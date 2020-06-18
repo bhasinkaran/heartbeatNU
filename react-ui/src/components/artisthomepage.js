@@ -15,7 +15,6 @@ const ArtistHomepage = () =>{
      const {artists, setArtists, messages, setMessages, songs, setSongs, posts, setPosts, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshtoken} = React.useContext(InfoContext);
      const [name, setName] = useState("");
      const [image, setImage]=useState("");
-    //  const [poster, setPoster]=useState("");
      const [image2, setImage2]=useState("");
      const [image3, setImage3]=useState("");
      const [valuee, setValuee]=useState("");
@@ -62,14 +61,14 @@ const ArtistHomepage = () =>{
                 }).catch(err=>console.log(err));
      }
      const ReturnPost = ({id}) =>{
-       var poster=""
-       if(posts && posts[id]){
+     const [poster, setPoster]=useState("");
+    if(posts && posts[id]){
         var redirectUri= process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/users/` : `http://localhost:8888/users/`
         var time= DateToTime(posts[id]['createdAt'])
          const posterid=posts[id]['posterid'];
          axios.get(`${redirectUri}${posterid}`)
          .then(response => {
-          poster = response.data[0];
+          setPoster(response.data[0]);
          })
          .catch(function (error) {
            console.log(error);
