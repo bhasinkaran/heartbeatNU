@@ -30,7 +30,7 @@ function App() {
   const [messages, setMessages]=useState("")
   const [songs, setSongs]=useState("")
   const [posts, setPosts]=useState("")
-  const [userid, setUserid]=useState("")
+  const [user, setUser]=useState("")
   const [accesstoken, setAccesToken]=useState("")
   const [refreshtoken, setRefreshToken]=useState("")
   useEffect(() => {
@@ -65,7 +65,7 @@ function App() {
   // const [context, setContext] = React.useState(info);
   return(
     <BrowserRouter>
-      <InfoContext.Provider value={{artists, setArtists, messages, setMessages, songs, setSongs,posts, setPosts, userid, setUserid, accesstoken, setAccesToken, refreshtoken, setRefreshToken}}>
+      <InfoContext.Provider value={{artists, setArtists, messages, setMessages, songs, setSongs,posts, setPosts, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshToken}}>
         <Route exact path="/signup/:id/:access_token" render={()=><Signup />} />
         <Route exact path="/" render={()=><Login />} />
         

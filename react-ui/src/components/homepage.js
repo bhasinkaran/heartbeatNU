@@ -13,8 +13,9 @@ const s = new Spotify();
 const Homepage = () =>{
   
   var {id, access_token, refresh_token } = useParams();
-  const {artists, setArtists, messages, setMessages, songs, setSongs, posts, setPosts, userid, setUserid, accesstoken, setAccesToken, refreshtoken, setRefreshToken} = React.useContext(InfoContext);
-  setUserid(id);
+  const {artists, setArtists, messages, setMessages, songs, setSongs, posts, setPosts, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshToken} = React.useContext(InfoContext);
+  
+  
   setAccesToken(access_token); // double check on the logic behind this. 
   setRefreshToken(refresh_token);
   s.setAccessToken(access_token);
@@ -38,6 +39,7 @@ useEffect( handleData, []);
     axios.get(`${redirectUri}${id}`)
       .then(response => {
        settmongouser(response.data[0]);
+       setUser(response.data[0]);
       })
       .catch(function (error) {
         console.log(error);
@@ -107,7 +109,7 @@ function rankAttractedTo(){
       <PageHeader access_token={access_token} id={id}/>
       {/* {userid} */}
       <Container>
-      {mongouser['favoriteartists'] ? <FavoriteArtists artists={mongouser['favoriteartists']} accesstoken={access_token}  refreshtoken={refresh_token}/> : "" }
+      {mongouser['favoriteartists'] ? <FavoriteArtists artists={mongouser['favoriteartists']} accesstoken={access_token} refreshtoken={refresh_token}/> : "" }
       </Container>
     </div>
   );
