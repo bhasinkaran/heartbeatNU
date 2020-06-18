@@ -55,7 +55,7 @@ function App() {
   }, []);
   useEffect(() => {
     const handleData = snap => {
-      if (snap.val()) setMessages(snap.val());
+      if (snap.val()) setReplies(snap.val());
     }
     dbReplies.on('value', handleData, error => alert(error));
     return () => { dbReplies.off('value', handleData); };

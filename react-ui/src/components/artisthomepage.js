@@ -4,7 +4,7 @@ import Spotify from 'spotify-web-api-js';
 import axios from 'axios'
 import {Divider, Grid, Image, Header, Container, Form, TextArea, Button, Rail, Segment, Feed, FeedContent, Icon, Label} from 'semantic-ui-react'
 import {Router , useParams} from  'react-router-dom';
-import {dbArtists, dbPosts} from '../firebase/firebase'
+import {dbArtists, dbPosts, dbReplies} from '../firebase/firebase'
 import {InfoContext} from '../App'
 import DateToTime from '../DateToTime'
 const mongoose = require('mongoose');
@@ -60,6 +60,62 @@ const ArtistHomepage = () =>{
                        
                 }).catch(err=>console.log(err));
      }
+     const ReturnReply = ({id})=>{
+       if(replies && replies[id]){
+         const[replier, setreplier]=useState("");
+         var redirectUri= process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/users/` : `http://localhost:8888/users/`
+         var replierid=replies[id]['posterid'];
+          axios.get(`${redirectUri}${replierid}`)
+          .then(response => {
+           setreplier(response.data[0]);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+         
+         return (
+<div>
+          <Segment attached>
+              <Grid centered columns = {2}>
+
+                  <Grid.Column width={5}>
+                 
+           <Image circular src={replier.image} size='tiny' ></Image>
+           </Grid.Column>
+           <Grid.Column width={10}>
+           <Header as='h4'>
+          {replies[id]['content']}
+         </Header>
+            
+              </Grid.Column>
+           </Grid>
+                
+
+           </Segment>
+            <Segment raised attached style={{marginTop:"-15px"}}>
+            <Button color='red'>
+               <Icon name='heart' />
+                 Like
+             </Button>
+             
+
+             <Label as='a' basic color='red' pointing='left'>
+               {replies[id]['likes'] != 0 ? Object.values(posts[id]['likes']).length:0}
+             </Label>
+             </Segment>
+             </div>
+
+         
+         );
+       }
+       else{
+         console.log(id);
+         console.log(replies[id])
+         console.log(replies)
+         return <div>loading</div>
+       }
+      
+     }
      const ReturnPost = ({id}) =>{
      const [poster, setPoster]=useState("");
     if(posts && posts[id]){
@@ -73,17 +129,32 @@ const ArtistHomepage = () =>{
          .catch(function (error) {
            console.log(error);
          });
+         function handleSubmit(){
+          console.log(document.getElementById("textareareply").value);
+          const ref = dbReplies.push({
+            'content':document.getElementById("textareareply").value,
+            'posterid': user.id,
+            'likes': 0,
+            'replies': "None",
+            "createdAt": {'.sv': 'timestamp'}
+          });
+
+          var key=ref.key;
+          // if(artists[artistid]['posts']=="None"){
+            console.log("here")
+            dbPosts.child(id).child('replies').push(key);
+          // }
+         }
+
          return(
           
           
           <div>
-           <Segment raised>
+           <Segment attached>
               <Grid centered columns = {2}>
 
                   <Grid.Column width={5}>
-                  {/* <Rail dividing position='right'> */}
-         
-           {/* </Rail> */}
+                 
            <Image circular src={poster.image} size='small' ></Image>
            </Grid.Column>
            <Grid.Column width={10}>
@@ -96,7 +167,7 @@ const ArtistHomepage = () =>{
                 
 
            </Segment>
-            <Segment attached='bottom'>
+            <Segment raised attached style={{marginTop:"-15px"}}>
             <Button color='red'>
                <Icon name='heart' />
                  Like
@@ -107,6 +178,18 @@ const ArtistHomepage = () =>{
                {posts[id]['likes'] != 0 ? Object.values(posts[id]['likes']).length:0}
              </Label>
              </Segment>
+             {posts[id]['replies'] != "None" ? 
+              Object.values(posts[id]['replies']).map(id => <ReturnReply id={id}></ReturnReply>)
+            
+             :""}
+        <Segment attached='bottom'>
+          <Form onSubmit={()=>handleSubmit()}>
+            <TextArea id="textareareply" rows={2} placeholder='Reply to post' /> 
+            <Form.Button fluid positive onClick = {()=>handleSubmit()} style={{marginTop:"10px"}}>Reply</Form.Button>  
+          </Form> 
+        </Segment>
+          
+             
              </div>
           
               
