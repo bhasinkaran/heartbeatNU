@@ -13,7 +13,7 @@ const s = new Spotify();
 const Homepage = () =>{
   
   var {id, access_token, refresh_token } = useParams();
-  const {artists, setArtists, messages, setMessages, songs, setSongs, userid, setUserid, accesstoken, setAccesToken, refreshtoken, setRefreshToken} = React.useContext(InfoContext);
+  const {artists, setArtists, messages, setMessages, songs, setSongs, posts, setPosts, userid, setUserid, accesstoken, setAccesToken, refreshtoken, setRefreshToken} = React.useContext(InfoContext);
   setUserid(id);
   setAccesToken(access_token); // double check on the logic behind this. 
   setRefreshToken(refresh_token);
@@ -105,7 +105,7 @@ function rankAttractedTo(){
  return (
     <div className="App">
       <PageHeader access_token={access_token} id={id}/>
-      {userid}
+      {/* {userid} */}
       <Container>
       {mongouser['favoriteartists'] ? <FavoriteArtists artists={mongouser['favoriteartists']} accesstoken={access_token}  refreshtoken={refresh_token}/> : "" }
       </Container>
