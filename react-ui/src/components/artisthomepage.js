@@ -91,6 +91,9 @@ const ArtistHomepage = () =>{
            </Feed.Event>
          )
        }
+       else{
+         return(<div></div>)
+       }
      }
      const Posts = ()=>{
        function handleSubmit(){
@@ -104,10 +107,10 @@ const ArtistHomepage = () =>{
           
         });
         var key=ref.key;
-        if(artists[artistid]['posts']=="None"){
+        // if(artists[artistid]['posts']=="None"){
           console.log("here")
-          dbPosts.child(artistid).push({'posts':key});
-        }
+          dbArtists.child(artistid).child('posts').push(key);
+        // }
         
        }
       if(artists[artistid] && artists[artistid]['posts']=="None"){
@@ -124,12 +127,23 @@ const ArtistHomepage = () =>{
         </div> 
         )
       }
-      if(artists[artistid] && artists[artistid]['posts']=="None"){
+      if(artists[artistid] && artists[artistid]['posts']!=="None"){
         console.log(Object.values(artists[artistid]['posts']));
         return(
-        <Feed>
-            {Object.values(artists[artistid]['posts']).map(id=><ReturnPost id={id}/>)}
-        </Feed>
+        <Grid>
+          <Grid.Row>
+          <Grid.Column width={3}></Grid.Column>
+          <Grid.Column width={10}>
+
+              <Feed>
+                 {Object.values(artists[artistid]['posts']).map(id=><ReturnPost id={id}/>)}
+             </Feed>
+        </Grid.Column>
+        <Grid.Column width={3}></Grid.Column>
+
+        </Grid.Row>
+        </Grid>
+       
         )
         
       }
@@ -145,6 +159,8 @@ const ArtistHomepage = () =>{
         {user.id}
       <Header as='h1' content={name} textAlign='center' dividing />
       <Image src={image} centered size='medium'></Image>
+      <br></br>
+      <br></br>
       {/* {image2 ? <Image src={image2} centered size='medium'></Image> : ""}
       {image3 ? <Image src={image3} centered size='medium'></Image> : ""} */}
       <Posts />

@@ -33,6 +33,17 @@ function App() {
   const [user, setUser]=useState("")
   const [accesstoken, setAccesToken]=useState("")
   const [refreshtoken, setRefreshToken]=useState("")
+  React.useEffect(()=>{
+    localStorage.setItem('user', JSON.stringify(user));
+  }, [user]);
+  React.useEffect(()=>{
+    const data = localStorage.getItem('user');
+    if(data){
+      setUser(JSON.parse(data));
+    }
+    
+  }, []);
+
   useEffect(() => {
     const handleData = snap => {
       if (snap.val()) setArtists(snap.val());
