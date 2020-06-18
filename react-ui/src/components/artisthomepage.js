@@ -42,15 +42,24 @@ const ArtistHomepage = () =>{
                        
                 }).catch(err=>console.log(err));
      }
+     const Posts = ()=>{
+      if(artists[artistid] && artists[artistid]['posts']=="None"){
+        console.log(artists[artistid]);
+        console.log(artists[artistid]['posts']=="None");
+        return(<div>Posts</div>)
+      }
+      return(<div>Loading</div>)
+    }
      return(
      
 
-       
+    
     <div className="HomepageArtist">
            
       <Container>
       <Header as='h3' content={name} textAlign='center' dividing />
       <Image src={image}></Image>
+      <Posts />
       
 
       </Container>
