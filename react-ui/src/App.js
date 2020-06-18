@@ -12,27 +12,22 @@ import MapLeaflet from './components/MapLeaflet'
 import {BrowserRouter, Route} from 'react-router-dom'
 import Signup from './components/signup';
 import ArtistPage from './components/artisthomepage'
-import {dbMessages, dbPosts, dbSongs, dbArtists} from './firebase/firebase';
+import {dbMessages, dbPosts, dbSongs, dbArtists, dbReplies} from './firebase/firebase';
 
 const s = new Spotify();
 
 export const InfoContext = React.createContext();
 function App() {
-  const info = {
-    artists: null,
-    messages: null,
-    songs: null,
-    userid: null,
-    accesstoken: null,
-    refreshtoken: null
-  };
+  
   const [artists, setArtists]=useState("")
   const [messages, setMessages]=useState("")
   const [songs, setSongs]=useState("")
   const [posts, setPosts]=useState("")
+  const [replies, setReplies]=useState("")
   const [user, setUser]=useState("")
   const [accesstoken, setAccesToken]=useState("")
   const [refreshtoken, setRefreshToken]=useState("")
+  
   React.useEffect(()=>{
     localStorage.setItem('user', JSON.stringify(user));
   }, [user]);
@@ -60,6 +55,13 @@ function App() {
   }, []);
   useEffect(() => {
     const handleData = snap => {
+      if (snap.val()) setMessages(snap.val());
+    }
+    dbReplies.on('value', handleData, error => alert(error));
+    return () => { dbReplies.off('value', handleData); };
+  }, []);
+  useEffect(() => {
+    const handleData = snap => {
       if (snap.val()) setSongs(snap.val());
     }
     dbSongs.on('value', handleData, error => alert(error));
@@ -76,7 +78,7 @@ function App() {
   // const [context, setContext] = React.useState(info);
   return(
     <BrowserRouter>
-      <InfoContext.Provider value={{artists, setArtists, messages, setMessages, songs, setSongs,posts, setPosts, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshToken}}>
+      <InfoContext.Provider value={{replies, setReplies, artists, setArtists, messages, setMessages, songs, setSongs,posts, setPosts, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshToken}}>
         <Route exact path="/signup/:id/:access_token" render={()=><Signup />} />
         <Route exact path="/" render={()=><Login />} />
         

@@ -2,7 +2,7 @@
 import React, {useState, useEffect, isValidElement, useContext} from 'react';
 import Spotify from 'spotify-web-api-js';
 import axios from 'axios'
-import {Divider, Grid, Image, Header, Container, Form, TextArea, Button, Segment, Feed, FeedContent, Icon} from 'semantic-ui-react'
+import {Divider, Grid, Image, Header, Container, Form, TextArea, Button, Rail, Segment, Feed, FeedContent, Icon, Label} from 'semantic-ui-react'
 import {Router , useParams} from  'react-router-dom';
 import {dbArtists, dbPosts} from '../firebase/firebase'
 import {InfoContext} from '../App'
@@ -12,7 +12,7 @@ const s = new Spotify();
 
 const ArtistHomepage = () =>{
      var  {artistid } = useParams();
-     const {artists, setArtists, messages, setMessages, songs, setSongs, posts, setPosts, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshtoken} = React.useContext(InfoContext);
+     const {replies, setReplies, artists, setArtists, messages, setMessages, songs, setSongs, posts, setPosts, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshtoken} = React.useContext(InfoContext);
      const [name, setName] = useState("");
      const [image, setImage]=useState("");
      const [image2, setImage2]=useState("");
@@ -74,21 +74,42 @@ const ArtistHomepage = () =>{
            console.log(error);
          });
          return(
-           <Feed.Event>
-              <Feed.Label>
-                  <img src={poster.image} />
-              </Feed.Label>
-             <FeedContent>
-               <Feed.Extra text>
-                {posts[id]['content']} {`  - ${poster.name} @ ${time}`}
-               </Feed.Extra>
-               <Feed.Meta>
-                  <Feed.Like>
-                    <Icon name='like' />{posts[id]['likes']} Likes
-                  </Feed.Like>
-                </Feed.Meta>
-             </FeedContent>
-           </Feed.Event>
+          
+          
+          <div>
+           <Segment raised>
+              <Grid centered columns = {2}>
+
+                  <Grid.Column width={5}>
+                  {/* <Rail dividing position='right'> */}
+         
+           {/* </Rail> */}
+           <Image circular src={poster.image} size='small' ></Image>
+           </Grid.Column>
+           <Grid.Column width={10}>
+             <Header as='h2'>
+              {posts[id]['content']} {`${poster.name} @ ${time}`}
+              </Header>
+            
+              </Grid.Column>
+           </Grid>
+                
+
+           </Segment>
+            <Segment attached='bottom'>
+            <Button color='red'>
+               <Icon name='heart' />
+                 Like
+             </Button>
+             
+
+             <Label as='a' basic color='red' pointing='left'>
+               {posts[id]['likes'] != 0 ? Object.values(posts[id]['likes']).length:0}
+             </Label>
+             </Segment>
+             </div>
+          
+              
          )
        }
        else{

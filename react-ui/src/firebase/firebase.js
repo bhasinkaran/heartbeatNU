@@ -19,3 +19,5 @@ export const dbArtists = firebase.database().ref().child('artists');
 export const dbSongs  = firebase.database().ref().child('songs');
 export const dbPosts = firebase.database().ref().child('posts');
 export const dbMessages = firebase.database().ref().child('messages');
+export const dbReplies = firebase.database().ref().child('replies');
+
