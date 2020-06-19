@@ -3,7 +3,7 @@ import React, {useState, useEffect, isValidElement} from 'react';
 import {Redirect} from 'react-router-dom'
 import _ from 'lodash'
 import Spotify from 'spotify-web-api-js';
-import { Grid, Image, Header, Search, Button} from 'semantic-ui-react'
+import { Grid, Image, Header, Search, Button, Container} from 'semantic-ui-react'
 import {Link} from 'react-router-dom'
 import axios from 'axios'
 
@@ -149,11 +149,8 @@ const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
 //      console.log(artistnames)
      return(
     <div className="FavoriteArtists ">
-            
-      <Grid>
-      <Grid.Row stretched>  
-      <Grid.Column>
-           <Search
+            <Container>
+            <Search
             loading={isLoading}
             onResultSelect={(e, {result})=>{
                     setResult(result);
@@ -168,6 +165,12 @@ const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
             input={{ fluid: true }}
         //     {...this.props}
           />
+            </Container>
+            
+      <Grid>
+      <Grid.Row stretched>  
+      <Grid.Column>
+           
           </Grid.Column>
         </Grid.Row>
 
@@ -178,7 +181,8 @@ const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
         </Grid.Column>
         
        
-        <Grid.Column width = {5}>
+        <Grid.Column width = {5}> 
+                
         <Header  size='huge'>Favorite Artist</Header>
 
         <Grid.Row >  

@@ -108,9 +108,9 @@ function rankAttractedTo(){
     <div className="App">
       <PageHeader access_token={access_token} id={id}/>
       {/* {userid} */}
-      <Container>
+      {/* <Container> */}
       {mongouser['favoriteartists'] ? <FavoriteArtists artists={mongouser['favoriteartists']} accesstoken={access_token} refreshtoken={refresh_token}/> : "" }
-      </Container>
+      {/* </Container> */}
     </div>
   );
 }
