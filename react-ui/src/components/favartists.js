@@ -13,13 +13,10 @@ const s = new Spotify();
 const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
      const [artistnames,setNames]= useState([]);
      const [artistimages, setImages]=useState([]);
-     const [isLoading, setisLoading]=useState(false);
-     const [result, setResult]=useState("");
+    
      var array = [...Array(20).keys()];
      const [indexarray, setIndex]=useState(array);
-     const [redirect, setRedirect]=useState(false);
-     const [value, setValue]=useState("");
-     const [results, setResults]=useState([]);
+     
      s.setAccessToken(accesstoken);
      useEffect(initializeState, []);
      var temp = [];
@@ -114,76 +111,29 @@ const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
                 return "null";
         }
      }
-     async function  handleSearchChange(valuee)  {
-        setisLoading(true);
-        setValue(valuee);
-        console.log(valuee);
-        const url='https://api.spotify.com/v1/search'+`?q=${encodeURIComponent(valuee)}`+"&type=artist"
-        const res = await axios.get(url, {
-                headers:{
-                        "Accept": "application/json",
-                        "Content-Type": "application/json",
-                        'Authorization': 'Bearer ' + accesstoken 
-                }
-        });
-        var temp=[];
-        console.log(res);
-        for(let i=0; i<res.data.artists.items.length; i++){
-                let item=res.data.artists.items[i];
-                console.log(item);
-                if(item.images[0]){
-                        temp.push({title: item.name, image: item.images[0].url, description: item.genres[0], price: item.popularity, id: item.id})
-
-                }
-                else{
-                        //if no pictures just put a black picture
-                        temp.push({title: item.name, image: "https://images.unsplash.com/photo-1554050857-c84a8abdb5e2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=564&q=80", description: item.genres[0], price: item.popularity, id: item.id})
-                }
-        }
-               
      
-        setResults(temp);
-        // console.log(temp);
-        setisLoading(false);
-     }
 //      console.log(artistnames)
      return(
     <div className="FavoriteArtists ">
-            <Container>
-            <Search
-            loading={isLoading}
-            onResultSelect={(e, {result})=>{
-                    setResult(result);
-                    setRedirect(true);
-            }}
-            onSearchChange={_.debounce((e, {value})=>handleSearchChange(value), 500, {
-              leading: true,
-            })}
-            results={results}
-            value={value}
-            fluid
-            input={{ fluid: true }}
-        //     {...this.props}
-          />
-            </Container>
+           
             
-      <Grid>
+      <Grid padded >
       <Grid.Row stretched>  
       <Grid.Column>
            
           </Grid.Column>
         </Grid.Row>
 
-        <Grid.Column width = {5}>
+        <Grid.Column width = {4}>
         </Grid.Column>
         
-        <Grid.Column width = {5}>
+        <Grid.Column width = {8}>
         </Grid.Column>
         
        
-        <Grid.Column width = {5}> 
+        <Grid.Column width = {4}> 
                 
-        <Header  size='huge'>Favorite Artist</Header>
+        <Header  size='huge'>Your Favorite Artist</Header>
 
         <Grid.Row >  
         {artistimages.length > 15 ? indexarray.slice(0,2).map(id=><ReturnFavArtist key = {id.toString()} id={id} />) : ""}
@@ -212,7 +162,6 @@ const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
         </Grid.Column>
        
       </Grid>
-      {redirect ? <Redirect to={`/artist/${result.id}`} push={true} /> : ""} 
       
     </div> 
    

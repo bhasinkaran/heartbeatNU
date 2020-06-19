@@ -1,6 +1,8 @@
 import axios from 'axios'
+import {Redirect} from 'react-router-dom'
+import _ from 'lodash'
 import React, {useState, useEffect, useContext} from 'react';
-import {Container} from 'semantic-ui-react'
+import {Container, Search} from 'semantic-ui-react'
 import {Router , useParams} from  'react-router-dom';
 import Spotify from 'spotify-web-api-js';
 import FavoriteArtists from './favartists'
@@ -25,6 +27,12 @@ const Homepage = () =>{
   const [mongouser, settmongouser]=useState("");
   const [allusers, setAllusers] = useState("");
   const [attractedUsers,setAttracted]=useState("");
+  const [value, setValue]=useState("");
+  const [results, setResults]=useState([]);
+  const [isLoading, setisLoading]=useState(false);
+  const [result, setResult]=useState("");
+  const [redirect, setRedirect]=useState(false);
+
   
   useEffect(handleState, []);
   function handleState()
@@ -99,18 +107,64 @@ function rankAttractedTo(){
   
 }
 
-  function CheckLocation(){
-    navigator.geolocation.getCurrentPosition((position)=>{
-      console.log(position);
-    })
+async function  handleSearchChange(valuee)  {
+  setisLoading(true);
+  setValue(valuee);
+  console.log(valuee);
+  const url='https://api.spotify.com/v1/search'+`?q=${encodeURIComponent(valuee)}`+"&type=artist"
+  const res = await axios.get(url, {
+          headers:{
+                  "Accept": "application/json",
+                  "Content-Type": "application/json",
+                  'Authorization': 'Bearer ' + accesstoken 
+          }
+  });
+  var temp=[];
+  console.log(res);
+  for(let i=0; i<res.data.artists.items.length; i++){
+          let item=res.data.artists.items[i];
+          console.log(item);
+          if(item.images[0]){
+                  temp.push({title: item.name, image: item.images[0].url, description: item.genres[0], price: item.popularity, id: item.id})
+
+          }
+          else{
+                  //if no pictures just put a black picture
+                  temp.push({title: item.name, image: "https://images.unsplash.com/photo-1554050857-c84a8abdb5e2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=564&q=80", description: item.genres[0], price: item.popularity, id: item.id})
+          }
   }
+         
+
+  setResults(temp);
+  // console.log(temp);
+  setisLoading(false);
+}
  return (
     <div className="App">
       <PageHeader access_token={access_token} id={id}/>
       {/* {userid} */}
       {/* <Container> */}
+      <Container>
+            <Search
+            loading={isLoading}
+            onResultSelect={(e, {result})=>{
+                    setResult(result);
+                    setRedirect(true);
+            }}
+            onSearchChange={_.debounce((e, {value})=>handleSearchChange(value), 500, {
+              leading: true,
+            })}
+            results={results}
+            value={value}
+            fluid
+            input={{ fluid: true }}
+        //     {...this.props}
+          />
+            </Container>
       {mongouser['favoriteartists'] ? <FavoriteArtists artists={mongouser['favoriteartists']} accesstoken={access_token} refreshtoken={refresh_token}/> : "" }
-      {/* </Container> */}
+      
+      {redirect ? <Redirect to={`/artist/${result.id}`} push={true} /> : ""} 
+
     </div>
   );
 }
