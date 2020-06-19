@@ -13,6 +13,7 @@ const s = new Spotify();
 const ArtistHomepage = () =>{
      var  {artistid } = useParams();
      const {replies, setReplies, artists, setArtists, messages, setMessages, songs, setSongs, posts, setPosts, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshtoken} = React.useContext(InfoContext);
+     localStorage.setItem('user', JSON.stringify(user));
      const [name, setName] = useState("");
      const [image, setImage]=useState("");
      const [image2, setImage2]=useState("");
@@ -145,6 +146,34 @@ const ArtistHomepage = () =>{
             dbPosts.child(id).child('replies').push(key);
           // }
          }
+         function updateLike(){
+          console.log("Called outside if/else.");
+           if(posts[id]['likes']!=0 && Object.values(posts[id]['likes']).includes(user.id)){
+             
+            console.log("Called inside if");
+             for(let i=0; i<Object.values(posts[id]['likes']).length; i++){
+                if(Object.values(posts[id]['likes'])[i]==user.id){
+                  var index=Object.keys(posts[id]['likes'])[i];
+                  if(Object.values(posts[id]['likes']).length==1){
+                    dbPosts.child(id).child('likes').set(0);
+                  }
+                  else{
+                    dbPosts.child(id).child('likes').remove(index).then(console.log("Done")).catch(err=>console.log(err));
+                  }
+                  
+                }
+             }
+             //remove
+           }
+           
+           else{
+            
+            console.log("Called.")
+
+            dbPosts.child(id).child('likes').push(user.id).then(console.log("Done")).catch(err=>console.log(err));;
+           }
+          
+         }
 
          return(
           
@@ -156,10 +185,11 @@ const ArtistHomepage = () =>{
                   <Grid.Column width={5}>
                  
            <Image circular src={poster.image} size='small' ></Image>
+           <Header as='h5'> {`${poster.name} @ ${time}`}</Header>
            </Grid.Column>
            <Grid.Column width={10}>
              <Header as='h2'>
-              {posts[id]['content']} {`${poster.name} @ ${time}`}
+              {posts[id]['content']}
               </Header>
             
               </Grid.Column>
@@ -168,7 +198,7 @@ const ArtistHomepage = () =>{
 
            </Segment>
             <Segment raised attached style={{marginTop:"-15px"}}>
-            <Button color='red'>
+            <Button color='red' onClick={()=>{updateLike();}}>
                <Icon name='heart' />
                  Like
              </Button>
@@ -248,9 +278,9 @@ const ArtistHomepage = () =>{
           <Divider ></Divider>
         </Form>
        
-              <Feed>
+              {/* <Feed> */}
                  {Object.values(artists[artistid]['posts']).map(id=><ReturnPost id={id}/>)}
-             </Feed>
+             {/* </Feed> */}
         </Grid.Column>
         <Grid.Column width={3}></Grid.Column>
         </Grid.Row>
