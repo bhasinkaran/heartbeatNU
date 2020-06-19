@@ -10,7 +10,6 @@ import axios from 'axios'
 
 const mongoose = require('mongoose');
 const s = new Spotify();
-
 const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
      const [artistnames,setNames]= useState([]);
      const [artistimages, setImages]=useState([]);
@@ -60,7 +59,7 @@ const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
                 <Grid.Column mobile={16} tablet={8} computer={8} id={id}> 
                         <Link to={`/artist/${artists[id]}`} >
                         <Image size='huge' rounded fluid verticalAlign='middle' src={imageurl} />
-                        <Header  size='huge'>{artistname}</Header>
+                        <Header  size='massive'>{artistname}</Header>
                         </Link>
                         
                         <br></br>
@@ -105,7 +104,7 @@ const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
                 <Grid.Column mobile={16} tablet={8} computer={4} id={id}> 
                          <Link to={`/artist/${artists[id]}`} >
                                 <Image fluid rounded src={imageurl} verticalAlign='middle' />
-                                <Header size='huge'>{artistname}</Header>
+                                <Header size='large'>{artistname}</Header>
                         </Link>
                         <br></br>
                 </Grid.Column>);
@@ -149,7 +148,8 @@ const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
      }
 //      console.log(artistnames)
      return(
-    <div className="FavoriteArtists">
+    <div className="FavoriteArtists ">
+            
       <Grid>
       <Grid.Row stretched>  
       <Grid.Column>
@@ -170,6 +170,17 @@ const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
           />
           </Grid.Column>
         </Grid.Row>
+
+        <Grid.Column width = {5}>
+        </Grid.Column>
+        
+        <Grid.Column width = {5}>
+        </Grid.Column>
+        
+       
+        <Grid.Column width = {5}>
+        <Header  size='huge'>Favorite Artist</Header>
+
         <Grid.Row >  
         {artistimages.length > 15 ? indexarray.slice(0,2).map(id=><ReturnFavArtist id={id} />) : ""}
         </Grid.Row>
@@ -192,10 +203,13 @@ const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
         
         <Grid.Row>  
         {artistimages.length > 19 ? indexarray.slice(14,21).map(id=>returnThirdFavArtist(id)):""}
-        </Grid.Row>  
+        </Grid.Row> 
+        
+        </Grid.Column>
+       
       </Grid>
       {redirect ? <Redirect to={`/artist/${result.id}`} push={true} /> : ""} 
-
+      
     </div> 
    
         )
