@@ -182,15 +182,15 @@ const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
         <Header  size='huge'>Favorite Artist</Header>
 
         <Grid.Row >  
-        {artistimages.length > 15 ? indexarray.slice(0,2).map(id=><ReturnFavArtist id={id} />) : ""}
+        {artistimages.length > 15 ? indexarray.slice(0,2).map(id=><ReturnFavArtist key = {id.toString()} id={id} />) : ""}
         </Grid.Row>
        
         <Grid.Row >  
-        {artistimages.length > 15 ? indexarray.slice(2,4).map(id=><ReturnFavArtist id={id} />) : ""}
+        {artistimages.length > 15 ? indexarray.slice(2,4).map(id=><ReturnFavArtist key = {id.toString()}  id={id} />) : ""}
         </Grid.Row>
         
         <Grid.Row >  
-        {artistimages.length > 15 ? indexarray.slice(4,6).map(id=><ReturnFavArtist id={id} />) : ""}
+        {artistimages.length > 15 ? indexarray.slice(4,6).map(id=><ReturnFavArtist key = {id.toString()}  id={id} />) : ""}
         </Grid.Row>
      
          <Grid.Row>  

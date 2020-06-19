@@ -31,7 +31,7 @@ function App() {
   
   React.useEffect(()=>{
     localStorage.setItem('user', JSON.stringify(user));
-  }, []);
+  }, [user]);
   React.useEffect(()=>{
     const data = localStorage.getItem('user');
     if(data){

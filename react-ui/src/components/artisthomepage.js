@@ -62,7 +62,7 @@ const ArtistHomepage = () =>{
                 }).catch(err=>console.log(err));
      }
     
-     const ReturnReply = ({reply})=>{
+     const ReturnReply = React.memo(({reply})=>{
       if(reply){
         const[replier, setreplier]=useState("");
         var redirectUri= process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/users/` : `http://localhost:8888/users/`
@@ -118,13 +118,13 @@ const ArtistHomepage = () =>{
          return <div>loading</div>
        }
       
-     }
-     const ReturnPost = ({id}) =>{
+     });
+     const ReturnPost = React.memo(({item}) =>{
      const [poster, setPoster]=useState("");
-    if(posts && posts[id]){
+    if(item ){
         var redirectUri= process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/users/` : `http://localhost:8888/users/`
-        var time= DateToTime(posts[id]['createdAt'])
-         const posterid=posts[id]['posterid'];
+        var time= DateToTime(item['createdAt'])
+         const posterid=item['posterid'];
          axios.get(`${redirectUri}${posterid}`)
          .then(response => {
           setPoster(response.data[0]);
@@ -139,7 +139,7 @@ const ArtistHomepage = () =>{
           console.log("Likes key is ", likeskey);
          
 
-          const ref = dbReplies.child(posts[id]['replies']).push({
+          const ref = dbReplies.child(item['replies']).push({
             'content':document.getElementById("textareareply").value,
             'posterid': user.id,
             'likes': likeskey,
@@ -150,21 +150,21 @@ const ArtistHomepage = () =>{
 
          function updateLike(){
           console.log("Called outside if/else.");
-          console.log(Object.values(likes[posts[id]['likes']]));
+          console.log(Object.values(likes[item['likes']]));
 
-           if(likes[posts[id]['likes']]!=0 && Object.values(likes[posts[id]['likes']]).includes(user.id)){
+           if(likes[item['likes']]!=0 && Object.values(likes[item['likes']]).includes(user.id)){
              
             console.log("Called inside if");
-            console.log(Object.values(likes[posts[id]['likes']]));
-             for(let i=0; i<Object.values(likes[posts[id]['likes']]).length; i++){
+            console.log(Object.values(likes[item['likes']]));
+             for(let i=0; i<Object.values(likes[item['likes']]).length; i++){
 
-                if(Object.values(likes[posts[id]['likes']])[i]==user.id){
-                  var index=Object.keys(likes[posts[id]['likes']])[i];
-                  if(Object.values(likes[posts[id]['likes']]).length==1){
-                    dbLikes.child(posts[id]['likes']).set(0);
+                if(Object.values(likes[item['likes']])[i]==user.id){
+                  var index=Object.keys(likes[item['likes']])[i];
+                  if(Object.values(likes[item['likes']]).length==1){
+                    dbLikes.child(item['likes']).set(0);
                   }
                   else{
-                    dbLikes.child(posts[id]['likes']).remove(index).then(console.log("Done")).catch(err=>console.log(err));
+                    dbLikes.child(item['likes']).remove(index).then(console.log("Done")).catch(err=>console.log(err));
                   }
                   
                 }
@@ -176,7 +176,7 @@ const ArtistHomepage = () =>{
             
             console.log("Called.")
 
-            dbLikes.child(posts[id]['likes']).push(user.id).then(console.log("Done")).catch(err=>console.log(err));;
+            dbLikes.child(item['likes']).push(user.id).then(console.log("Done")).catch(err=>console.log(err));;
            }
           
          }
@@ -195,7 +195,7 @@ const ArtistHomepage = () =>{
            </Grid.Column>
            <Grid.Column width={10}>
              <Header as='h2'>
-              {posts[id]['content']}
+              {item['content']}
               </Header>
             
               </Grid.Column>
@@ -211,11 +211,11 @@ const ArtistHomepage = () =>{
              
 
              <Label as='a' basic color='red' pointing='left'>
-               {likes[posts[id]['likes']] != 0 ? Object.values(likes[posts[id]['likes']]).length:0}
+               {likes[item['likes']] != 0 ? Object.values(likes[item['likes']]).length:0}
              </Label>
              </Segment>
-             {replies[posts[id]['replies']] != 0 ? 
-              Object.values(replies[posts[id]['replies']]).map(id => <ReturnReply key={id.posterid+id.createdAt} reply={id}></ReturnReply>)
+             {replies[item['replies']] != 0 ? 
+              Object.values(replies[item['replies']]).map(id => <ReturnReply key={id.posterid+id.createdAt} reply={id}></ReturnReply>)
             
              :""}
         <Segment attached='bottom'>
@@ -232,7 +232,7 @@ const ArtistHomepage = () =>{
        else{
          return(<div>Loading</div>)
        }
-     }
+     });
      function handleSubmit(){
       console.log(document.getElementById("textarea").value);
       const likesref=dbLikes.push(0);
@@ -280,17 +280,14 @@ const ArtistHomepage = () =>{
           <Grid.Column width={3}></Grid.Column>
           <Grid.Column width={10}>
         {artists && artists[artistid] && artists[artistid]['posts']!="None" ? 
-          Object.values(artists[artistid]['posts']).map(id=><ReturnPost id={id}/>) 
+          Object.values(artists[artistid]['posts']).map(id=><ReturnPost key={id.toString()} item={posts[id]}/>) 
           : " "}
-      </Grid.Column>
-        <Grid.Column width={3}></Grid.Column>
-        </Grid.Row>
-        </Grid>
-        </div> 
-      
-
+          </Grid.Column>
+          <Grid.Column width={3}></Grid.Column>
+          </Grid.Row>
+          </Grid>
+          </div> 
       </Container>
-
     </div> 
    
         )
