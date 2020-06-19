@@ -257,67 +257,10 @@ const ArtistHomepage = () =>{
         dbArtists.child(artistid).child('posts').push(key);
       // }
      }
-     const Posts = ()=>{
-       function handleSubmit(){
-        console.log(document.getElementById("textarea").value);
-        const likesref=dbLikes.push(0);
-          const likeskey=likesref.getKey();
-          console.log("Likes key is ", likeskey);
-          const repliesref=dbReplies.push(0);
-          const replieskey=repliesref.getKey();
-          console.log("Likes key is ", likeskey);
-          console.log("replies key is ", replieskey);
-
-        const ref = dbPosts.push({
-          'content':document.getElementById("textarea").value,
-          'posterid': user.id,
-          'likes': likeskey,
-          'replies': replieskey,
-          "createdAt": {'.sv': 'timestamp'}
-          
-        });
-        var key=ref.key;
-        // if(artists[artistid]['posts']=="None"){
-          console.log("here")
-          dbArtists.child(artistid).child('posts').push(key);
-        // }
-       }
-      if(artists[artistid] && artists[artistid]['posts']=="None"){
-        console.log(artists[artistid]);
-        return("");
-      }
-      if(artists[artistid] && artists[artistid]['posts']!=="None"){
-        console.log(Object.values(artists[artistid]['posts']));
-
-        return(
-          <div>
-        
-        <Grid>
-          <Grid.Row>
-          <Grid.Column width={3}></Grid.Column>
-          <Grid.Column width={10}>
-         
-       
-              {/* <Feed> */}
-                 {Object.values(artists[artistid]['posts']).map(id=><ReturnPost id={id}/>)}
-             {/* </Feed> */}
-        </Grid.Column>
-        <Grid.Column width={3}></Grid.Column>
-        </Grid.Row>
-        </Grid>
-        </div> 
-       
-        )
-        
-      }
-      return(<div>Loading</div>)
-    }
-     return(
      
-
-    
+     return(
+  
     <div className="HomepageArtist">
-           
       <Container>
       <Header as='h1' content={name} textAlign='center' dividing />
       <Image src={image} centered size='medium'></Image>
@@ -327,7 +270,8 @@ const ArtistHomepage = () =>{
         <Header style={{marginTop:"10px"}} textAlign='center' as='h3'>Say something about this artist</Header>
         <Form onSubmit={()=>handleSubmit()}>
           <TextArea id="textarea" rows={2} placeholder='Add a post' /> 
-          <Form.Button fluid positive onClick = {()=>handleSubmit()} style={{marginTop:"10px"}}>Post</Form.Button>
+          <Form.Button fluid positive  style={{marginTop:"10px"}}>Post</Form.Button>
+          {/* onClick = {()=>handleSubmit()} */}
         </Form>
       </div> 
       <div>
