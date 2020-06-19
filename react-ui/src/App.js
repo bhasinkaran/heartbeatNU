@@ -12,7 +12,7 @@ import MapLeaflet from './components/MapLeaflet'
 import {BrowserRouter, Route} from 'react-router-dom'
 import Signup from './components/signup';
 import ArtistPage from './components/artisthomepage'
-import {dbMessages, dbPosts, dbSongs, dbArtists, dbReplies} from './firebase/firebase';
+import {dbMessages, dbPosts, dbSongs, dbArtists, dbReplies, dbLikes} from './firebase/firebase';
 
 const s = new Spotify();
 
@@ -24,6 +24,7 @@ function App() {
   const [songs, setSongs]=useState("")
   const [posts, setPosts]=useState("")
   const [replies, setReplies]=useState("")
+  const [likes, setLikes]=useState("");
   const [user, setUser]=useState("")
   const [accesstoken, setAccesToken]=useState("")
   const [refreshtoken, setRefreshToken]=useState("")
@@ -45,6 +46,13 @@ function App() {
     }
     dbArtists.on('value', handleData, error => alert(error));
     return () => { dbArtists.off('value', handleData); };
+  }, []);
+  useEffect(() => {
+    const handleData = snap => {
+      if (snap.val()) setLikes(snap.val());
+    }
+    dbLikes.on('value', handleData, error => alert(error));
+    return () => { dbLikes.off('value', handleData); };
   }, []);
   useEffect(() => {
     const handleData = snap => {
@@ -78,7 +86,7 @@ function App() {
   // const [context, setContext] = React.useState(info);
   return(
     <BrowserRouter>
-      <InfoContext.Provider value={{replies, setReplies, artists, setArtists, messages, setMessages, songs, setSongs,posts, setPosts, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshToken}}>
+      <InfoContext.Provider value={{replies, setReplies, artists, setArtists, messages, setMessages, songs, setSongs,posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshToken}}>
         <Route exact path="/signup/:id/:access_token" render={()=><Signup />} />
         <Route exact path="/" render={()=><Login />} />
         

@@ -4,7 +4,7 @@ import Spotify from 'spotify-web-api-js';
 import axios from 'axios'
 import {Divider, Grid, Image, Header, Container, Form, TextArea, Button, Rail, Segment, Feed, FeedContent, Icon, Label} from 'semantic-ui-react'
 import {Router , useParams} from  'react-router-dom';
-import {dbArtists, dbPosts, dbReplies} from '../firebase/firebase'
+import {dbArtists, dbPosts, dbReplies, dbLikes} from '../firebase/firebase'
 import {InfoContext} from '../App'
 import DateToTime from '../DateToTime'
 const mongoose = require('mongoose');
@@ -12,7 +12,7 @@ const s = new Spotify();
 
 const ArtistHomepage = () =>{
      var  {artistid } = useParams();
-     const {replies, setReplies, artists, setArtists, messages, setMessages, songs, setSongs, posts, setPosts, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshtoken} = React.useContext(InfoContext);
+     const {replies, setReplies, artists, setArtists, messages, setMessages, songs, setSongs, posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshtoken} = React.useContext(InfoContext);
      localStorage.setItem('user', JSON.stringify(user));
      const [name, setName] = useState("");
      const [image, setImage]=useState("");
@@ -75,7 +75,7 @@ const ArtistHomepage = () =>{
           });
          
          return (
-<div>
+        <div>
           <Segment attached>
               <Grid centered columns = {2}>
 
@@ -126,17 +126,27 @@ const ArtistHomepage = () =>{
          axios.get(`${redirectUri}${posterid}`)
          .then(response => {
           setPoster(response.data[0]);
+
+
+
+
+
+
          })
          .catch(function (error) {
            console.log(error);
          });
          function handleSubmit(){
           console.log(document.getElementById("textareareply").value);
+          const likesref=dbLikes.push(0);
+          const likeskey=likesref.getKey();
+          console.log("Likes key is ", likeskey);
+         
+
           const ref = dbReplies.push({
             'content':document.getElementById("textareareply").value,
             'posterid': user.id,
-            'likes': 0,
-            'replies': "None",
+            'likes': likeskey,
             "createdAt": {'.sv': 'timestamp'}
           });
 
@@ -205,7 +215,7 @@ const ArtistHomepage = () =>{
              
 
              <Label as='a' basic color='red' pointing='left'>
-               {posts[id]['likes'] != 0 ? Object.values(posts[id]['likes']).length:0}
+               {posts[id]['likes'] != 0 ? Object.values(likes[posts[id]['likes']]).length:0}
              </Label>
              </Segment>
              {posts[id]['replies'] != "None" ? 
@@ -229,15 +239,46 @@ const ArtistHomepage = () =>{
          return(<div></div>)
        }
      }
+     function handleSubmit(){
+      console.log(document.getElementById("textarea").value);
+      const likesref=dbLikes.push(0);
+        const likeskey=likesref.getKey();
+        console.log("Likes key is ", likeskey);
+        const repliesref=dbReplies.push(0);
+        const replieskey=repliesref.getKey();
+        console.log("Likes key is ", likeskey);
+        console.log("replies key is ", replieskey);
 
+      const ref = dbPosts.push({
+        'content':document.getElementById("textarea").value,
+        'posterid': user.id,
+        'likes': likeskey,
+        'replies': replieskey,
+        "createdAt": {'.sv': 'timestamp'}
+        
+      });
+      var key=ref.key;
+      // if(artists[artistid]['posts']=="None"){
+        console.log("here")
+        dbArtists.child(artistid).child('posts').push(key);
+      // }
+     }
      const Posts = ()=>{
        function handleSubmit(){
         console.log(document.getElementById("textarea").value);
+        const likesref=dbLikes.push(0);
+          const likeskey=likesref.getKey();
+          console.log("Likes key is ", likeskey);
+          const repliesref=dbReplies.push(0);
+          const replieskey=repliesref.getKey();
+          console.log("Likes key is ", likeskey);
+          console.log("replies key is ", replieskey);
+
         const ref = dbPosts.push({
           'content':document.getElementById("textarea").value,
           'posterid': user.id,
-          'likes': 0,
-          'replies': "None",
+          'likes': likeskey,
+          'replies': replieskey,
           "createdAt": {'.sv': 'timestamp'}
           
         });
@@ -249,16 +290,7 @@ const ArtistHomepage = () =>{
        }
       if(artists[artistid] && artists[artistid]['posts']=="None"){
         console.log(artists[artistid]);
-        // console.log(artists[artistid]['posts']=="None");
-        return( 
-        <div>
-        <Header style={{marginTop:"10px"}} textAlign='center' as='h3'>No Posts Yet</Header>
-        <Form onSubmit={()=>handleSubmit()}>
-          <TextArea id="textarea" rows={2} placeholder='Add a post' /> 
-          <Form.Button fluid positive onClick = {()=>handleSubmit()} style={{marginTop:"10px"}}>Post</Form.Button>
-        </Form>
-        </div> 
-        )
+        return("");
       }
       if(artists[artistid] && artists[artistid]['posts']!=="None"){
         console.log(Object.values(artists[artistid]['posts']));
@@ -270,13 +302,7 @@ const ArtistHomepage = () =>{
           <Grid.Row>
           <Grid.Column width={3}></Grid.Column>
           <Grid.Column width={10}>
-          <Header style={{marginTop:"10px"}} textAlign='center' as='h3'>Add Post</Header>
-        <Form onSubmit={()=>handleSubmit()}>
-          <TextArea id="textarea" rows={2} placeholder='Add a post' /> 
-          
-          <Form.Button fluid positive onClick = {()=>handleSubmit()} style={{marginTop:"10px"}}>Post</Form.Button>
-          <Divider ></Divider>
-        </Form>
+         
        
               {/* <Feed> */}
                  {Object.values(artists[artistid]['posts']).map(id=><ReturnPost id={id}/>)}
@@ -303,9 +329,26 @@ const ArtistHomepage = () =>{
       <Image src={image} centered size='medium'></Image>
       <br></br>
       <br></br>
-      {/* {image2 ? <Image src={image2} centered size='medium'></Image> : ""}
-      {image3 ? <Image src={image3} centered size='medium'></Image> : ""} */}
-      <Posts />
+      <div>
+        <Header style={{marginTop:"10px"}} textAlign='center' as='h3'>Say something about this artist</Header>
+        <Form onSubmit={()=>handleSubmit()}>
+          <TextArea id="textarea" rows={2} placeholder='Add a post' /> 
+          <Form.Button fluid positive onClick = {()=>handleSubmit()} style={{marginTop:"10px"}}>Post</Form.Button>
+        </Form>
+      </div> 
+      <div>
+      <Grid>
+          <Grid.Row>
+          <Grid.Column width={3}></Grid.Column>
+          <Grid.Column width={10}>
+        {artists && artists[artistid] ? 
+          Object.values(artists[artistid]['posts']).map(id=><ReturnPost id={id}/>) 
+          : " "}
+      </Grid.Column>
+        <Grid.Column width={3}></Grid.Column>
+        </Grid.Row>
+        </Grid>
+        </div> 
       
 
       </Container>
