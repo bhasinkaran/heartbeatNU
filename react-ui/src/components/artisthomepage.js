@@ -61,58 +61,60 @@ const ArtistHomepage = () =>{
                        
                 }).catch(err=>console.log(err));
      }
-     const ReturnReply = ({id})=>{
-       if(replies && replies[id]){
-         const[replier, setreplier]=useState("");
-         var redirectUri= process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/users/` : `http://localhost:8888/users/`
-         var replierid=replies[id]['posterid'];
-          axios.get(`${redirectUri}${replierid}`)
-          .then(response => {
-           setreplier(response.data[0]);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-         
-         return (
-        <div>
-          <Segment attached>
-              <Grid centered columns = {2}>
+    
+     const ReturnReply = ({reply})=>{
+      if(reply){
+        const[replier, setreplier]=useState("");
+        var redirectUri= process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/users/` : `http://localhost:8888/users/`
+        var replierid=reply['posterid'];
+         axios.get(`${redirectUri}${replierid}`)
+         .then(response => {
+          setreplier(response.data[0]);
+         })
+         .catch(function (error) {
+           console.log(error);
+         });
+        
+        return (
+       <div>
+         <Segment attached>
+             <Grid centered columns = {2}>
 
-                  <Grid.Column width={5}>
-                 
-           <Image circular src={replier.image} size='tiny' ></Image>
-           </Grid.Column>
-           <Grid.Column width={10}>
-           <Header as='h4'>
-          {replies[id]['content']}
-         </Header>
-            
-              </Grid.Column>
-           </Grid>
+                 <Grid.Column width={5}>
                 
+          <Image circular src={replier.image} size='tiny' ></Image>
+          </Grid.Column>
+          <Grid.Column width={10}>
+          <Header as='h4'>
+         {reply['content']}
+        </Header>
+           
+             </Grid.Column>
+          </Grid>
+               
 
-           </Segment>
-            <Segment raised attached style={{marginTop:"-15px"}}>
-            <Button color='red'>
-               <Icon name='heart' />
-                 Like
-             </Button>
-             
+          </Segment>
+           <Segment raised attached style={{marginTop:"-15px"}}>
+           <Button color='red'>
+              <Icon name='heart' />
+                Like
+            </Button>
+            
 
-             <Label as='a' basic color='red' pointing='left'>
-               {replies[id]['likes'] != 0 ? Object.values(posts[id]['likes']).length:0}
-             </Label>
-             </Segment>
-             </div>
+            <Label as='a' basic color='red' pointing='left'>
+              {likes[reply['likes']] != 0 ? Object.values(likes[reply['likes']]).length:0}
+            </Label>
+            </Segment>
+            </div>
 
-         
-         );
-       }
+        
+        );
+      }
+     
+      
        else{
-         console.log(id);
-         console.log(replies[id])
-         console.log(replies)
+       
+        console.log("Loading")
          return <div>loading</div>
        }
       
@@ -126,61 +128,55 @@ const ArtistHomepage = () =>{
          axios.get(`${redirectUri}${posterid}`)
          .then(response => {
           setPoster(response.data[0]);
-
-
-
-
-
-
          })
          .catch(function (error) {
            console.log(error);
          });
-         function handleSubmit(){
+         function handleSubmitReply(){
           console.log(document.getElementById("textareareply").value);
           const likesref=dbLikes.push(0);
           const likeskey=likesref.getKey();
           console.log("Likes key is ", likeskey);
          
 
-          const ref = dbReplies.push({
+          const ref = dbReplies.child(posts[id]['replies']).push({
             'content':document.getElementById("textareareply").value,
             'posterid': user.id,
             'likes': likeskey,
             "createdAt": {'.sv': 'timestamp'}
           });
 
-          var key=ref.key;
-          // if(artists[artistid]['posts']=="None"){
-            console.log("here")
-            dbPosts.child(id).child('replies').push(key);
-          // }
-         }
+        }
+
          function updateLike(){
           console.log("Called outside if/else.");
-           if(posts[id]['likes']!=0 && Object.values(posts[id]['likes']).includes(user.id)){
+          console.log(Object.values(likes[posts[id]['likes']]));
+
+           if(likes[posts[id]['likes']]!=0 && Object.values(likes[posts[id]['likes']]).includes(user.id)){
              
             console.log("Called inside if");
-             for(let i=0; i<Object.values(posts[id]['likes']).length; i++){
-                if(Object.values(posts[id]['likes'])[i]==user.id){
-                  var index=Object.keys(posts[id]['likes'])[i];
-                  if(Object.values(posts[id]['likes']).length==1){
-                    dbPosts.child(id).child('likes').set(0);
+            console.log(Object.values(likes[posts[id]['likes']]));
+             for(let i=0; i<Object.values(likes[posts[id]['likes']]).length; i++){
+
+                if(Object.values(likes[posts[id]['likes']])[i]==user.id){
+                  var index=Object.keys(likes[posts[id]['likes']])[i];
+                  if(Object.values(likes[posts[id]['likes']]).length==1){
+                    dbLikes.child(posts[id]['likes']).set(0);
                   }
                   else{
-                    dbPosts.child(id).child('likes').remove(index).then(console.log("Done")).catch(err=>console.log(err));
+                    dbLikes.child(posts[id]['likes']).remove(index).then(console.log("Done")).catch(err=>console.log(err));
                   }
                   
                 }
              }
-             //remove
+
            }
            
            else{
             
             console.log("Called.")
 
-            dbPosts.child(id).child('likes').push(user.id).then(console.log("Done")).catch(err=>console.log(err));;
+            dbLikes.child(posts[id]['likes']).push(user.id).then(console.log("Done")).catch(err=>console.log(err));;
            }
           
          }
@@ -215,28 +211,26 @@ const ArtistHomepage = () =>{
              
 
              <Label as='a' basic color='red' pointing='left'>
-               {posts[id]['likes'] != 0 ? Object.values(likes[posts[id]['likes']]).length:0}
+               {likes[posts[id]['likes']] != 0 ? Object.values(likes[posts[id]['likes']]).length:0}
              </Label>
              </Segment>
-             {posts[id]['replies'] != "None" ? 
-              Object.values(posts[id]['replies']).map(id => <ReturnReply id={id}></ReturnReply>)
+             {replies[posts[id]['replies']] != 0 ? 
+              Object.values(replies[posts[id]['replies']]).map(id => <ReturnReply key={id.posterid+id.createdAt} reply={id}></ReturnReply>)
             
              :""}
         <Segment attached='bottom'>
-          <Form onSubmit={()=>handleSubmit()}>
+          <Form onSubmit={()=>handleSubmitReply()}>
             <TextArea id="textareareply" rows={2} placeholder='Reply to post' /> 
-            <Form.Button fluid positive onClick = {()=>handleSubmit()} style={{marginTop:"10px"}}>Reply</Form.Button>  
+            <Form.Button fluid positive onClick = {()=>handleSubmitReply()} style={{marginTop:"10px"}}>Reply</Form.Button>  
           </Form> 
         </Segment>
           
              
-             </div>
-          
-              
+             </div>       
          )
-       }
+      }
        else{
-         return(<div></div>)
+         return(<div>Loading</div>)
        }
      }
      function handleSubmit(){
@@ -341,7 +335,7 @@ const ArtistHomepage = () =>{
           <Grid.Row>
           <Grid.Column width={3}></Grid.Column>
           <Grid.Column width={10}>
-        {artists && artists[artistid] ? 
+        {artists && artists[artistid] && artists[artistid]['posts']!="None" ? 
           Object.values(artists[artistid]['posts']).map(id=><ReturnPost id={id}/>) 
           : " "}
       </Grid.Column>
