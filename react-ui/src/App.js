@@ -12,6 +12,8 @@ import MapLeaflet from './components/MapLeaflet'
 import {BrowserRouter, Route} from 'react-router-dom'
 import Signup from './components/signup';
 import ArtistPage from './components/artisthomepage'
+import TrackPage from './components/trackhomepage'
+
 import {dbMessages, dbPosts, dbSongs, dbArtists, dbReplies, dbLikes} from './firebase/firebase';
 
 const s = new Spotify();
@@ -94,6 +96,8 @@ function App() {
     
        
         <Route exact path="/artist/:artistid"  render = {()=> <ArtistPage ></ArtistPage>} />
+        <Route exact path="/track/:trackid"  render = {()=> <TrackPage ></TrackPage>} />
+
         {/* <Route exact path="/artist/:artistid/:bool"  render = {()=> <ArtistPage ></ArtistPage>} /> */}
 
         <Route exact path="/map" render={()=><MapLeaflet />} />
