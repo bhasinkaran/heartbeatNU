@@ -2,10 +2,12 @@ import axios from 'axios'
 import {Redirect} from 'react-router-dom'
 import _ from 'lodash'
 import React, {useState, useEffect, useContext} from 'react';
-import {Container, Search} from 'semantic-ui-react'
+import {Container, Search, Grid} from 'semantic-ui-react'
 import {Router , useParams} from  'react-router-dom';
 import Spotify from 'spotify-web-api-js';
 import FavoriteArtists from './favartists'
+import FavoriteSongs from './favsongs'
+
 import PageHeader from './pageheader'
 import {InfoContext} from '../App'
 
@@ -161,8 +163,26 @@ async function  handleSearchChange(valuee)  {
         //     {...this.props}
           />
             </Container>
+            <Grid padded >
+      <Grid.Row stretched>  
+
+
+        <Grid.Column width = {4}>
+        {mongouser['favoritesongs'] ? <FavoriteSongs songs={mongouser['favoritesongs']} accesstoken={access_token} refreshtoken={refresh_token}/> : "" }
+
+        </Grid.Column>
+
+        
+        <Grid.Column width = {8}>
+        </Grid.Column>
+        
+       
+        <Grid.Column width = {4}> 
       {mongouser['favoriteartists'] ? <FavoriteArtists artists={mongouser['favoriteartists']} accesstoken={access_token} refreshtoken={refresh_token}/> : "" }
-      
+      </Grid.Column>
+      </Grid.Row>
+       </Grid>
+       
       {redirect ? <Redirect to={`/artist/${result.id}`} push={true} /> : ""} 
 
     </div>
