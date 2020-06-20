@@ -53,7 +53,7 @@ const FavoriteSongs = ({accesstoken, songs, refreshtoken}) =>{
         //      console.log(imageurl);
              return(
                 <Grid.Column mobile={16} tablet={8} computer={8} id={id}> 
-                        <Link to={`/song/${songs[id]}`} >
+                        <Link to={`/track/${songs[id]}`} >
                         <Image size='huge' rounded fluid verticalAlign='middle' src={imageurl} />
                         <Header  size='massive'>{songName}</Header>
                         </Link>
@@ -76,7 +76,7 @@ const FavoriteSongs = ({accesstoken, songs, refreshtoken}) =>{
         //      console.log(imageurl);
              return(
                 <Grid.Column mobile={16} tablet={8} computer={4} id={id}> 
-                        <Link to={`/song/${songs[id]}`} >
+                        <Link to={`/track/${songs[id]}`} >
                                 <Image fluid rounded src={imageurl} verticalAlign='middle' />
                                 <Header size='huge'>{songName}</Header>
                         </Link>
@@ -98,7 +98,7 @@ const FavoriteSongs = ({accesstoken, songs, refreshtoken}) =>{
         //      console.log(imageurl);
              return(
                 <Grid.Column mobile={16} tablet={8} computer={4} id={id}> 
-                         <Link to={`/song/${songs[id]}`} >
+                         <Link to={`/track/${songs[id]}`} >
                                 <Image fluid rounded src={imageurl} verticalAlign='middle' />
                                 <Header size='large'>{songName}</Header>
                         </Link>

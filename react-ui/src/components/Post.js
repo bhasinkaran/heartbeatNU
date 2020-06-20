@@ -92,8 +92,7 @@ const ReturnPost = React.memo(({item}) =>{
                
                  </Grid.Column>
               </Grid>
-                   
-   
+
               </Segment>
                <Segment raised attached style={{marginTop:"-15px"}}>
                <Button color='red' onClick={()=>{updateLike();}}>
