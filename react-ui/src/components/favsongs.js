@@ -11,6 +11,7 @@ const s = new Spotify();
 const FavoriteSongs = ({accesstoken, songs, refreshtoken}) =>{
      const [songnames,setNames]= useState([]);
      const [songimages, setImages]=useState([]);
+     const [orderedSongs, setOrderedSongs]=useState([]);
      var array = [...Array(20).keys()];
      const [indexarray, setIndex]=useState(array);
      
@@ -18,6 +19,7 @@ const FavoriteSongs = ({accesstoken, songs, refreshtoken}) =>{
      useEffect(initializeState, []);
      var temp = [];
      var temp2 = [];
+     var temp3 = [];
     function initializeState() {
             for(let i = 0; i<songs.length; i++){
                 //     console.log("This is songs",songs)
@@ -25,12 +27,14 @@ const FavoriteSongs = ({accesstoken, songs, refreshtoken}) =>{
                      res => {
                              temp.push(res.name);
                              temp2.push(res.album.images[0].url);
+                             temp3.push(songs[i]);
                         //      console.log("Inside then")
                         //      console.log(res);
                         //      console.log(temp);
                              if(temp.length==20){
                                 setNames(temp);
                                 setImages(temp2);
+                                setOrderedSongs(temp3);
                              }
                             
                      }).catch(err=>console.log(err));
@@ -53,7 +57,7 @@ const FavoriteSongs = ({accesstoken, songs, refreshtoken}) =>{
         //      console.log(imageurl);
              return(
                 <Grid.Column mobile={16} tablet={8} computer={8} id={id}> 
-                        <Link to={`/track/${songs[id]}`} >
+                        <Link to={`/track/${orderedSongs[id]}`} >
                         <Image size='huge' rounded fluid verticalAlign='middle' src={imageurl} />
                         <Header  size='massive'>{songName}</Header>
                         </Link>
@@ -76,7 +80,7 @@ const FavoriteSongs = ({accesstoken, songs, refreshtoken}) =>{
         //      console.log(imageurl);
              return(
                 <Grid.Column mobile={16} tablet={8} computer={4} id={id}> 
-                        <Link to={`/track/${songs[id]}`} >
+                        <Link to={`/track/${orderedSongs[id]}`} >
                                 <Image fluid rounded src={imageurl} verticalAlign='middle' />
                                 <Header size='huge'>{songName}</Header>
                         </Link>
@@ -98,7 +102,7 @@ const FavoriteSongs = ({accesstoken, songs, refreshtoken}) =>{
         //      console.log(imageurl);
              return(
                 <Grid.Column mobile={16} tablet={8} computer={4} id={id}> 
-                         <Link to={`/track/${songs[id]}`} >
+                         <Link to={`/track/${orderedSongs[id]}`} >
                                 <Image fluid rounded src={imageurl} verticalAlign='middle' />
                                 <Header size='large'>{songName}</Header>
                         </Link>
