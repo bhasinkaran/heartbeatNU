@@ -2,13 +2,14 @@
 import React, {useState, useEffect, isValidElement} from 'react';
 import Spotify from 'spotify-web-api-js';
 import { Grid, Image, Header, Search, Button, Container} from 'semantic-ui-react'
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 import axios from 'axios'
 const mongoose = require('mongoose');
 const s = new Spotify();
 const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
      const [artistnames,setNames]= useState([]);
      const [artistimages, setImages]=useState([]);
+     const[orderedArtists,setOrdererdArtists]=useState([]);
     
      var array = [...Array(20).keys()];
      const [indexarray, setIndex]=useState(array);
@@ -17,23 +18,31 @@ const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
      useEffect(initializeState, []);
      var temp = [];
      var temp2 = [];
+     var temp3=[];
     function initializeState() {
+            console.log(artists);
             for(let i = 0; i<artists.length; i++){
+
              s.getArtist(artists[i]).then(
                      res => {
+                             console.log(artists[i]);
                              temp.push(res.name);
                              temp2.push(res.images[0].url);
+                             temp3.push(artists[i]);
+                        //      console.log(temp);
                         //      console.log(res);
                         //      console.log(temp);
                              if(temp.length==20){
+                                //      console.log(temp);
                                 setNames(temp);
                                 setImages(temp2);
+                                setOrdererdArtists(temp3);
                              }
                             
                      }).catch(err=>console.log(err));
      }
-     console.log(temp);
-     console.log(temp2);
+//      console.log(temp);
+//      console.log(temp2);
 //      setNames(temp);
 //      setImages(temp2);
      
@@ -51,7 +60,7 @@ const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
              return(
                 <div  id={id}> 
                 {/* mobile={16} tablet={8} computer={8} */}
-                        <Link to={`/artist/${artists[id]}`} >
+                        <Link to={`/artist/${orderedArtists[id]}`} >
                         <Image size='massive' rounded fluid verticalAlign='middle' src={imageurl} />
                         <Header  size='massive'>{artistname}</Header>
                         </Link>
@@ -75,7 +84,7 @@ const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
              return(
                 // <Grid.Row mobile={16} tablet={8} computer={4} id={id}> 
                 <div  id={id}> 
-                        <Link to={`/artist/${artists[id]}`} >
+                        <Link to={`/artist/${orderedArtists[id]}`} >
                                 <Image fluid rounded src={imageurl} verticalAlign='middle' />
                                 <Header size='huge'>{artistname}</Header>
                         </Link>
@@ -97,13 +106,16 @@ const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
        {
              console.log(imageurl);
              return(
-                <Grid.Column mobile={16} tablet={8} computer={4} id={id}> 
-                         <Link to={`/artist/${artists[id]}`} >
+                // <Grid.Column mobile={16} tablet={8} computer={4} id={id}> 
+                <div  id={id}> 
+                         <Link to={`/artist/${orderedArtists[id]}`} >
                                 <Image fluid rounded src={imageurl} verticalAlign='middle' />
                                 <Header size='large'>{artistname}</Header>
                         </Link>
                         <br></br>
-                </Grid.Column>);
+                {/* </Grid.Column> */}
+                </div>
+                );
        }
         else{
                 console.log(imageurl)
@@ -112,7 +124,8 @@ const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
      }
      
 //      console.log(artistnames)
-     return(
+     
+             return(
     <div className="FavoriteArtists ">
            
             
@@ -148,5 +161,6 @@ const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
    
         )
 }
+       
 
 export default FavoriteArtists;

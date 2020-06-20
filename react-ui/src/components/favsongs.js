@@ -20,14 +20,14 @@ const FavoriteSongs = ({accesstoken, songs, refreshtoken}) =>{
      var temp2 = [];
     function initializeState() {
             for(let i = 0; i<songs.length; i++){
-                    console.log("This is songs",songs)
+                //     console.log("This is songs",songs)
              s.getTrack(songs[i]).then(
                      res => {
                              temp.push(res.name);
                              temp2.push(res.album.images[0].url);
-                             console.log("Inside then")
-                             console.log(res);
-                             console.log(temp);
+                        //      console.log("Inside then")
+                        //      console.log(res);
+                        //      console.log(temp);
                              if(temp.length==20){
                                 setNames(temp);
                                 setImages(temp2);
@@ -35,8 +35,8 @@ const FavoriteSongs = ({accesstoken, songs, refreshtoken}) =>{
                             
                      }).catch(err=>console.log(err));
      }
-     console.log(temp);
-     console.log(temp2);
+//      console.log(temp);
+//      console.log(temp2);
 //      setNames(temp);
 //      setImages(temp2);
      
@@ -50,7 +50,7 @@ const FavoriteSongs = ({accesstoken, songs, refreshtoken}) =>{
         // console.log(artistimages)
        if(imageurl)
        {
-             console.log(imageurl);
+        //      console.log(imageurl);
              return(
                 <Grid.Column mobile={16} tablet={8} computer={8} id={id}> 
                         <Link to={`/song/${songs[id]}`} >
@@ -62,7 +62,7 @@ const FavoriteSongs = ({accesstoken, songs, refreshtoken}) =>{
                 </Grid.Column>);
        }
         else{
-                console.log(imageurl)
+                // console.log(imageurl)
                 return "null";
         }
      }
@@ -84,7 +84,7 @@ const FavoriteSongs = ({accesstoken, songs, refreshtoken}) =>{
                 </Grid.Column>);
        }
         else{
-                console.log(imageurl)
+                // console.log(imageurl)
                 return "null";
         }
      }
@@ -95,7 +95,7 @@ const FavoriteSongs = ({accesstoken, songs, refreshtoken}) =>{
         // console.log(artistimages)
        if(imageurl)
        {
-             console.log(imageurl);
+        //      console.log(imageurl);
              return(
                 <Grid.Column mobile={16} tablet={8} computer={4} id={id}> 
                          <Link to={`/song/${songs[id]}`} >
@@ -106,7 +106,7 @@ const FavoriteSongs = ({accesstoken, songs, refreshtoken}) =>{
                 </Grid.Column>);
        }
         else{
-                console.log(imageurl)
+                // console.log(imageurl)
                 return "null";
         }
      }

@@ -25,7 +25,6 @@ const Homepage = () =>{
   s.setAccessToken(access_token);
   // s.setRefreshToken(refresh_token);
   const[nowPlaying, setNowPlaying]=useState({name: "not checked",image:""});
-  // const [artists,setArtists]=useState(['None']);
   const [mongouser, settmongouser]=useState("");
   const [allusers, setAllusers] = useState("");
   const [attractedUsers,setAttracted]=useState("");
@@ -34,7 +33,10 @@ const Homepage = () =>{
   const [isLoading, setisLoading]=useState(false);
   const [result, setResult]=useState("");
   const [redirect, setRedirect]=useState(false);
-
+  const [timeout, setTime]=useState(false);
+  setTimeout(() => {
+    setTime(true);
+  }, 3000);
   
   useEffect(handleState, []);
   function handleState()
@@ -100,7 +102,7 @@ function rankAttractedTo(){
     }
    
   }
-  console.log(attractedUsers);
+  // console.log(attractedUsers);
   var copyUsers = attractedUsers;
   if(attractedUsers){
     copyUsers.sort(comparedistance);
@@ -184,7 +186,12 @@ async function  handleSearchChange(valuee)  {
       </Grid.Row>
        </Grid>
        
-      {redirect ? <Redirect to={`/artist/${result.id}`} push={true} /> : ""} 
+      {redirect ? <Redirect to={`/artist/${result.id}`} push={true} /> : ""}
+      {/* {redirectsong ? <Redirect to={`/song/${result.id}`} push={true} /> : ""} */}
+
+      {!user   && timeout?  <Redirect to="/" push={true} /> : ""}
+     
+      
 
     </div>
   );
