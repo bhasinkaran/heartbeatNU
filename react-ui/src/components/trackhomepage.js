@@ -281,7 +281,7 @@ const TrackPage = () =>{
           <Grid.Column width={3}></Grid.Column>
           <Grid.Column width={10}>
         {songs && songs[trackid] && songs[trackid]['posts']!="None" ? 
-          Object.values(artists[trackid]['posts']).map(id=><ReturnPost key={id.toString()} item={posts[id]}/>) 
+          Object.values(songs[trackid]['posts']).map(id=><ReturnPost key={id.toString()} item={posts[id]}/>) 
           : " "}
           </Grid.Column>
           <Grid.Column width={3}></Grid.Column>
