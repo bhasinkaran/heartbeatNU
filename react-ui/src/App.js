@@ -94,7 +94,8 @@ function App() {
     
        
         <Route exact path="/artist/:artistid"  render = {()=> <ArtistPage ></ArtistPage>} />
-       
+        {/* <Route exact path="/artist/:artistid/:bool"  render = {()=> <ArtistPage ></ArtistPage>} /> */}
+
         <Route exact path="/map" render={()=><MapLeaflet />} />
       </InfoContext.Provider>
     </BrowserRouter>

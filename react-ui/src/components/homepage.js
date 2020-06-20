@@ -32,8 +32,12 @@ const Homepage = () =>{
   const [results, setResults]=useState([]);
   const [isLoading, setisLoading]=useState(false);
   const [result, setResult]=useState("");
-  const [redirect, setRedirect]=useState(false);
+  const [redirectArtist, setRedirectArtist]=useState(false);
+  const [redirectTrack, setRedirectTrack]=useState(false);
   const [timeout, setTime]=useState(false);
+  const [newTrack, setNewTrack]=useState(false);
+  const [newArtist, setNewArtist]=useState(false);
+
   // const [newArtist]
   setTimeout(() => {
     setTime(true);
@@ -173,7 +177,15 @@ for(let i=0; i<realistic; i++){
 
           }
 }
-         
+  temp.sort((a,b)=>{
+   if( a.price > b.price ){
+     return -1;
+   }
+   else{
+     return 1;
+   };
+  })       
+  console.log(temp);
 
   setResults(temp);
   // console.log(temp);
@@ -189,13 +201,15 @@ for(let i=0; i<realistic; i++){
             loading={isLoading}
             onResultSelect={(e, {result})=>{
                     setResult(result);
-                    setRedirect(true);
-                    // if(!favoriteartists.contains(result)){
-                    //   setNewArtist(true);
-                    // }
-                    // else{
-                    //   setNewArtist(false);
-                    // }
+                    console.log(result);
+                    // setRedirect(true);
+                    if(result.type=="artist"){
+                      setRedirectArtist(true);
+                    }
+                    else{
+                      setRedirectTrack(true);
+                    }
+                    
             }}
             onSearchChange={_.debounce((e, {value})=>handleSearchChange(value), 500, {
               leading: true,
@@ -228,7 +242,9 @@ for(let i=0; i<realistic; i++){
       </Grid.Row>
        </Grid>
        
-      {redirect ? <Redirect to={`/artist/${result.id}`} push={true} /> : ""}
+      {redirectArtist ? <Redirect to={`/artist/${result.id}`} push={true} /> : ""}
+      {redirectTrack ? <Redirect to={`/track/${result.id}`} push={true} /> : ""}
+
       {/* {redirectsong ? <Redirect to={`/song/${result.id}`} push={true} /> : ""} */}
 
       {!user   && timeout?  <Redirect to="/" push={true} /> : ""}
