@@ -34,6 +34,7 @@ const Homepage = () =>{
   const [result, setResult]=useState("");
   const [redirect, setRedirect]=useState(false);
   const [timeout, setTime]=useState(false);
+  // const [newArtist]
   setTimeout(() => {
     setTime(true);
   }, 3000);
@@ -125,18 +126,53 @@ async function  handleSearchChange(valuee)  {
   });
   var temp=[];
   console.log(res);
-  for(let i=0; i<res.data.artists.items.length; i++){
+  var max=res.data.artists.items.length;
+  var realistic=10;
+  if(max<realistic){
+    realistic=max;
+  }
+  for(let i=0; i<realistic; i++){
           let item=res.data.artists.items[i];
           console.log(item);
           if(item.images[0]){
-                  temp.push({title: item.name, image: item.images[0].url, description: item.genres[0], price: item.popularity, id: item.id})
+                  temp.push({title: item.name, image: item.images[0].url, description: item.genres[0], price: item.popularity, id: item.id, type: "artist"})
 
           }
           else{
                   //if no pictures just put a black picture
-                  temp.push({title: item.name, image: "https://images.unsplash.com/photo-1554050857-c84a8abdb5e2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=564&q=80", description: item.genres[0], price: item.popularity, id: item.id})
+                  temp.push({title: item.name, image: "https://images.unsplash.com/photo-1554050857-c84a8abdb5e2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=564&q=80", description: item.genres[0], price: item.popularity, id: item.id, type: "artist"})
           }
   }
+
+  const urltrack='https://api.spotify.com/v1/search'+`?q=${encodeURIComponent(valuee)}`+"&type=track"
+
+  const ressong = await axios.get(urltrack, {
+    headers:{
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            'Authorization': 'Bearer ' + accesstoken 
+    }
+});
+console.log("this is res SONG",ressong);
+var max=ressong.data.tracks.items.length;
+var realistic=10;
+if(max<realistic){
+  realistic=max;
+}
+for(let i=0; i<realistic; i++){
+    let item=ressong.data.tracks.items[i];
+    console.log(item);
+    if(item.album.images[0]){
+            temp.push({title: item.name, image: item.album.images[0].url, description: item.album.name, price: item.popularity, id: item.id, type: "track"})
+
+    }
+    else{
+            //if no pictures just put a black picture
+            // temp.push({title: item.name, image: ", description: item.genres[0], price: item.popularity, id: item.id})
+            temp.push({title: item.name, image: "https://images.unsplash.com/photo-1554050857-c84a8abdb5e2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=564&q=80", description: item.album.name, price: item.popularity, id: item.id, type: "track"})
+
+          }
+}
          
 
   setResults(temp);
@@ -154,6 +190,12 @@ async function  handleSearchChange(valuee)  {
             onResultSelect={(e, {result})=>{
                     setResult(result);
                     setRedirect(true);
+                    // if(!favoriteartists.contains(result)){
+                    //   setNewArtist(true);
+                    // }
+                    // else{
+                    //   setNewArtist(false);
+                    // }
             }}
             onSearchChange={_.debounce((e, {value})=>handleSearchChange(value), 500, {
               leading: true,

@@ -149,6 +149,24 @@ router.route('/signup/:id/').post((req,res)=>{
   }).then(user=>console.log(json(user))).catch(err=>res.status(400).json("Error: "+err));
   ;
 });
+router.route('/addartist/:id/:artistid').post((req,res)=>{
+  User.findOne({id:req.params.id}, function(err, doc){
+    var temp = doc.favoriteartists;
+    temp.push(req.params.artistid);
+    doc.favoriteartists=temp;
+  })
+  .then(user=>res.json(user))
+  .catch(err=>res.status(400).json('Error: '+err));
+});
+router.route('/addsong/:id/:songid').post((req,res)=>{
+  User.findOne({id:req.params.id}, function(err, doc){
+    var temp = doc.favoritesongs;
+    temp.push(req.params.songid);
+    doc.favoritesongs=temp;
+  } )
+  .then(user=>res.json(user))
+  .catch(err=>res.status(400).json('Error: '+err));
+});
 
 
 
