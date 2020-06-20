@@ -167,17 +167,18 @@ async function  handleSearchChange(valuee)  {
       <Grid.Row stretched>  
 
 
-        <Grid.Column width = {4}>
+        <Grid.Column width = {3}>
         {mongouser['favoritesongs'] ? <FavoriteSongs songs={mongouser['favoritesongs']} accesstoken={access_token} refreshtoken={refresh_token}/> : "" }
 
         </Grid.Column>
 
         
-        <Grid.Column width = {8}>
+        <Grid.Column width = {10}>
+          FEED
         </Grid.Column>
         
        
-        <Grid.Column width = {4}> 
+        <Grid.Column width = {3}> 
       {mongouser['favoriteartists'] ? <FavoriteArtists artists={mongouser['favoriteartists']} accesstoken={access_token} refreshtoken={refresh_token}/> : "" }
       </Grid.Column>
       </Grid.Row>

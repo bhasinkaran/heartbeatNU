@@ -49,14 +49,15 @@ const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
        {
              console.log(imageurl);
              return(
-                <Grid.Column mobile={16} tablet={8} computer={8} id={id}> 
+                <div  id={id}> 
+                {/* mobile={16} tablet={8} computer={8} */}
                         <Link to={`/artist/${artists[id]}`} >
-                        <Image size='huge' rounded fluid verticalAlign='middle' src={imageurl} />
+                        <Image size='massive' rounded fluid verticalAlign='middle' src={imageurl} />
                         <Header  size='massive'>{artistname}</Header>
                         </Link>
                         
                         <br></br>
-                </Grid.Column>);
+                </div>);
        }
         else{
                 console.log(imageurl)
@@ -72,13 +73,15 @@ const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
        {
              console.log(imageurl);
              return(
-                <Grid.Column mobile={16} tablet={8} computer={4} id={id}> 
+                // <Grid.Row mobile={16} tablet={8} computer={4} id={id}> 
+                <div  id={id}> 
                         <Link to={`/artist/${artists[id]}`} >
                                 <Image fluid rounded src={imageurl} verticalAlign='middle' />
                                 <Header size='huge'>{artistname}</Header>
                         </Link>
                         <br></br>
-                </Grid.Column>);
+                </div>);
+                // {/* </Grid.Row>); */}
        }
         else{
                 console.log(imageurl)
@@ -113,22 +116,7 @@ const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
     <div className="FavoriteArtists ">
            
             
-      <Grid padded >
-      <Grid.Row stretched>  
-      <Grid.Column>
-           
-          </Grid.Column>
-        </Grid.Row>
-
-        <Grid.Column width = {4}>
-        </Grid.Column>
-        
-        <Grid.Column width = {8}>
-        </Grid.Column>
-        
-       
-        <Grid.Column width = {4}> 
-                
+    
         <Header  size='huge'>Top Artist</Header>
 
         <Grid.Row >  
@@ -155,10 +143,7 @@ const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
         {artistimages.length > 19 ? indexarray.slice(14,21).map(id=>returnThirdFavArtist(id)):""}
         </Grid.Row> 
         
-        </Grid.Column>
        
-      </Grid>
-      
     </div> 
    
         )

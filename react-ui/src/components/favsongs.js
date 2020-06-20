@@ -24,7 +24,8 @@ const FavoriteSongs = ({accesstoken, songs, refreshtoken}) =>{
              s.getTrack(songs[i]).then(
                      res => {
                              temp.push(res.name);
-                             temp2.push(res.images[0].url);
+                             temp2.push(res.album.images[0].url);
+                             console.log("Inside then")
                              console.log(res);
                              console.log(temp);
                              if(temp.length==20){
@@ -72,7 +73,7 @@ const FavoriteSongs = ({accesstoken, songs, refreshtoken}) =>{
         // console.log(artistimages)
        if(imageurl)
        {
-             console.log(imageurl);
+        //      console.log(imageurl);
              return(
                 <Grid.Column mobile={16} tablet={8} computer={4} id={id}> 
                         <Link to={`/song/${songs[id]}`} >
@@ -116,7 +117,7 @@ const FavoriteSongs = ({accesstoken, songs, refreshtoken}) =>{
            
             
                 
-        <Header  size='huge'>Your Favorite Songs</Header>
+        <Header  size='huge'>Top Songs</Header>
 
         <Grid.Row >  
         {songimages.length > 15 ? indexarray.slice(0,2).map(id=><ReturnFavSong key = {id.toString()} id={id} />) : ""}
