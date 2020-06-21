@@ -11,7 +11,6 @@ import ReturnReply from './Reply'
 
 const ReturnPost = React.memo(({item}) =>{
         const {replies, setReplies, artists, setArtists, messages, setMessages, songs, setSongs, posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshtoken} = React.useContext(InfoContext);
-
         const [poster, setPoster]=useState("");
        if(item ){
            var redirectUri= process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/users/` : `http://localhost:8888/users/`
@@ -81,9 +80,9 @@ const ReturnPost = React.memo(({item}) =>{
                  <Grid centered columns = {2}>
    
                      <Grid.Column width={5}>
-                    
-              <Image circular src={poster.image} size='small' ></Image>
-              <Header as='h5'> {`${poster.name} @ ${time}`}</Header>
+                    {poster ? <div><Image circular src={poster.image} size='small' ></Image>
+              <Header as='h5'> {`${poster.name} @ ${time}`}</Header></div> : <Header as='h5' > Loading</Header> }
+              
               </Grid.Column>
               <Grid.Column width={10}>
                 <Header as='h2'>
