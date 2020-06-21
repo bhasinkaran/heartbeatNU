@@ -1,7 +1,7 @@
 import React, {useState, useEffect, isValidElement, useContext} from 'react';
 import Spotify from 'spotify-web-api-js';
 import axios from 'axios'
-import {Divider, Grid, Image, Header, Container, Form, TextArea, Button, Rail, Segment, Feed, FeedContent, Icon, Label} from 'semantic-ui-react'
+import {Divider, Grid, Image, Header, Container, Form, TextArea, Button, Rail, Segment, Feed, FeedContent, Icon, Label, Loader} from 'semantic-ui-react'
 import {Router , useParams} from  'react-router-dom';
 import {dbArtists, dbPosts, dbReplies, dbLikes} from '../firebase/firebase'
 import {InfoContext} from '../App'
@@ -31,7 +31,9 @@ const ReturnReply = React.memo(({reply})=>{
   
                    <Grid.Column width={5}>
                   
-            <Image circular src={replier.image} size='tiny' ></Image>
+                   {replier ? <div style={{alignItems:"center", alignContent:"center"}}><Image  circular src={replier.image} size='tiny' ></Image>
+              <Header style={{textAlign:"center",marginTop:"5px"}} as='h6'>{`${replier.name}`}</Header>
+              </div> : <Loader active inline='centered' /> }
             </Grid.Column>
             <Grid.Column width={10}>
             <Header as='h4'>

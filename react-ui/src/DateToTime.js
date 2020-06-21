@@ -2,7 +2,7 @@ const DatetoTime = (input) => {
         const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
         let temp;
         let date = new Date(input);
-        temp = (months[(date).getMonth()]) + "/" + (date).getDate().toString()+" ";
+        temp = (months[(date).getMonth()]) + " " + (date).getDate().toString()+" ";
         let HH, MM, AP;
         if (date.getHours() >= 12) {
           HH = ((date).getHours().toString() - 12)

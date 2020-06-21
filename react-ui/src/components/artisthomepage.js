@@ -107,7 +107,13 @@ const ArtistHomepage = () =>{
           <Grid.Column width={3}></Grid.Column>
           <Grid.Column width={10}>
         {artists && artists[artistid] && artists[artistid]['posts']!="None" ? 
-          Object.values(artists[artistid]['posts']).map(id=><ReturnPost key={id.toString()} item={posts[id]}/>) 
+          Object.values(artists[artistid]['posts']).map(id=>
+            <Segment raised style={{marginTop: "40px"}}>
+
+            
+          <ReturnPost key={id.toString()} item={posts[id]}/>
+          </Segment>
+          ) 
           : " "}
           </Grid.Column>
           <Grid.Column width={3}></Grid.Column>

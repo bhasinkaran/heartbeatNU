@@ -2,7 +2,7 @@
 import React, {useState, useEffect, isValidElement, useContext} from 'react';
 import Spotify from 'spotify-web-api-js';
 import axios from 'axios'
-import {Divider, Grid, Image, Header, Container, Form, TextArea, Button, Rail, Segment, Feed, FeedContent, Icon, Label} from 'semantic-ui-react'
+import {Divider, Grid, Image, Header, Container, Form, TextArea, Button, Rail, Segment, Feed, FeedContent, Icon, Label, Loader} from 'semantic-ui-react'
 import {Router , useParams} from  'react-router-dom';
 import {dbArtists, dbPosts, dbReplies, dbLikes} from '../firebase/firebase'
 import {InfoContext} from '../App'
@@ -80,8 +80,9 @@ const ReturnPost = React.memo(({item}) =>{
                  <Grid centered columns = {2}>
    
                      <Grid.Column width={5}>
-                    {poster ? <div><Image circular src={poster.image} size='small' ></Image>
-              <Header as='h5'> {`${poster.name} @ ${time}`}</Header></div> : <Header as='h5' > Loading</Header> }
+                    {poster ? <div><Image circular src={poster.image} size='smalls' ></Image>
+              <Header style={{textAlign:"center",marginTop:"5px"}} as='h5'> {`${poster.name}`}</Header><Header style={{textAlign:"center", marginTop:"-10px"}} as='h6'> {`${time}`}</Header>
+              </div> : <Loader active inline='centered' /> }
               
               </Grid.Column>
               <Grid.Column width={10}>
@@ -111,7 +112,7 @@ const ReturnPost = React.memo(({item}) =>{
            <Segment attached='bottom'>
                    {/* onSubmit={()=>handleSubmitReply()} */}
              <Form >
-               <TextArea id="textareareply" rows={2} placeholder='Reply to post' /> 
+               <TextArea id="textareareply" rows={1} placeholder='Reply to post' /> 
                <Form.Button fluid positive onClick = {()=>handleSubmitReply()} style={{marginTop:"10px"}}>Reply</Form.Button>  
              </Form> 
            </Segment>
@@ -121,7 +122,7 @@ const ReturnPost = React.memo(({item}) =>{
             )
          }
           else{
-            return(<div>Loading</div>)
+            return(<Loader active inline='centered' />)
           }
         });
 
