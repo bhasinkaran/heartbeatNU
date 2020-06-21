@@ -247,7 +247,7 @@ for(let i=0; i<realistic; i++){
 
       {/* {redirectsong ? <Redirect to={`/song/${result.id}`} push={true} /> : ""} */}
 
-      {!user   && timeout?  <Redirect to="/" push={true} /> : ""}
+      {/* {!user   && timeout?  <Redirect to="/" push={true} /> : ""} */}
      
       
 
