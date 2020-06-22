@@ -26,7 +26,7 @@ const ReturnReply = React.memo(({reply})=>{
           
           return (
          <div>
-           <Segment attached>
+           <Segment attached secondary={true}>
                <Grid centered columns = {2}>
   
                    <Grid.Column width={5}>
