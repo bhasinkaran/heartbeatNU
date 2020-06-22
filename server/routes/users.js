@@ -163,6 +163,7 @@ router.route('/addartist/:id/:artistid').post((req,res)=>{
     var temp = doc.favoriteartists;
     temp.push(req.params.artistid);
     doc.favoriteartists=temp;
+    doc.save();
   })
   .then(user=>res.json(user))
   .catch(err=>res.status(400).json('Error: '+err));
@@ -172,6 +173,7 @@ router.route('/addsong/:id/:songid').post((req,res)=>{
     var temp = doc.favoritesongs;
     temp.push(req.params.songid);
     doc.favoritesongs=temp;
+    doc.save();
   } )
   .then(user=>res.json(user))
   .catch(err=>res.status(400).json('Error: '+err));
@@ -187,6 +189,7 @@ router.route('/addpost/:id/:postid').post((req,res)=>{
     }
     
     doc.postsfolowing=temp;
+    doc.save();
   } )
   .then(user=>res.status(200).json(user))
   .catch(err=>res.status(400).json('Error: '+err));
