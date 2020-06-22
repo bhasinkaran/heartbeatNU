@@ -92,7 +92,7 @@ const ReturnPost = React.memo(({item}) =>{
                         </Grid.Row>
                       </Grid.Column>
                       <Grid.Column width={11}>
-                         <Label as='a' basic color='red' size="huge" pointing='left' style={{marginTop:"20px"}}>
+                         <Label as='a' basic color='red' size="huge" pointing='left' style={{marginTop:"15px"}}>
                             {item['content']}
                         </Label>
                      </Grid.Column>

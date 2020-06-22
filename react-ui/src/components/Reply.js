@@ -26,17 +26,18 @@ const ReturnReply = React.memo(({reply})=>{
           
           return (
          <div>
-           <Segment attached secondary={true}>
-               <Grid centered columns = {2}>
+           <Segment attached secondary={true} compact>
+               <Grid columns = {2}>
   
-                   <Grid.Column width={5}>
+                   <Grid.Column width={4}>
                   
-                   {replier ? <div style={{alignItems:"center", alignContent:"center"}}><Image  circular src={replier.image} size='tiny' ></Image>
-              <Header style={{textAlign:"center",marginTop:"5px"}} as='h6'>{`${replier.name}`}</Header>
+                   {replier ? <div >
+                     <Image style={{marginLeft:"10px" ,textAlign:"center"}} circular src={replier.image} size='tiny' ></Image>
+                     <Header style={{textAlign:"center", marginTop:"5px", marginLeft:"18px"}} as='h6'>{`${replier.name}`}</Header>
               </div> : <Loader active inline='centered' /> }
             </Grid.Column>
-            <Grid.Column width={10}>
-            <Header as='h4'>
+            <Grid.Column width={12}>
+            <Header as='h4' style={{marginTop:"5px", marginLeft:"25px"}}>
            {reply['content']}
           </Header>
              
@@ -45,7 +46,7 @@ const ReturnReply = React.memo(({reply})=>{
                  
   
             </Segment>
-             <Segment raised attached style={{marginTop:"-15px"}}>
+             {/* <Segment raised attached style={{marginTop:"-15px"}}>
              <Button color='red'>
                 <Icon name='heart' />
                   Like
@@ -55,7 +56,7 @@ const ReturnReply = React.memo(({reply})=>{
               <Label as='a' basic color='red' pointing='left'>
                 {likes[reply['likes']] != 0 ? Object.values(likes[reply['likes']]).length:0}
               </Label>
-              </Segment>
+              </Segment> */}
               </div>
   
           
