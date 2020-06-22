@@ -18,6 +18,7 @@ const ArtistHomepage = () =>{
        localStorage.setItem('user', JSON.stringify(user));
      }
      
+     
      const [name, setName] = useState("");
      const [image, setImage]=useState("");
      const [image2, setImage2]=useState("");

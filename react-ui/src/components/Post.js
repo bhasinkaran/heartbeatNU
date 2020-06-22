@@ -1,5 +1,5 @@
 
-import React, {useState, useEffect, isValidElement, useContext} from 'react';
+import React, {useState, useEffect, isValidElement, useContext, useRef} from 'react';
 import Spotify from 'spotify-web-api-js';
 import axios from 'axios'
 import {Divider, Grid, Image, Header, Container, Form, TextArea, Button, Rail, Segment, Feed, FeedContent, Icon, Label, Loader} from 'semantic-ui-react'
@@ -13,6 +13,44 @@ const ReturnPost = React.memo(({item}) =>{
         const {replies, setReplies, artists, setArtists, messages, setMessages, songs, setSongs, posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshtoken} = React.useContext(InfoContext);
         const [poster, setPoster]=useState("");
         const [showReply, setShowReply]=useState(false);
+    
+        const replyRef = useRef(null);
+
+  function handleSubmitReply(){
+    console.log(document.getElementById("textareareply").value);
+    const likesref=dbLikes.push(0);
+    const likeskey=likesref.getKey();
+    console.log("Likes key is ", likeskey);
+   
+
+    const ref = dbReplies.child(item['replies']).push({
+      'content':document.getElementById("textareareply").value,
+      'posterid': user.id,
+      'likes': likeskey,
+      "createdAt": {'.sv': 'timestamp'}
+    });
+
+  }
+//   useEffect(() => {
+//     const div = replyRef.current;
+//     // subscribe event
+//     div.addEventListener("keyup", function(e) {
+//       if (e.code === 'Enter') {
+//        handleSubmitReply();
+//         console.log("Go");
+//      }
+//    console.log("Works");
+//  });
+//     return () => {
+//       // unsubscribe event
+//       div.removeEventListener("keyup", function(e) {
+//         if (e.code === 'Enter') {
+//          handleSubmitReply();
+//           console.log("Go");
+//        }
+//      console.log("Works");
+//     });}
+//   }, []);
 
        if(item ){
            var redirectUri= process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/users/` : `http://localhost:8888/users/`
@@ -25,21 +63,7 @@ const ReturnPost = React.memo(({item}) =>{
             .catch(function (error) {
               console.log(error);
             });
-            function handleSubmitReply(){
-             console.log(document.getElementById("textareareply").value);
-             const likesref=dbLikes.push(0);
-             const likeskey=likesref.getKey();
-             console.log("Likes key is ", likeskey);
             
-   
-             const ref = dbReplies.child(item['replies']).push({
-               'content':document.getElementById("textareareply").value,
-               'posterid': user.id,
-               'likes': likeskey,
-               "createdAt": {'.sv': 'timestamp'}
-             });
-   
-           }
    
             function updateLike(){
              console.log("Called outside if/else.");
@@ -74,6 +98,11 @@ const ReturnPost = React.memo(({item}) =>{
              
             }
    
+        //  useEffect(()=>{
+        //   document.getElementById("textareareply").addEventListener(
+        //  }, []); 
+          
+        
             return(
              
              
@@ -86,13 +115,14 @@ const ReturnPost = React.memo(({item}) =>{
                      <Grid.Column width={5}>        
                           <Image circular src={poster.image} size='medium' ></Image>
                           <Grid.Row>
-                        <Header as={"h4"} textAlign="center" >
+                        <Header as={"h4"} textAlign="center" style={{marginTop:
+                        "10px"}}>
                             {`${poster.name}`}
                         </Header>
                         </Grid.Row>
                       </Grid.Column>
                       <Grid.Column width={11}>
-                         <Label as='a' basic color='red' size="huge" pointing='left' style={{marginTop:"15px"}}>
+                         <Label as='a' basic color='red' size="huge" pointing='left' style={{marginTop:"12px"}}>
                             {item['content']}
                         </Label>
                      </Grid.Column>
@@ -148,7 +178,7 @@ const ReturnPost = React.memo(({item}) =>{
            <Segment attached='bottom'>
                    {/* onSubmit={()=>handleSubmitReply()} */}
              <Form >
-               <TextArea id="textareareply" rows={1} placeholder='Reply to post' /> 
+               <TextArea id="textareareply" ref={replyRef} rows={1} placeholder='Reply to post' /> 
                <Form.Button fluid positive onClick = {()=>handleSubmitReply()} style={{marginTop:"10px"}}>Reply</Form.Button> 
                <Button fluid onClick={()=>{updateLike();}} >
                   <Icon color="" name='heart' />
@@ -163,8 +193,6 @@ const ReturnPost = React.memo(({item}) =>{
                 replies[item['replies']] != 0 ? <Form.Button fluid positive onClick = {()=>setShowReply(false)} style={{marginTop:"10px"}}>Hide Replies</Form.Button> 
                   : ""
                 }
-             
-                
                 </div>       
             )
          }
