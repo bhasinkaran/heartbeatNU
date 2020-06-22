@@ -77,6 +77,7 @@ const ArtistHomepage = () =>{
       const ref = dbPosts.push({
         'content':document.getElementById("textarea").value,
         'posterid': user.id,
+        'artistid': artistid,
         'likes': likeskey,
         'replies': replieskey,
         "createdAt": {'.sv': 'timestamp'},

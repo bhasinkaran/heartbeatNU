@@ -79,10 +79,10 @@ const TrackPage = () =>{
       const ref = dbPosts.push({
         'content':document.getElementById("textarea").value,
         'posterid': user.id,
+        'trackid': trackid,
         'likes': likeskey,
         'replies': replieskey,
         "createdAt": {'.sv': 'timestamp'},
-        "type":"track"
         
       });
       var key=ref.key;
