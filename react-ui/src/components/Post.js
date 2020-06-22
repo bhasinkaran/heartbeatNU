@@ -77,34 +77,40 @@ const ReturnPost = React.memo(({item}) =>{
              
              <div>
               <Segment attached>
-                 <Grid centered columns = {2}>
-   
-                     <Grid.Column width={5}>
-                    {poster ? <div><Image circular src={poster.image} size='smalls' ></Image>
-              <Header style={{textAlign:"center",marginTop:"5px"}} as='h5'> {`${poster.name}`}</Header><Header style={{textAlign:"center", marginTop:"-10px"}} as='h6'> {`${time}`}</Header>
-              </div> : <Loader active inline='centered' /> }
-              
-              </Grid.Column>
-              <Grid.Column width={10}>
-                <Header as='h2'>
-                 {item['content']}
-                 </Header>
-               
-                 </Grid.Column>
-              </Grid>
-
-              </Segment>
-               <Segment raised attached style={{marginTop:"-15px"}}>
-               <Button color='red' onClick={()=>{updateLike();}}>
+                 
+                 {poster ? 
+                  <Grid centered columns = {2}>
+                     <Grid.Column width={4}>        
+                          <Image circular src={poster.image} size='small' ></Image>
+                      </Grid.Column>
+                      <Grid.Column width={9}>
+                         <Label as='a' basic color='red' size="massive" pointing='left'>
+                            {item['content']+" - "+`${poster.name}`}
+                        </Label>
+                     </Grid.Column>
+                     <Grid.Column width={3} >
+                       <Button color='red' size="mini" onClick={()=>{updateLike();}}>
                   <Icon name='heart' />
                     Like
                 </Button>
+
+                     </Grid.Column>
+              </Grid>
+                : <Loader active inline='centered' />  }
+              </Segment>
+               {/* <Segment raised attached style={{marginTop:"-15px"}}> */}
+               {/* <Button color='red' onClick={()=>{updateLike();}}>
+                  <Icon name='heart' />
+                    Like
+                </Button> */}
                 
    
-                <Label as='a' basic color='red' pointing='left'>
+                {/* <Label as='a' basic color='red' pointing='left'>
                   {likes[item['likes']] != 0 ? Object.values(likes[item['likes']]).length:0}
                 </Label>
-                </Segment>
+                <Header style={{textAlign:"center", marginTop:"-10px"}} as='h6'> {`${time}`}</Header> */}
+
+                {/* </Segment> */}
                 {replies[item['replies']] != 0 ? 
                  Object.values(replies[item['replies']]).map(id => <ReturnReply key={id.posterid+id.createdAt} reply={id}></ReturnReply>)
                
