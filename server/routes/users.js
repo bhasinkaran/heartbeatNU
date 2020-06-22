@@ -179,10 +179,16 @@ router.route('/addsong/:id/:songid').post((req,res)=>{
 router.route('/addpost/:id/:postid').post((req,res)=>{
   User.findOne({id:req.params.id}, function(err, doc){
     var temp = doc.postsfollowing;
-    temp.push(req.params.postid);
+    if(!temp){
+      temp=[req.params.postid];
+    }
+    else{
+      temp.push(req.params.postid);
+    }
+    
     doc.postsfolowing=temp;
   } )
-  .then(user=>res.json(user))
+  .then(user=>res.status(200).json(user))
   .catch(err=>res.status(400).json('Error: '+err));
 });
 
