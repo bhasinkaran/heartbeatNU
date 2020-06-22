@@ -32,7 +32,10 @@ function App() {
   const [refreshtoken, setRefreshToken]=useState("")
   
   React.useEffect(()=>{
-    localStorage.setItem('user', JSON.stringify(user));
+    if(user){
+      localStorage.setItem('user', JSON.stringify(user));
+    }
+   
   }, [user]);
   React.useEffect(()=>{
     const data = localStorage.getItem('user');

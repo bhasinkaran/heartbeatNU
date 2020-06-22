@@ -152,7 +152,7 @@ const ReturnPost = React.memo(({item}) =>{
                <Form.Button fluid positive onClick = {()=>handleSubmitReply()} style={{marginTop:"10px"}}>Reply</Form.Button> 
                <Button fluid onClick={()=>{updateLike();}} >
                   <Icon color="" name='heart' />
-                    Like
+                    { Object.values(likes[item['likes']]).includes(user.id) ? "Unlike": "Like"}
                   </Button> 
              </Form> 
            </Segment>
@@ -160,8 +160,8 @@ const ReturnPost = React.memo(({item}) =>{
                <Form.Button fluid positive onClick = {()=>setShowReply(true)} style={{marginTop:"10px"}}>Show Replies</Form.Button> 
 
                 :
-                <Form.Button fluid positive onClick = {()=>setShowReply(false)} style={{marginTop:"10px"}}>Hide Replies</Form.Button> 
-
+                replies[item['replies']] != 0 ? <Form.Button fluid positive onClick = {()=>setShowReply(false)} style={{marginTop:"10px"}}>Hide Replies</Form.Button> 
+                  : ""
                 }
              
                 

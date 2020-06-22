@@ -3,7 +3,7 @@ import React, {useState, useEffect, isValidElement, useContext} from 'react';
 import Spotify from 'spotify-web-api-js';
 import axios from 'axios'
 import {Divider, Grid, Image, Header, Container, Form, TextArea, Button, Rail, Segment, Feed, FeedContent, Icon, Label} from 'semantic-ui-react'
-import {Router , useParams} from  'react-router-dom';
+import {Router , useParams, Redirect} from  'react-router-dom';
 import {dbArtists, dbPosts, dbReplies, dbLikes} from '../firebase/firebase'
 import {InfoContext} from '../App'
 import DateToTime from '../DateToTime'
@@ -14,7 +14,10 @@ const s = new Spotify();
 const ArtistHomepage = () =>{
      var  {artistid } = useParams();
      const {replies, setReplies, artists, setArtists, messages, setMessages, songs, setSongs, posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshtoken} = React.useContext(InfoContext);
-     localStorage.setItem('user', JSON.stringify(user));
+     if(user){
+       localStorage.setItem('user', JSON.stringify(user));
+     }
+     
      const [name, setName] = useState("");
      const [image, setImage]=useState("");
      const [image2, setImage2]=useState("");
@@ -84,7 +87,10 @@ const ArtistHomepage = () =>{
         dbArtists.child(artistid).child('posts').push(key);
       // }
      }
-     
+     if(user|| JSON.parse(localStorage.getItem('user'))){
+// 
+     console.log(user);
+     console.log(JSON.parse(localStorage.getItem('user')));
      return(
   
     <div className="HomepageArtist">
@@ -124,6 +130,10 @@ const ArtistHomepage = () =>{
     </div> 
    
         )
+      }
+      else{
+        return(<Redirect to="/" push={true} />);
+      }
 }
 
 export default ArtistHomepage;
