@@ -56,7 +56,13 @@ router.route('/add').get((req,res)=>{
         var displayname=body.display_name;
         var email=body.email;
         var id=body.id;
-        var image=body.images[0].url;
+        var image;
+        if(body.images[0]){
+          image=body.images[0].url;
+        }
+        else{
+          image="https://pngimg.com/uploads/music_notes/music_notes_PNG84.png"
+        } 
         var externalurl=body.external_urls.spotify
         console.log(body);
         User.findOne({id:id}, function(err, user){
@@ -101,11 +107,14 @@ router.route('/add').get((req,res)=>{
                               console.log(topsongs);
   
   
-                              const newUser=new User({"name": displayname,"favoriteartists": ids, "favoritesongs": topsongs, "id":id, "email":email, "image":image, "url": externalurl });
+                              const newUser=new User({"name": displayname,"favoriteartists": ids, "favoritesongs": topsongs, "id":id, "email":email, "image":image, "url": externalurl, "postsfollowing": [] });
                               newUser.save()
                               .then(()=>{
-                                var url =  process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/signup/${id}/${req.query.access_token}`: `http://localhost:3000/signup/${id}/${req.query.access_token}`;
-                                res.status(200).redirect(url);
+                                var url =  process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/home/${id}/${req.query.access_token}/${req.query.refresh_token}`: `http://localhost:3000/home/${id}/${req.query.access_token}/${req.query.refresh_token}`;
+                                    res.redirect(url);
+           
+                                // var url =  process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/signup/${id}/${req.query.access_token}`: `http://localhost:3000/signup/${id}/${req.query.access_token}`;
+                                // res.status(200).redirect(url);
   
                               })
                               .catch(err=>{
@@ -163,6 +172,15 @@ router.route('/addsong/:id/:songid').post((req,res)=>{
     var temp = doc.favoritesongs;
     temp.push(req.params.songid);
     doc.favoritesongs=temp;
+  } )
+  .then(user=>res.json(user))
+  .catch(err=>res.status(400).json('Error: '+err));
+});
+router.route('/addpost/:id/:postid').post((req,res)=>{
+  User.findOne({id:req.params.id}, function(err, doc){
+    var temp = doc.postsfollowing;
+    temp.push(req.params.postid);
+    doc.postsfolowing=temp;
   } )
   .then(user=>res.json(user))
   .catch(err=>res.status(400).json('Error: '+err));

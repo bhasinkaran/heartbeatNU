@@ -13,6 +13,9 @@ const userSchema=new Schema({
         type: Array,
         required:true,
     },
+    postsfolowing:{
+        type: Array,
+    },
     email:{
         type: String,
         required:false
@@ -43,6 +46,7 @@ const userSchema=new Schema({
     url:{
         type: String
     }
+
 
 },
 {
