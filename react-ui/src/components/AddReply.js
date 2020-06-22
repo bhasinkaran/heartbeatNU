@@ -11,13 +11,12 @@ import ReturnReply from './Reply'
 
 const  AddReply =({item })=> {
         const {replies, setReplies, artists, setArtists, messages, setMessages, songs, setSongs, posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshtoken} = React.useContext(InfoContext);
-
-        function eventhandler(e) {
+        const refKey = useRef();
+                function eventhandler(e) {
                 if (e.code === 'Enter') {
                  handleSubmitReply();
-                  console.log("Go");
+                 console.log("Works");
                }
-             console.log("Works");
             }
 
         function handleSubmitReply(){
@@ -26,7 +25,6 @@ const  AddReply =({item })=> {
                 const likeskey=likesref.getKey();
                 console.log("Likes key is ", likeskey);
                
-            
                 const ref = dbReplies.child(item['replies']).push({
                   'content':document.getElementById("textareareply").value,
                   'posterid': user.id,
@@ -35,19 +33,19 @@ const  AddReply =({item })=> {
                 });
             
               }
-        useEffect(() => {
+        // useEffect(() => {
           
       
-          window.addEventListener("keyup", eventhandler);
-          return () => {
-            window.removeEventListener("keyup", eventhandler);
-          };
-        }, []);
+        //   refKey.current.addEventListener("keyup", eventhandler);
+        //   return () => {
+        //         refKey.current.removeEventListener("keyup", eventhandler);
+        //   };
+        // }, []);
       
         return(
                     
         <div>
-                <TextArea id="textareareply" rows={1} placeholder='Reply to post' /> 
+                <TextArea ref={refKey} id="textareareply" rows={1} placeholder='Reply to post' /> 
                 <Form.Button fluid positive onClick = {()=>handleSubmitReply()} style={{marginTop:"10px"}}>Reply</Form.Button> 
        </div>
 )}
