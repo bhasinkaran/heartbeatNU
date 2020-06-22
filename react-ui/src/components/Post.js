@@ -8,49 +8,17 @@ import {dbArtists, dbPosts, dbReplies, dbLikes} from '../firebase/firebase'
 import {InfoContext} from '../App'
 import DateToTime from '../DateToTime'
 import ReturnReply from './Reply'
+import AddReply from './AddReply';
 
 const ReturnPost = React.memo(({item}) =>{
         const {replies, setReplies, artists, setArtists, messages, setMessages, songs, setSongs, posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshtoken} = React.useContext(InfoContext);
         const [poster, setPoster]=useState("");
         const [showReply, setShowReply]=useState(false);
     
-        const replyRef = useRef(null);
+        const replyRef = useRef();
 
-  function handleSubmitReply(){
-    console.log(document.getElementById("textareareply").value);
-    const likesref=dbLikes.push(0);
-    const likeskey=likesref.getKey();
-    console.log("Likes key is ", likeskey);
-   
-
-    const ref = dbReplies.child(item['replies']).push({
-      'content':document.getElementById("textareareply").value,
-      'posterid': user.id,
-      'likes': likeskey,
-      "createdAt": {'.sv': 'timestamp'}
-    });
-
-  }
-//   useEffect(() => {
-//     const div = replyRef.current;
-//     // subscribe event
-//     div.addEventListener("keyup", function(e) {
-//       if (e.code === 'Enter') {
-//        handleSubmitReply();
-//         console.log("Go");
-//      }
-//    console.log("Works");
-//  });
-//     return () => {
-//       // unsubscribe event
-//       div.removeEventListener("keyup", function(e) {
-//         if (e.code === 'Enter') {
-//          handleSubmitReply();
-//           console.log("Go");
-//        }
-//      console.log("Works");
-//     });}
-//   }, []);
+ 
+  
 
        if(item ){
            var redirectUri= process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/users/` : `http://localhost:8888/users/`
@@ -98,9 +66,7 @@ const ReturnPost = React.memo(({item}) =>{
              
             }
    
-        //  useEffect(()=>{
-        //   document.getElementById("textareareply").addEventListener(
-        //  }, []); 
+            
           
         
             return(
@@ -178,8 +144,7 @@ const ReturnPost = React.memo(({item}) =>{
            <Segment attached='bottom'>
                    {/* onSubmit={()=>handleSubmitReply()} */}
              <Form >
-               <TextArea id="textareareply" ref={replyRef} rows={1} placeholder='Reply to post' /> 
-               <Form.Button fluid positive onClick = {()=>handleSubmitReply()} style={{marginTop:"10px"}}>Reply</Form.Button> 
+              <AddReply item={item} />
                <Button fluid onClick={()=>{updateLike();}} >
                   <Icon color="" name='heart' />
                     { Object.values(likes[item['likes']]).includes(user.id) ? "Unlike": "Like"}
@@ -201,4 +166,59 @@ const ReturnPost = React.memo(({item}) =>{
           }
         });
 
+        function useEventListener(eventName, handler, element = window){
+          // Create a ref that stores handler
+          const savedHandler = useRef();
+          
+          // Update ref.current value if handler changes.
+          // This allows our effect below to always get latest handler ...
+          // ... without us needing to pass it in effect deps array ...
+          // ... and potentially cause effect to re-run every render.
+          useEffect(() => {
+            savedHandler.current = handler;
+          }, [handler]);
+        
+          useEffect(
+            () => {
+              // Make sure element supports addEventListener
+              // On 
+              const isSupported = element && element.addEventListener;
+              if (!isSupported) return;
+              
+              // Create event listener that calls handler function stored in ref
+              const eventListener = event => savedHandler.current(event);
+              
+              // Add event listener
+              element.addEventListener(eventName, eventListener);
+              
+              // Remove event listener on cleanup
+              return () => {
+                element.removeEventListener(eventName, eventListener);
+              };
+            },
+            [eventName, element] // Re-run if eventName or element changes
+          );
+        };
+
 export default ReturnPost;
+
+// useEffect(() => {
+//   const div = replyRef.current;
+//   // subscribe event
+//   div.addEventListener("keyup", function(e) {
+//     if (e.code === 'Enter') {
+//      handleSubmitReply();
+//       console.log("Go");
+//    }
+//  console.log("Works");
+// });
+//   return () => {
+//     // unsubscribe event
+//     div.removeEventListener("keyup", function(e) {
+//       if (e.code === 'Enter') {
+//        handleSubmitReply();
+//         console.log("Go");
+//      }
+//    console.log("Works");
+//   });}
+// }, []);
