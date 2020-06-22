@@ -79,7 +79,8 @@ const ArtistHomepage = () =>{
         'posterid': user.id,
         'likes': likeskey,
         'replies': replieskey,
-        "createdAt": {'.sv': 'timestamp'}
+        "createdAt": {'.sv': 'timestamp'},
+        "type": "artist"
         
       });
       var key=ref.key;

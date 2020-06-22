@@ -81,7 +81,8 @@ const TrackPage = () =>{
         'posterid': user.id,
         'likes': likeskey,
         'replies': replieskey,
-        "createdAt": {'.sv': 'timestamp'}
+        "createdAt": {'.sv': 'timestamp'},
+        "type":"track"
         
       });
       var key=ref.key;

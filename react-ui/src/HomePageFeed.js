@@ -17,26 +17,14 @@ const HomePageFeed = () =>{
        localStorage.setItem('user', JSON.stringify(user));
      }
      
+     
      const [name, setName] = useState("");
      const [image, setImage]=useState("");
      const [image2, setImage2]=useState("");
      const [image3, setImage3]=useState("");
      const [valuee, setValuee]=useState("");
-     if(artists && !artists[artistid] && name){
-      const constant = {
-        id: artistid,
-        name: name,
-        posts: "None",
-      }
-      const dataToPush = {
-        [artistid]: constant
-      }  
-      dbArtists.update(dataToPush);
-     }
-//      var array = [...Array(20).keys()];
-//      const [indexarray, setIndex]=useState(array);
-//      s.setAccessToken(accesstoken);
-        // console.log(context);
+   
+
      useEffect(initializeState, []);
      function initializeState(){
      s.getArtist(artistid).then(
