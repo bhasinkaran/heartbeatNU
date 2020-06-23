@@ -23,7 +23,8 @@ const userSchema=new Schema({
     id:{
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        index: true
     },
     gender:{
         type: String,

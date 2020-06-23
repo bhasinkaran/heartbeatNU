@@ -180,15 +180,18 @@ router.route('/addsong/:id/:songid').post((req,res)=>{
 });
 router.route('/addpost/:id/:postid').post((req,res)=>{
   User.findOne({id:req.params.id}, function(err, doc){
-    var temp = doc.postsfollowing;
-    if(!temp){
-      temp=[req.params.postid];
-    }
-    else{
-      temp.push(req.params.postid);
-    }
+    var temp = doc.postsfollowing.addToSet(req.params.postid);
+    // if(!(temp.length==0)){
+    //   temp=[req.params.postid];
+    //   console.log("BAD To be inside here.")
+    // }
+    // else{
+    //   temp.push(req.params.postid);
+    //   console.log("Good To be inside here.")
+    // }
     
-    doc.postsfolowing=temp;
+    // doc.postsfolowing=temp;
+    // console.log(temp);
     doc.save();
   } )
   .then(user=>res.status(200).json(user))

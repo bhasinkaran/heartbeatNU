@@ -134,7 +134,7 @@ const ArtistHomepage = () =>{
             <Segment raised style={{marginTop: "40px"}}>
 
             
-          <ReturnPost key={id.toString()} item={posts[id]}/>
+          <ReturnPost key={id.toString()} id={id} item={posts[id]}/>
           </Segment>
           ) 
           : " "}

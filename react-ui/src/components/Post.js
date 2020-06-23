@@ -10,15 +10,12 @@ import DateToTime from '../DateToTime'
 import ReturnReply from './Reply'
 import AddReply from './AddReply';
 
-const ReturnPost = React.memo(({item}) =>{
+const ReturnPost = React.memo(({item, id}) =>{
         const {replies, setReplies, artists, setArtists, messages, setMessages, songs, setSongs, posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshtoken} = React.useContext(InfoContext);
         const [poster, setPoster]=useState("");
         const [showReply, setShowReply]=useState(false);
     
         const replyRef = useRef();
-
- 
-  
 
        if(item ){
            var redirectUri= process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/users/` : `http://localhost:8888/users/`
@@ -60,8 +57,20 @@ const ReturnPost = React.memo(({item}) =>{
               else{
                
                console.log("Called.")
+               
    
                dbLikes.child(item['likes']).push(user.id).then(console.log("Done")).catch(err=>console.log(err));;
+               var redirectUri= process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/users/addpost/` : `http://localhost:8888/users/addpost/`
+               axios.post(`${redirectUri}${user.id}/${id}`)
+               .then(response => {
+                   console.log("updated!", response);
+                   })
+               .catch(function (error) {
+                 console.log(error);
+               });
+
+
+
               }
              
             }
@@ -144,7 +153,7 @@ const ReturnPost = React.memo(({item}) =>{
            <Segment attached='bottom'>
                    {/* onSubmit={()=>handleSubmitReply()} */}
              <Form >
-              <AddReply item={item} />
+              <AddReply item={item} id={id} />
                <Button fluid onClick={()=>{updateLike();}} >
                   <Icon color="" name='heart' />
                     { Object.values(likes[item['likes']]).includes(user.id) ? "Unlike": "Like"}

@@ -9,8 +9,9 @@ import {InfoContext} from '../App'
 import DateToTime from '../DateToTime'
 import ReturnReply from './Reply'
 
-const  AddReply =({item })=> {
+const  AddReply =({item , id})=> {
         const {replies, setReplies, artists, setArtists, messages, setMessages, songs, setSongs, posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshtoken} = React.useContext(InfoContext);
+        const [value,setValue]=useState("");
         const refKey = useRef();
                 function eventhandler(e) {
                   console.log(e);
@@ -33,6 +34,14 @@ const  AddReply =({item })=> {
                   'likes': likeskey,
                   "createdAt": {'.sv': 'timestamp'}
                 });
+      var redirectUri= process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/users/addpost/` : `http://localhost:8888/users/addpost/`
+      axios.post(`${redirectUri}${user.id}/${id}`)
+      .then(response => {
+          console.log("updated!", response);
+          })
+      .catch(function (error) {
+        console.log(error);
+      });
             
               }
         // useEffect(() => {
@@ -45,7 +54,10 @@ const  AddReply =({item })=> {
         return(
                     
         <div>
-                <TextArea onKeyUp={(e) => eventhandler(e)} ref={refKey} id="textareareply" rows={1} placeholder='Reply to post' /> 
+                <TextArea onKeyUp={(e) => eventhandler(e)} ref={refKey} id="textareareply" value={value} onChange={(e)=>{
+                  setValue(e.target.value);
+                  console.log(e.target.value);
+                }} rows={1} placeholder='Reply to post' /> 
                 <Form.Button fluid positive onClick = {()=>handleSubmitReply()} style={{marginTop:"10px"}}>Reply</Form.Button> 
        </div>
 )}
