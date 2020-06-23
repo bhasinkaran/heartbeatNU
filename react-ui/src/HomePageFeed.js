@@ -20,9 +20,9 @@ const HomePageFeed = () =>{
      
      const [name, setName] = useState("");
      const [image, setImage]=useState("");
-     const [image2, setImage2]=useState("");
-     const [image3, setImage3]=useState("");
-     const [valuee, setValuee]=useState("");
+//      const [image2, setImage2]=useState("");
+//      const [image3, setImage3]=useState("");
+//      const [valuee, setValuee]=useState("");
    
 
      useEffect(initializeState, []);
