@@ -61,7 +61,14 @@ const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
                 <div  id={id}> 
                 {/* mobile={16} tablet={8} computer={8} */}
                         <Link to={`/artist/${orderedArtists[id]}`} >
-                        <Image size='massive' rounded fluid verticalAlign='middle' src={imageurl} />
+                        <div class="ui medium image">
+                        <div class="ui dimmer">
+                                <div class="content">
+                                        <h2 class="ui inverted header">Title</h2>
+                                </div>
+                        </div>
+                        <Image class="ui image" size='massive' rounded fluid verticalAlign='middle' src={imageurl} />
+                        </div>
                         <Header  size='massive'>{artistname}</Header>
                         </Link>
                         

@@ -39,6 +39,8 @@ const ArtistHomepage = () =>{
 //      const [indexarray, setIndex]=useState(array);
 //      s.setAccessToken(accesstoken);
         // console.log(context);
+
+        
      useEffect(initializeState, []);
      function initializeState(){
      s.getArtist(artistid).then(
@@ -108,8 +110,10 @@ const ArtistHomepage = () =>{
   
     <div className="HomepageArtist">
       <Container>
-      <Header as='h1' content={name} textAlign='center' dividing />
-      <Image src={image} centered size='medium'></Image>
+      <br></br>
+      <Header as='h1' content={name} textAlign='center' />
+      <br></br>
+      <img class="ui medium centered circular image" src={image} centered size='medium'></img>
       <br></br>
       <br></br>
       <div>
