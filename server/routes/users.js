@@ -180,8 +180,12 @@ router.route('/addsong/:id/:songid').post((req,res)=>{
 });
 router.route('/addpost/:id/:postid').post((req,res)=>{
   User.findOne({id:req.params.id}, function(err, doc){
-    console.log(doc);
-    // var temp = doc.postsfollowing.addToSet(req.params.postid);
+    console.log('before');
+
+    console.log(doc.postsfollowing);  
+      console.log('after');
+
+    var temp = doc.postsfollowing.addToSet(req.params.postid);
     
     doc.save();
 

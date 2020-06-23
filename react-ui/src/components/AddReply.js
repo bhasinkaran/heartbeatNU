@@ -29,7 +29,7 @@ const  AddReply =({item , id})=> {
                 console.log("Likes key is ", likeskey);
                
                 const ref = dbReplies.child(item['replies']).push({
-                  'content':document.getElementById("textareareply").value,
+                  'content':value,
                   'posterid': user.id,
                   'likes': likeskey,
                   "createdAt": {'.sv': 'timestamp'}
@@ -42,6 +42,7 @@ const  AddReply =({item , id})=> {
       .catch(function (error) {
         console.log(error);
       });
+      setValue("")
             
               }
         // useEffect(() => {

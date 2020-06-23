@@ -77,7 +77,7 @@ const TrackPage = () =>{
         console.log("replies key is ", replieskey);
 
       const ref = dbPosts.push({
-        'content':document.getElementById("textarea").value,
+        'content':valuee,
         'posterid': user.id,
         'trackid': trackid,
         'likes': likeskey,
@@ -90,6 +90,15 @@ const TrackPage = () =>{
         console.log("here")
         dbSongs.child(trackid).child('posts').push(key);
       // }
+      var redirectUri= process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/users/addpost/` : `http://localhost:8888/users/addpost/`
+      axios.post(`${redirectUri}${user.id}/${key}`)
+      .then(response => {
+          console.log("updated!", response);
+          })
+      .catch(function (error) {
+        console.log(error);
+      });
+      setValuee("");
      }
      
      return(
@@ -103,7 +112,7 @@ const TrackPage = () =>{
       <div>
         <Header style={{marginTop:"10px"}} textAlign='center' as='h3'>Say something about this song</Header>
         <Form onSubmit={()=>handleSubmit()}>
-          <TextArea id="textarea" rows={2} placeholder='Add a post' /> 
+          <TextArea id="textarea" value={valuee} onChange={(e)=>setValuee(e.target.value)} rows={2} placeholder='Add a post' /> 
           <Form.Button fluid positive  style={{marginTop:"10px"}}>Post</Form.Button>
           {/* onClick = {()=>handleSubmit()} */}
         </Form>

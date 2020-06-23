@@ -13,7 +13,7 @@ const userSchema=new Schema({
         type: Array,
         required:true,
     },
-    postsfolowing:{
+    postsfollowing:{
         type: Array,
     },
     email:{
