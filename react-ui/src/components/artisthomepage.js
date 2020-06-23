@@ -110,7 +110,9 @@ const ArtistHomepage = () =>{
   
     <div className="HomepageArtist">
       <Container>
-      <Header as='h1' content={name} textAlign='center' dividing />
+      <br></br>
+      <Header as='h1' content={name} textAlign='center' />
+      <br></br>
       <img class="ui medium centered circular image" src={image} centered size='medium'></img>
       <br></br>
       <br></br>
