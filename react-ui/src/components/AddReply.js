@@ -13,10 +13,12 @@ const  AddReply =({item })=> {
         const {replies, setReplies, artists, setArtists, messages, setMessages, songs, setSongs, posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshtoken} = React.useContext(InfoContext);
         const refKey = useRef();
                 function eventhandler(e) {
-                if (e.code === 'Enter') {
+                  console.log(e);
+                if (e.key === 'Enter') {
                  handleSubmitReply();
                  console.log("Works");
                }
+               console.log("Works outside");
             }
 
         function handleSubmitReply(){
@@ -34,8 +36,6 @@ const  AddReply =({item })=> {
             
               }
         // useEffect(() => {
-          
-      
         //   refKey.current.addEventListener("keyup", eventhandler);
         //   return () => {
         //         refKey.current.removeEventListener("keyup", eventhandler);
@@ -45,7 +45,7 @@ const  AddReply =({item })=> {
         return(
                     
         <div>
-                <TextArea ref={refKey} id="textareareply" rows={1} placeholder='Reply to post' /> 
+                <TextArea onKeyUp={(e) => eventhandler(e)} ref={refKey} id="textareareply" rows={1} placeholder='Reply to post' /> 
                 <Form.Button fluid positive onClick = {()=>handleSubmitReply()} style={{marginTop:"10px"}}>Reply</Form.Button> 
        </div>
 )}
