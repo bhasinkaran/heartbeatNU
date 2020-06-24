@@ -93,14 +93,26 @@ const ArtistHomepage = () =>{
 
       // }
 
-      var redirectUri= process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/users/addpost/` : `http://localhost:8888/users/addpost/`
-      axios.post(`${redirectUri}${user.id}/${key}`)
-      .then(response => {
-          console.log("updated!", response);
-          })
-      .catch(function (error) {
-        console.log(error);
-      });
+      if(!user.postsfollowing.includes(id)){  
+        var redirectUri= process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/users/addpost/` : `http://localhost:8888/users/addpost/`
+        axios.post(`${redirectUri}${user.id}/${id}`)
+        .then(response => {
+             console.log("updated!", response);
+        })
+        .catch(function (error) {
+             console.log(error);
+          });
+        var temp= user;
+        console.log(temp);
+        // var array = temp.postsfollowing;
+        // array.add(id);
+        temp.postsfollowing.push(id);
+        console.log(temp);
+        setUser(temp);
+        // user.postsfollowing.push(id);
+        // setUser()
+        }
+
      }
      if(user|| JSON.parse(localStorage.getItem('user'))){
 // 
