@@ -14,6 +14,7 @@ const s = new Spotify();
 
 const TrackPage = () =>{
      var  {trackid } = useParams();
+     const [value, setValue]=useState("");
      const {replies, setReplies, artists, setArtists, messages, setMessages, songs, setSongs, posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshtoken} = React.useContext(InfoContext);
      localStorage.setItem('user', JSON.stringify(user));
      const [name, setName] = useState("");
@@ -68,7 +69,7 @@ const TrackPage = () =>{
      
      function handleSubmit(){
       console.log(document.getElementById("textarea").value);
-      const likesref=dbLikes.push(0);
+        const likesref=dbLikes.push(0);
         const likeskey=likesref.getKey();
         console.log("Likes key is ", likeskey);
         const repliesref=dbReplies.push(0);
@@ -98,6 +99,14 @@ const TrackPage = () =>{
       .catch(function (error) {
         console.log(error);
       });
+      var temp= user;
+      console.log(temp);
+                // var array = temp.postsfollowing;
+                // array.add(id);
+      temp.postsfollowing.push(key);
+      console.log(temp);
+      setUser(temp);
+
       setValuee("");
      }
      

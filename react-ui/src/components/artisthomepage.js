@@ -13,6 +13,7 @@ const s = new Spotify();
 
 const ArtistHomepage = () =>{
      var  {artistid } = useParams();
+     const [value, setValue]=useState("");
      const {replies, setReplies, artists, setArtists, messages, setMessages, songs, setSongs, posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshtoken} = React.useContext(InfoContext);
      if(user){
        localStorage.setItem('user', JSON.stringify(user));
@@ -77,7 +78,7 @@ const ArtistHomepage = () =>{
         console.log("replies key is ", replieskey);
 
       const ref = dbPosts.push({
-        'content':document.getElementById("textarea").value,
+        'content':value,
         'posterid': user.id,
         'artistid': artistid,
         'likes': likeskey,
@@ -112,6 +113,7 @@ const ArtistHomepage = () =>{
         // user.postsfollowing.push(id);
         // setUser()
         }
+        setValue("");
 
      }
      if(user|| JSON.parse(localStorage.getItem('user'))){
@@ -131,7 +133,7 @@ const ArtistHomepage = () =>{
       <div>
         <Header style={{marginTop:"10px"}} textAlign='center' as='h3'>Say something about this artist</Header>
         <Form onSubmit={()=>handleSubmit()}>
-          <TextArea id="textarea" rows={2} placeholder='Add a post' /> 
+          <TextArea id="textarea" value={value} onChange={(e)=>setValue(e.target.value)} rows={2} placeholder='Add a post' /> 
           <Form.Button fluid positive  style={{marginTop:"10px"}}>Post</Form.Button>
           {/* onClick = {()=>handleSubmit()} */}
         </Form>

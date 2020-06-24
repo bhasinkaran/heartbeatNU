@@ -68,6 +68,13 @@ const ReturnPost = React.memo(({item, id}) =>{
                .catch(function (error) {
                  console.log(error);
                });
+               var temp= user;
+                console.log(temp);
+                // var array = temp.postsfollowing;
+                // array.add(id);
+                temp.postsfollowing.push(id);
+                console.log(temp);
+               setUser(temp);
 
 
 
