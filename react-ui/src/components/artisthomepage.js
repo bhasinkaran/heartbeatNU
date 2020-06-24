@@ -93,9 +93,9 @@ const ArtistHomepage = () =>{
 
       // }
 
-      if(!user.postsfollowing.includes(id)){  
+      if(!user.postsfollowing.includes(key)){  
         var redirectUri= process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/users/addpost/` : `http://localhost:8888/users/addpost/`
-        axios.post(`${redirectUri}${user.id}/${id}`)
+        axios.post(`${redirectUri}${user.id}/${key}`)
         .then(response => {
              console.log("updated!", response);
         })
@@ -106,7 +106,7 @@ const ArtistHomepage = () =>{
         console.log(temp);
         // var array = temp.postsfollowing;
         // array.add(id);
-        temp.postsfollowing.push(id);
+        temp.postsfollowing.push(key);
         console.log(temp);
         setUser(temp);
         // user.postsfollowing.push(id);
