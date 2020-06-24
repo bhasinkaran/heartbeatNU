@@ -7,6 +7,7 @@ import {Router , useParams} from  'react-router-dom';
 import Spotify from 'spotify-web-api-js';
 import FavoriteArtists from './favartists'
 import FavoriteSongs from './favsongs'
+import HomePagePosts from './HomePagePosts'
 
 import PageHeader from './pageheader'
 import {InfoContext} from '../App'
@@ -14,7 +15,7 @@ import {InfoContext} from '../App'
 const mongoose = require('mongoose');
 const s = new Spotify();
 
-const Homepage = () =>{
+const HomePageFeed = () =>{
   
   var {id, access_token, refresh_token } = useParams();
   const {replies, setReplies, artists, setArtists, messages, setMessages, songs, setSongs, posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshToken} = React.useContext(InfoContext);
@@ -232,7 +233,7 @@ for(let i=0; i<realistic; i++){
 
         
         <Grid.Column width = {10}>
-          FEED
+          <HomePageFeed />
         </Grid.Column>
         
        
@@ -255,7 +256,7 @@ for(let i=0; i<realistic; i++){
   );
 }
 
-export default Homepage;
+export default HomePageFeed;
 
 
  {/* <div> Now Playing {nowPlaying.name}
