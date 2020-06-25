@@ -105,7 +105,7 @@ const HomePagePosts = ({userLoaded}) =>{
       <Container>
       <Header as='h1' content={"Homepagefeed"} textAlign='center' dividing />
       {/* {returnPosts.length > 0 ? returnPosts.map(id=> <ReturnHomePagePost postid={id} />) : "No posts as yet"} */}
-     {returnPosts.map(id => <div>{id}</div>)}
+     { returnPosts ? returnPosts.map(id => <div>{id}</div>) : " "}
       </Container>
     </div> 
    
