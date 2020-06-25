@@ -20,12 +20,12 @@ const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
      var temp2 = [];
      var temp3=[];
     function initializeState() {
-            console.log(artists);
+        //     console.log(artists);
             for(let i = 0; i<artists.length; i++){
 
              s.getArtist(artists[i]).then(
                      res => {
-                             console.log(artists[i]);
+                        //      console.log(artists[i]);
                              temp.push(res.name);
                              temp2.push(res.images[0].url);
                              temp3.push(artists[i]);

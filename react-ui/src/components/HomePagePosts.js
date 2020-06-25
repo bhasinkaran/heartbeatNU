@@ -23,9 +23,10 @@ const HomePagePosts = () =>{
      console.log(user);
      console.log(JSON.parse(localStorage.getItem('user')));
      useEffect(initializeState, []);
-     function getArtistsPosts( artistid){
-      if(artists &&artists[artistid] &&artists[artistid]['posts']!="None"){
-       var values= Object.values(artists[artistid]['posts']);
+     function getArtistsPosts( artistidd){
+      console.log("Ran getArtistsPosts");
+      if(artists &&artists[artistidd] &&artists[artistidd]['posts']!="None"){
+       var values= Object.values(artists[artistidd]['posts']);
        if(values.length>=3){
          return values.slice(-3);
        }
@@ -46,6 +47,8 @@ const HomePagePosts = () =>{
          var arrayRecentArtists = getArtistsPosts(user.favoriteartists[i]);
          console.log(arrayRecentArtists);
         }
+        console.log("Ran initialize State");
+
       }
      return(
   
