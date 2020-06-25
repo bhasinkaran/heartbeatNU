@@ -56,7 +56,7 @@ const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
         // console.log(artistimages)
        if(imageurl)
        {
-             console.log(imageurl);
+        //      console.log(imageurl);
              return(
                 <div  id={id}> 
                 {/* mobile={16} tablet={8} computer={8} */}
@@ -76,7 +76,7 @@ const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
                 </div>);
        }
         else{
-                console.log(imageurl)
+                // console.log(imageurl)
                 return "null";
         }
      }
@@ -87,7 +87,7 @@ const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
         // console.log(artistimages)
        if(imageurl)
        {
-             console.log(imageurl);
+        //      console.log(imageurl);
              return(
                 // <Grid.Row mobile={16} tablet={8} computer={4} id={id}> 
                 <div  id={id}> 
@@ -100,7 +100,7 @@ const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
                 // {/* </Grid.Row>); */}
        }
         else{
-                console.log(imageurl)
+                // console.log(imageurl)
                 return "null";
         }
      }
@@ -111,7 +111,7 @@ const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
         // console.log(artistimages)
        if(imageurl)
        {
-             console.log(imageurl);
+        //      console.log(imageurl);
              return(
                 // <Grid.Column mobile={16} tablet={8} computer={4} id={id}> 
                 <div  id={id}> 
@@ -125,7 +125,7 @@ const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
                 );
        }
         else{
-                console.log(imageurl)
+                // console.log(imageurl)
                 return "null";
         }
      }
