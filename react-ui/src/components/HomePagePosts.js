@@ -13,11 +13,77 @@ const s = new Spotify();
 
 const HomePagePosts = ({userLoaded}) =>{
      const {replies, setReplies, artists, setArtists, messages, setMessages, songs, setSongs, posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshtoken} = React.useContext(InfoContext);
-     const [timeout, setTime]=useState(false);
+    //  const [timeout, setTime]=useState(false);
      const [returnPosts, setReturnPosts]=useState([]);
-     setTimeout(() => {
-      setTime(true);
-    }, 3000);
+     useEffect(initializeState, []);
+     function initializeState(){
+      // console.log(user);
+      // console.log(user['favoriteartists']);
+      console.log(user);
+      console.log(user.favoriteartists);
+      console.log(user['favoriteartists']);
+
+      var temp=[];
+     for(let i=0; i<user.favoriteartists.length;i++){
+      //  console.log("Outside of IF");
+      if(artists &&artists[user['favoriteartists'][i]] &&artists[user.favoriteartists[i]]['posts']!="None"){
+        var values= Object.values(artists[user['favoriteartists'][i]]['posts']);
+        console.log("Inside of IF");
+        console.log("This is i ", i);  
+        console.log(user['favoriteartists'][i]);
+        console.log(values);
+
+        if(values.length>=3){
+          console.log("Here");
+          temp.push(values.slice(-3));
+        }
+
+        else if(values.length>1){
+          console.log("Here2");
+          temp.push(values.slice(-2));
+        }
+
+        else if(values.length==1){
+          console.log("Here3");
+          temp.push(values.slice(-1));
+        }
+ 
+       }
+      }
+      for(let i=0; i<user.favoritesongs.length;i++){
+        // console.log("Outside of IF");
+       if(songs &&songs[user['favoritesongs'][i]] &&songs[user.favoritesongs[i]]['posts']!="None"){
+         var values= Object.values(songs[user['favoritesongs'][i]]['posts']);
+        //  console.log("Inside of IF");
+        //  console.log("This is i ", i);  
+        //  console.log(user['favoriteartists'][i]);
+        //  console.log(values);
+
+         if(values.length>=3){
+          //  console.log("Here");
+           temp.push(values.slice(-3));
+         }
+
+         else if(values.length>1){
+          //  console.log("Here2");
+           temp.push(values.slice(-2));
+         }
+
+         else if(values.length==1){
+          //  console.log("Here3");
+           temp.push(values.slice(-1));
+         }
+        }
+       }
+
+      setReturnPosts(temp);
+      console.log("Ran initialize State");
+      
+
+    }
+    //  setTimeout(() => {
+    //   setTime(true);
+    // }, 3000);
      if(user){
        localStorage.setItem('user', JSON.stringify(user));
      }
@@ -26,64 +92,20 @@ const HomePagePosts = ({userLoaded}) =>{
      }
      
     
-     if(userLoaded){
+     if(user){
 //  
-     console.log(userLoaded);
-     console.log(JSON.parse(localStorage.getItem('user')));
-    //  useEffect(initializeState, []);
-    initializeState();
-     function initializeState(){
-        // console.log(user);
-        // console.log(user['favoriteartists']);
-        console.log(userLoaded.favoriteartists);
-        console.log(userLoaded['favoriteartists']);
-
-       for(let i=0; i<userLoaded.favoriteartists.length;i++){
-         var temp=[];
-         console.log("Outside of IF");
-        if(artists &&artists[userLoaded['favoriteartists'][i]] &&artists[userLoaded.favoriteartists[i]]['posts']!="None"){
-          var values= Object.values(artists[userLoaded['favoriteartists'][i]]['posts']);
-          console.log("Inside of IF");
-          console.log("This is i ", i);  
-          console.log(userLoaded['favoriteartists'][i]);
-          console.log(values);
-
-          if(values.length>=3){
-            console.log("Here");
-            temp.push(values.slice(-3));
-            
-          }
-          else if(values.length>1){
-            console.log("Here2");
-            temp.push(values.slice(-2));
-            
-
-          }
-          if(values.length==1){
-            console.log("Here3");
-            temp.push(values.slice(-1));
-            
-          }
-          
-          console.log("No posts to add for ", userLoaded.favoriteartists[i]);
-
-          
-         }
-         else{
-           return [];
-         }
-         
-        }
-        console.log("Ran initialize State");
-        
-
-      }
+    //  console.log(user);
+    //  console.log(JSON.parse(localStorage.getItem('user')));
+    
+    // initializeState();
+     
      return(
   
     <div className="HomepageFeed">
       <Container>
       <Header as='h1' content={"Homepagefeed"} textAlign='center' dividing />
-     
+      {/* {returnPosts.length > 0 ? returnPosts.map(id=> <ReturnHomePagePost postid={id} />) : "No posts as yet"} */}
+     {returnPosts.map(id => <div>{id}</div>)}
       </Container>
     </div> 
    

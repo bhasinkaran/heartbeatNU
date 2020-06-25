@@ -58,18 +58,11 @@ const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
        {
         //      console.log(imageurl);
              return(
-                <div  id={id}> 
+                <div key={id.toString()}  id={id}> 
                 {/* mobile={16} tablet={8} computer={8} */}
                         <Link to={`/artist/${orderedArtists[id]}`} >
-                        <div class="ui medium image">
-                        <div class="ui dimmer">
-                                <div class="content">
-                                        <h2 class="ui inverted header">Title</h2>
-                                </div>
-                        </div>
-                        <Image class="ui image" size='massive' rounded fluid verticalAlign='middle' src={imageurl} />
-                        </div>
-                        <Header  size='massive'>{artistname}</Header>
+                        <Image  rounded src={imageurl} verticalAlign='middle' />
+                                <Header size='huge'>{artistname}</Header>
                         </Link>
                         
                         <br></br>
@@ -90,9 +83,9 @@ const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
         //      console.log(imageurl);
              return(
                 // <Grid.Row mobile={16} tablet={8} computer={4} id={id}> 
-                <div  id={id}> 
+                <div key={id.toString()} id={id}> 
                         <Link to={`/artist/${orderedArtists[id]}`} >
-                                <Image fluid rounded src={imageurl} verticalAlign='middle' />
+                                <Image  rounded src={imageurl} verticalAlign='middle' />
                                 <Header size='huge'>{artistname}</Header>
                         </Link>
                         <br></br>
@@ -114,7 +107,7 @@ const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
         //      console.log(imageurl);
              return(
                 // <Grid.Column mobile={16} tablet={8} computer={4} id={id}> 
-                <div  id={id}> 
+                <div key={id.toString()}  id={id}> 
                          <Link to={`/artist/${orderedArtists[id]}`} >
                                 <Image fluid rounded src={imageurl} verticalAlign='middle' />
                                 <Header size='large'>{artistname}</Header>

@@ -56,10 +56,10 @@ const FavoriteSongs = ({accesstoken, songs, refreshtoken}) =>{
        {
         //      console.log(imageurl);
              return(
-                <Grid.Column mobile={16} tablet={8} computer={8} id={id}> 
+                <Grid.Column key={id.toString()}  mobile={16} tablet={8} computer={8} id={id}> 
                         <Link to={`/track/${orderedSongs[id]}`} >
-                        <Image size='huge' rounded fluid verticalAlign='middle' src={imageurl} />
-                        <Header  size='massive'>{songName}</Header>
+                        <Image size='huge' rounded  verticalAlign='middle' src={imageurl} />
+                        <Header  size='huge'>{songName}</Header>
                         </Link>
                         
                         <br></br>
@@ -79,9 +79,9 @@ const FavoriteSongs = ({accesstoken, songs, refreshtoken}) =>{
        {
         //      console.log(imageurl);
              return(
-                <Grid.Column mobile={16} tablet={8} computer={4} id={id}> 
+                <Grid.Column key={id.toString()}  mobile={16} tablet={8} computer={4} id={id}> 
                         <Link to={`/track/${orderedSongs[id]}`} >
-                                <Image fluid rounded src={imageurl} verticalAlign='middle' />
+                                <Image  rounded src={imageurl} verticalAlign='middle' />
                                 <Header size='huge'>{songName}</Header>
                         </Link>
                         <br></br>
@@ -101,9 +101,9 @@ const FavoriteSongs = ({accesstoken, songs, refreshtoken}) =>{
        {
         //      console.log(imageurl);
              return(
-                <Grid.Column mobile={16} tablet={8} computer={4} id={id}> 
+                <Grid.Column key={id.toString()}  mobile={16} tablet={8} computer={4} id={id}> 
                          <Link to={`/track/${orderedSongs[id]}`} >
-                                <Image fluid rounded src={imageurl} verticalAlign='middle' />
+                                <Image  rounded src={imageurl} verticalAlign='middle' />
                                 <Header size='large'>{songName}</Header>
                         </Link>
                         <br></br>
