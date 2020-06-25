@@ -12,55 +12,57 @@ const mongoose = require('mongoose');
 const s = new Spotify();
 
 const HomePagePosts = () =>{
-//      const {replies, setReplies, artists, setArtists, messages, setMessages, songs, setSongs, posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshtoken} = React.useContext(InfoContext);
-//      if(user){
-//        localStorage.setItem('user', JSON.stringify(user));
-//      }
+     const {replies, setReplies, artists, setArtists, messages, setMessages, songs, setSongs, posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshtoken} = React.useContext(InfoContext);
+     if(user){
+       localStorage.setItem('user', JSON.stringify(user));
+     }
      
     
-//      if(user|| JSON.parse(localStorage.getItem('user'))){
-// // 
-//      console.log(user);
-//      console.log(JSON.parse(localStorage.getItem('user')));
+     if(user|| JSON.parse(localStorage.getItem('user'))){
+// 
+     console.log(user);
+     console.log(JSON.parse(localStorage.getItem('user')));
+     useEffect(initializeState, []);
+     function getArtistsPosts( artistid){
+      if(artists &&artists[artistid] &&artists[artistid]['posts']!="None"){
+       var values= Object.values(artists[artistid]['posts']);
+       if(values.length>=3){
+         return values.slice(-3);
+       }
+       else if(values.length>1){
+         return values.slice(-2);
+       }
+       return values.slice(-1);
+       
+      }
+      else{
+        return [];
+      }
+
+    }
+     function initializeState(){
+       for(let i=0; user.favoriteartists;i++){
+         
+         var arrayRecentArtists = getArtistsPosts(user.favoriteartists[i]);
+         console.log(arrayRecentArtists);
+        }
+      }
      return(
   
-    <div className="HomepageFeed">kjkk
-      {/* <Container>
+    <div className="HomepageFeed">
+      <Container>
       <Header as='h1' content={"Homepagefeed"} textAlign='center' dividing />
      
-      </Container> */}
+      </Container>
     </div> 
    
         )
-      // }
-      // else{
-      //   return(<Redirect to="/" push={true} />);
-      // }
+       }
+      else{
+        return(<Redirect to="/" push={true} />);
+      }
 }
 
 export default HomePagePosts;
 
- //  useEffect(initializeState, []);
-    //  function getArtistsPosts( artistid){
-    //   if(artists &&artists[artistid] &&artists[artistid]['posts']!="None"){
-    //    var values= Object.values(artists[artistid]['posts']);
-    //    if(values.length>=3){
-    //      return values.slice(-3);
-    //    }
-    //    else if(values.length>1){
-    //      return values.slice(-2);
-    //    }
-    //    return values.slice(-1);
-       
-    //   }
-    //   else{
-    //     return [];
-    //   }
-
-    // }
-    //  function initializeState(){
-      //  for(let i=0; user.favoriteartists;i++){
-         
-      //    var arrayRecentArtists = getArtistsPosts(user.favoriteartists[0]);
-      //    console.log(arrayRecentArtists);
-      // //  }
+  
