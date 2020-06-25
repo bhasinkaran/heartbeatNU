@@ -14,6 +14,7 @@ const s = new Spotify();
 const HomePagePosts = ({userLoaded}) =>{
      const {replies, setReplies, artists, setArtists, messages, setMessages, songs, setSongs, posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshtoken} = React.useContext(InfoContext);
      const [timeout, setTime]=useState(false);
+     const [returnPosts, setReturnPosts]=useState([]);
      setTimeout(() => {
       setTime(true);
     }, 3000);
@@ -38,6 +39,7 @@ const HomePagePosts = ({userLoaded}) =>{
         console.log(userLoaded['favoriteartists']);
 
        for(let i=0; i<userLoaded.favoriteartists.length;i++){
+         var temp=[];
          console.log("Outside of IF");
         if(artists &&artists[userLoaded['favoriteartists'][i]] &&artists[userLoaded.favoriteartists[i]]['posts']!="None"){
           var values= Object.values(artists[userLoaded['favoriteartists'][i]]['posts']);
@@ -48,22 +50,22 @@ const HomePagePosts = ({userLoaded}) =>{
 
           if(values.length>=3){
             console.log("Here");
-            return values.slice(-3);
+            temp.push(values.slice(-3));
             
           }
           else if(values.length>1){
             console.log("Here2");
-            return values.slice(-2);
+            temp.push(values.slice(-2));
             
 
           }
           if(values.length==1){
             console.log("Here3");
-            return values.slice(-1);
+            temp.push(values.slice(-1));
             
           }
           
-          console.log("Here4");
+          console.log("No posts to add for ", userLoaded.favoriteartists[i]);
 
           
          }
