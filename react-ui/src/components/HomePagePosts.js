@@ -15,7 +15,7 @@ const HomePagePosts = ({userLoaded}) =>{
      const {replies, setReplies, artists, setArtists, messages, setMessages, songs, setSongs, posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshtoken} = React.useContext(InfoContext);
     //  const [timeout, setTime]=useState(false);
      const [returnPosts, setReturnPosts]=useState([]);
-     useEffect(initializeState, []);
+     useEffect(initializeState, [artists]);
      function initializeState(){
       // console.log(user);
       // console.log(user['favoriteartists']);
@@ -25,7 +25,15 @@ const HomePagePosts = ({userLoaded}) =>{
 
       var temp=[];
      for(let i=0; i<user.favoriteartists.length;i++){
-      //  console.log("Outside of IF");
+       console.log("Outside of IF");
+       console.log("This is i ", i);  
+       console.log(user['favoriteartists'][i]);
+       if(artists && artists[user['favoriteartists'][i]]){
+        console.log(artists[user['favoriteartists'][i]]['name']);
+
+       }
+       console.log(artists);
+
       if(artists &&artists[user['favoriteartists'][i]] &&artists[user.favoriteartists[i]]['posts']!="None"){
         var values= Object.values(artists[user['favoriteartists'][i]]['posts']);
         console.log("Inside of IF");
@@ -81,6 +89,13 @@ const HomePagePosts = ({userLoaded}) =>{
       
 
     }
+    useEffect(() => {
+      const handleData = snap => {
+        if (snap.val()) setArtists(snap.val());
+      }
+      dbArtists.on('value', handleData, error => alert(error));
+      return () => { dbArtists.off('value', handleData); };
+    }, []);
     //  setTimeout(() => {
     //   setTime(true);
     // }, 3000);
@@ -92,7 +107,7 @@ const HomePagePosts = ({userLoaded}) =>{
      }
      
     
-     if(user){
+     if(user && artists && returnPosts.length>0){
 //  
     //  console.log(user);
     //  console.log(JSON.parse(localStorage.getItem('user')));
@@ -105,7 +120,7 @@ const HomePagePosts = ({userLoaded}) =>{
       <Container>
       <Header as='h1' content={"Homepagefeed"} textAlign='center' dividing />
       {/* {returnPosts.length > 0 ? returnPosts.map(id=> <ReturnHomePagePost postid={id} />) : "No posts as yet"} */}
-     { returnPosts ? returnPosts.map(id => <div>{id}</div>) : " "}
+     {returnPosts ? returnPosts.map(id => <div>{id}</div>) : " "}
       </Container>
     </div> 
    

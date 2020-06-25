@@ -11,7 +11,7 @@ import ReturnReply from './Reply'
 import AddReply from './AddReply';
 
 const ReturnPost = React.memo(({item, id}) =>{
-        const {replies, setReplies, artists, setArtists, messages, setMessages, songs, setSongs, posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshtoken} = React.useContext(InfoContext);
+        const {replies, setReplies, artists, setArtists, messages, setMessages, songs, setSongs,posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshToken} = React.useContext(InfoContext);
         const [poster, setPoster]=useState("");
         const [showReply, setShowReply]=useState(false);
     
