@@ -11,43 +11,60 @@ import ReturnPost from './Post'
 const mongoose = require('mongoose');
 const s = new Spotify();
 
-const HomePagePosts = () =>{
+const HomePagePosts = ({userLoaded}) =>{
      const {replies, setReplies, artists, setArtists, messages, setMessages, songs, setSongs, posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshtoken} = React.useContext(InfoContext);
+     const [timeout, setTime]=useState(false);
+     setTimeout(() => {
+      setTime(true);
+    }, 3000);
      if(user){
        localStorage.setItem('user', JSON.stringify(user));
      }
+     else{
+       setUser(JSON.parse(localStorage.getItem('user')));
+     }
      
     
-     if(user|| JSON.parse(localStorage.getItem('user'))){
-// 
-     console.log(user);
+     if(userLoaded){
+//  
+     console.log(userLoaded);
      console.log(JSON.parse(localStorage.getItem('user')));
-     useEffect(initializeState, []);
-     function getArtistsPosts( artistidd){
-      console.log("Ran getArtistsPosts");
-      if(artists &&artists[artistidd] &&artists[artistidd]['posts']!="None"){
-       var values= Object.values(artists[artistidd]['posts']);
-       if(values.length>=3){
-         return values.slice(-3);
-       }
-       else if(values.length>1){
-         return values.slice(-2);
-       }
-       return values.slice(-1);
-       
-      }
-      else{
-        return [];
-      }
-
-    }
+    //  useEffect(initializeState, []);
+    initializeState();
      function initializeState(){
-       for(let i=0; user.favoriteartists;i++){
+        // console.log(user);
+        // console.log(user['favoriteartists']);
+       for(let i=0; userLoaded.favoriteartists;i++){
+         console.log("Outside of IF");
+        if(artists &&artists[userLoaded.favoriteartists[i]] &&artists[userLoaded.favoriteartists[i]]['posts']!="None"){
+          var values= Object.values(artists[userLoaded.favoriteartists[i]]['posts']);
+          console.log("Inside of IF");
+
+          if(values.length>=3){
+            return values.slice(-3);
+            console.log("Here");
+          }
+          else if(values.length>1){
+            return values.slice(-2);
+            console.log("Here2");
+
+          }
+          if(values.length==1){
+            return values.slice(-1);
+            console.log("Here3");
+          }
+          
+          console.log("Here4");
+
+          
+         }
+         else{
+           return [];
+         }
          
-         var arrayRecentArtists = getArtistsPosts(user.favoriteartists[i]);
-         console.log(arrayRecentArtists);
         }
         console.log("Ran initialize State");
+        
 
       }
      return(
@@ -62,7 +79,13 @@ const HomePagePosts = () =>{
         )
        }
       else{
-        return(<Redirect to="/" push={true} />);
+        // if (timeout){
+        //   return(<Redirect to="/" push={true} />);
+        // }
+        // else{
+          return "Loading";
+        // }
+       
       }
 }
 
