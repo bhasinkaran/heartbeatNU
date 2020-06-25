@@ -89,13 +89,13 @@ const HomePagePosts = ({userLoaded}) =>{
       
 
     }
-    useEffect(() => {
-      const handleData = snap => {
-        if (snap.val()) setArtists(snap.val());
-      }
-      dbArtists.on('value', handleData, error => alert(error));
-      return () => { dbArtists.off('value', handleData); };
-    }, []);
+    // useEffect(() => {
+    //   const handleData = snap => {
+    //     if (snap.val()) setArtists(snap.val());
+    //   }
+    //   dbArtists.on('value', handleData, error => alert(error));
+    //   return () => { dbArtists.off('value', handleData); };
+    // }, []);
     //  setTimeout(() => {
     //   setTime(true);
     // }, 3000);
