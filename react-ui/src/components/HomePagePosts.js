@@ -34,24 +34,33 @@ const HomePagePosts = ({userLoaded}) =>{
      function initializeState(){
         // console.log(user);
         // console.log(user['favoriteartists']);
-       for(let i=0; userLoaded.favoriteartists;i++){
+        console.log(userLoaded.favoriteartists);
+        console.log(userLoaded['favoriteartists']);
+
+       for(let i=0; i<userLoaded.favoriteartists.length;i++){
          console.log("Outside of IF");
-        if(artists &&artists[userLoaded.favoriteartists[i]] &&artists[userLoaded.favoriteartists[i]]['posts']!="None"){
-          var values= Object.values(artists[userLoaded.favoriteartists[i]]['posts']);
+        if(artists &&artists[userLoaded['favoriteartists'][i]] &&artists[userLoaded.favoriteartists[i]]['posts']!="None"){
+          var values= Object.values(artists[userLoaded['favoriteartists'][i]]['posts']);
           console.log("Inside of IF");
+          console.log("This is i ", i);  
+          console.log(userLoaded['favoriteartists'][i]);
+          console.log(values);
 
           if(values.length>=3){
-            return values.slice(-3);
             console.log("Here");
+            return values.slice(-3);
+            
           }
           else if(values.length>1){
-            return values.slice(-2);
             console.log("Here2");
+            return values.slice(-2);
+            
 
           }
           if(values.length==1){
-            return values.slice(-1);
             console.log("Here3");
+            return values.slice(-1);
+            
           }
           
           console.log("Here4");
