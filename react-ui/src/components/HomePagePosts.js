@@ -16,7 +16,7 @@ const HomePagePosts = () =>{
      const {replies, setReplies, artists, setArtists, messages, setMessages, songs, setSongs, posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshtoken} = React.useContext(InfoContext);
     //  const [timeout, setTime]=useState(false);
      const [returnPosts, setReturnPosts]=useState([]);
-     useEffect(initializeState, [artists]);
+     useEffect(initializeState, [artists, songs]);
      function initializeState(){
       // console.log(user);
       // console.log(user['favoriteartists']);
@@ -99,7 +99,7 @@ const HomePagePosts = () =>{
      }
      
     
-     if(user && artists && returnPosts.length>0){
+     if(user && artists && songs && returnPosts.length>0){
 //  
     //  console.log(user);
     //  console.log(JSON.parse(localStorage.getItem('user')));
@@ -110,9 +110,23 @@ const HomePagePosts = () =>{
   
     <div className="HomepageFeed">
       <Container>
-      <Header as='h1' content={"Homepagefeed"} textAlign='center' dividing />
+      <Header as='h1' content={"What's been up with your favorite music?"} textAlign='center' dividing />
       {/* {returnPosts.length > 0 ? returnPosts.map(id=> <ReturnHomePagePost postid={id} />) : "No posts as yet"} */}
-     {returnPosts && posts ? returnPosts.map(id => <ReturnHomepagePost item={posts[id]} id={id} />) : " "}
+     {returnPosts && posts ? returnPosts.map(id => 
+      <Segment raised style={{marginTop: "40px"}}>
+        {id}
+        <div>
+          ..... 
+        </div>
+        {posts[id]['trackid']}
+        <div>
+          ..... 
+        </div>
+        {posts[id]['artistid']}
+        <ReturnHomepagePost item={posts[id]} id={id} />
+      </Segment>
+      ) 
+      : " "}
      {/* <ReturnHomepagePost item={posts['-MAUybwcC0MyDfwFhnqg']} id={'-MAUybwcC0MyDfwFhnqg'} /> */}
       </Container>
     </div> 

@@ -27,6 +27,7 @@ const ReturnPost = React.memo(({item, id}) =>{
             else if (item && item['trackid'] && songs){
               setType('track');
               setTrackName(songs[item['trackid']]['name']);
+              console.log("here!")
             }
         })
 
@@ -96,7 +97,7 @@ const ReturnPost = React.memo(({item, id}) =>{
             }
    
             
-           if(type=='artist'){
+           if((artistName || trackName)){
             return(
               <div>
                <Segment attached>
@@ -104,11 +105,11 @@ const ReturnPost = React.memo(({item, id}) =>{
                   {poster ? 
                    <Grid centered >
                      <Grid.Row>
-                       {/* <Header as={'h3'}>{artistName}</Header> */}
+                       <Header as={'h3'}>{`${poster.name}`} {"posted to  "}{ type== 'artist' ?  artistName : trackName}{"'s wall"}</Header>
                      </Grid.Row>
                      <Grid.Row>
                       <Grid.Column width={5}>        
-                           <Image circular src={poster.image} size='medium' ></Image>
+                           <Image circular src={poster.image} size='small' ></Image>
                            <Grid.Row>
                          <Header as={"h4"} textAlign="center" style={{marginTop:
                          "10px"}}>
@@ -175,87 +176,7 @@ const ReturnPost = React.memo(({item, id}) =>{
              )
 
           }
-          else if(type=='track'){
-            return(
-              <div>
-               <Segment attached>
-                  {poster ? 
-                   <Grid centered >
-                     <Grid.Row>
-                       <Header as={'h3'}>{trackName}</Header>
-                     </Grid.Row>
-                     <Grid.Row>
-                      <Grid.Column width={5}>        
-                           <Image circular src={poster.image} size='medium' ></Image>
-                           <Grid.Row>
-                         <Header as={"h4"} textAlign="center" style={{marginTop:
-                         "10px"}}>
-                             {`${poster.name}`}
-                         </Header>
-                         </Grid.Row>
-                       </Grid.Column>
-                       <Grid.Column width={11}>
-                          <Label as='a' basic color='red' size="huge" pointing='left' style={{marginTop:"12px"}}>
-                             {item['content']}
-                         </Label>
-                      </Grid.Column>
-                      </Grid.Row>
-                      <Grid.Row style={{marginTop:"-20px", marginBottom: "-10px"}}>
-                   <Grid.Column width={8}>
-                  <Header  as="h5" color='gray' >
-                   {likes[item['likes']] != 0 ? Object.values(likes[item['likes']]).length :0}
-                   {' Likes & '}
-                   {replies[item['replies']] != 0 ? Object.values(replies[item['replies']]).length :0}
-                   {' Replies'}
-                 </Header>
-                 </Grid.Column>
-                 <Grid.Column width={3}>
- 
-                 </Grid.Column>
-                 <Grid.Column width={5}>
-                 <Header  as="h5" color='gray' >
-                   {`${time}`}
-                 </Header>
-                 </Grid.Column>
-                   
-                   
-                      </Grid.Row>
-
-               </Grid>
-                 : 
-                 <div>
-                 <Loader active inline='centered' /> 
-                 {id }
-                 </div>}
-               </Segment>
-
-                 {replies[item['replies']] != 0 && showReply? 
-                  Object.values(replies[item['replies']]).map(id => <ReturnReply key={id.posterid+id.createdAt} reply={id}></ReturnReply>)
-                
-                 :""}
-                
-            <Segment attached='bottom'>
-                    {/* onSubmit={()=>handleSubmitReply()} */}
-              <Form >
-               <AddReply item={item} id={id} />
-                <Button fluid onClick={()=>{updateLike();}} >
-                   <Icon color="" name='heart' />
-                     { Object.values(likes[item['likes']]).includes(user.id) ? "Unlike": "Like"}
-                   </Button> 
-              </Form> 
-            </Segment>
-            {replies[item['replies']] != 0 && !showReply? 
-                <Form.Button fluid positive onClick = {()=>setShowReply(true)} style={{marginTop:"10px"}}>Show Replies</Form.Button> 
- 
-                 :
-                 replies[item['replies']] != 0 ? <Form.Button fluid positive onClick = {()=>setShowReply(false)} style={{marginTop:"10px"}}>Hide Replies</Form.Button> 
-                   : ""
-                 }
-                 </div>       
-             )
-          }
-        
-            
+         
          }
           else{
             return(
