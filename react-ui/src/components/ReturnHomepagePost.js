@@ -19,6 +19,16 @@ const ReturnPost = React.memo(({item, id}) =>{
         const [trackName, setTrackName]=useState("");
     
         const replyRef = useRef();
+        useEffect(()=>{
+           if(item && item['artistid'] && artists){
+              setType('artist');
+              setArtistName(artists[item['artistid']]['name']);
+            }
+            else if (item && item['trackid'] && songs){
+              setType('track');
+              setTrackName(songs[item['trackid']]['name']);
+            }
+        })
 
        if(item ){
            var redirectUri= process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/users/` : `http://localhost:8888/users/`
@@ -31,16 +41,8 @@ const ReturnPost = React.memo(({item, id}) =>{
             .catch(function (error) {
               console.log(error);
             });
-            // if(item['artistid'] && artists){
-            //   setType('artist');
-            //   setArtistName(artists[item['artistid']]['name']);
-            // }
-            // else if (item['trackid'] && songs){
-            //   setType('track');
-            //   setTrackName(songs[item['trackid']]['name']);
-            // }
-            
-   
+           
+
             function updateLike(){
              console.log("Called outside if/else.");
              console.log(Object.values(likes[item['likes']]));
@@ -140,29 +142,13 @@ const ReturnPost = React.memo(({item, id}) =>{
                    
                    
                       </Grid.Row>
-                      {/* <Grid.Column width={3} >
-                        <Button color='red' size="mini" onClick={()=>{updateLike();}}>
-                          <Icon name='heart' />
-                             Like
-                        </Button>
- 
-                      </Grid.Column> */}
                </Grid>
-                 : <Loader active inline='centered' />  }
+                 : <div>
+                   <Loader active inline='centered' />
+                 {id }
+                 </div>
+                   }
                </Segment>
-                {/* <Segment raised attached style={{marginTop:"-15px"}}> */}
-                {/* <Button color='red' onClick={()=>{updateLike();}}>
-                   <Icon name='heart' />
-                     Like
-                 </Button> */}
-                 
-    
-                 {/* <Label as='a' basic color='red' pointing='left'>
-                   {likes[item['likes']] != 0 ? Object.values(likes[item['likes']]).length:0}
-                 </Label>
-                 <Header style={{textAlign:"center", marginTop:"-10px"}} as='h6'> {`${time}`}</Header> */}
- 
-                 {/* </Segment> */}
                  {replies[item['replies']] != 0 && showReply? 
                   Object.values(replies[item['replies']]).map(id => <ReturnReply key={id.posterid+id.createdAt} reply={id}></ReturnReply>)
                 
@@ -189,11 +175,10 @@ const ReturnPost = React.memo(({item, id}) =>{
              )
 
           }
-          else if(type=='song'){
+          else if(type=='track'){
             return(
               <div>
                <Segment attached>
-                  
                   {poster ? 
                    <Grid centered >
                      <Grid.Row>
@@ -235,29 +220,15 @@ const ReturnPost = React.memo(({item, id}) =>{
                    
                    
                       </Grid.Row>
-                      {/* <Grid.Column width={3} >
-                        <Button color='red' size="mini" onClick={()=>{updateLike();}}>
-                          <Icon name='heart' />
-                             Like
-                        </Button>
- 
-                      </Grid.Column> */}
+
                </Grid>
-                 : <Loader active inline='centered' />  }
+                 : 
+                 <div>
+                 <Loader active inline='centered' /> 
+                 {id }
+                 </div>}
                </Segment>
-                {/* <Segment raised attached style={{marginTop:"-15px"}}> */}
-                {/* <Button color='red' onClick={()=>{updateLike();}}>
-                   <Icon name='heart' />
-                     Like
-                 </Button> */}
-                 
-    
-                 {/* <Label as='a' basic color='red' pointing='left'>
-                   {likes[item['likes']] != 0 ? Object.values(likes[item['likes']]).length:0}
-                 </Label>
-                 <Header style={{textAlign:"center", marginTop:"-10px"}} as='h6'> {`${time}`}</Header> */}
- 
-                 {/* </Segment> */}
+
                  {replies[item['replies']] != 0 && showReply? 
                   Object.values(replies[item['replies']]).map(id => <ReturnReply key={id.posterid+id.createdAt} reply={id}></ReturnReply>)
                 
@@ -287,7 +258,13 @@ const ReturnPost = React.memo(({item, id}) =>{
             
          }
           else{
-            return(<Loader active inline='centered' />)
+            return(
+              <div>
+            <Loader active inline='centered' />
+            {id}
+            </div>
+            
+            )
           }
         });
 

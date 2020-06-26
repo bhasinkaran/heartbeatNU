@@ -44,17 +44,17 @@ const HomePagePosts = () =>{
 
         if(values.length>=3){
           console.log("Here");
-          temp.push(values.slice(-3));
+          values.slice(-3).map(id=>temp.push(id));
         }
 
         else if(values.length>1){
           console.log("Here2");
-          temp.push(values.slice(-2));
+          values.slice(-2).map(id=>temp.push(id));;
         }
 
         else if(values.length==1){
           console.log("Here3");
-          temp.push(values.slice(-1));
+          values.slice(-1).map(id=>temp.push(id));;
         }
  
        }
@@ -70,17 +70,17 @@ const HomePagePosts = () =>{
 
          if(values.length>=3){
           //  console.log("Here");
-           temp.push(values.slice(-3));
+           values.slice(-3).map(id=>temp.push(id));
          }
 
          else if(values.length>1){
           //  console.log("Here2");
-           temp.push(values.slice(-2));
+           values.slice(-2).map(id=>temp.push(id));;
          }
 
          else if(values.length==1){
           //  console.log("Here3");
-           temp.push(values.slice(-1));
+           values.slice(-1).map(id=>temp.push(id));;
          }
         }
        }
@@ -112,8 +112,8 @@ const HomePagePosts = () =>{
       <Container>
       <Header as='h1' content={"Homepagefeed"} textAlign='center' dividing />
       {/* {returnPosts.length > 0 ? returnPosts.map(id=> <ReturnHomePagePost postid={id} />) : "No posts as yet"} */}
-     {/* {returnPosts && posts ? returnPosts.map(id => <ReturnHomepagePost item={posts[id]} id={id} />) : " "} */}
-     <ReturnHomepagePost item={posts['-MAUybwcC0MyDfwFhnqg']} id={'-MAUybwcC0MyDfwFhnqg'} />
+     {returnPosts && posts ? returnPosts.map(id => <ReturnHomepagePost item={posts[id]} id={id} />) : " "}
+     {/* <ReturnHomepagePost item={posts['-MAUybwcC0MyDfwFhnqg']} id={'-MAUybwcC0MyDfwFhnqg'} /> */}
       </Container>
     </div> 
    
