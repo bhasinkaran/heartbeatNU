@@ -14,9 +14,9 @@ const ReturnPost = React.memo(({item, id}) =>{
         const {replies, setReplies, artists, setArtists, messages, setMessages, songs, setSongs,posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshToken} = React.useContext(InfoContext);
         const [poster, setPoster]=useState("");
         const [showReply, setShowReply]=useState(false);
-        const [type, setType]=useState("");
+        const [type, setType]=useState("track");
         const [artistName, setArtistName]=useState("");
-        const [songName, setSongName]=useState("");
+        const [trackName, setTrackName]=useState("");
     
         const replyRef = useRef();
 
@@ -31,14 +31,14 @@ const ReturnPost = React.memo(({item, id}) =>{
             .catch(function (error) {
               console.log(error);
             });
-            if(item['artistid'] && artists){
-              setType('artist');
-              setArtistName(artists[item['artistid']]['name']);
-            }
-            else if (item['trackid'] && songs){
-              setType('track');
-              setArtistName(songs[item['trackid']]['name']);
-            }
+            // if(item['artistid'] && artists){
+            //   setType('artist');
+            //   setArtistName(artists[item['artistid']]['name']);
+            // }
+            // else if (item['trackid'] && songs){
+            //   setType('track');
+            //   setTrackName(songs[item['trackid']]['name']);
+            // }
             
    
             function updateLike(){
@@ -94,139 +94,204 @@ const ReturnPost = React.memo(({item, id}) =>{
             }
    
             
-          
-        
+           if(type=='artist'){
             return(
-             
-             
-             <div>
-              <Segment attached>
-                 
-                 {poster ? 
-                  <Grid centered >
-                    <Grid.Row>
-                     <Grid.Column width={5}>        
-                          <Image circular src={poster.image} size='medium' ></Image>
-                          <Grid.Row>
-                        <Header as={"h4"} textAlign="center" style={{marginTop:
-                        "10px"}}>
-                            {`${poster.name}`}
-                        </Header>
-                        </Grid.Row>
+              <div>
+               <Segment attached>
+                  
+                  {poster ? 
+                   <Grid centered >
+                     <Grid.Row>
+                       {/* <Header as={'h3'}>{artistName}</Header> */}
+                     </Grid.Row>
+                     <Grid.Row>
+                      <Grid.Column width={5}>        
+                           <Image circular src={poster.image} size='medium' ></Image>
+                           <Grid.Row>
+                         <Header as={"h4"} textAlign="center" style={{marginTop:
+                         "10px"}}>
+                             {`${poster.name}`}
+                         </Header>
+                         </Grid.Row>
+                       </Grid.Column>
+                       <Grid.Column width={11}>
+                          <Label as='a' basic color='red' size="huge" pointing='left' style={{marginTop:"12px"}}>
+                             {item['content']}
+                         </Label>
                       </Grid.Column>
-                      <Grid.Column width={11}>
-                         <Label as='a' basic color='red' size="huge" pointing='left' style={{marginTop:"12px"}}>
-                            {item['content']}
-                        </Label>
-                     </Grid.Column>
-                     </Grid.Row>
-                     <Grid.Row style={{marginTop:"-20px", marginBottom: "-10px"}}>
-                  <Grid.Column width={8}>
+                      </Grid.Row>
+                      <Grid.Row style={{marginTop:"-20px", marginBottom: "-10px"}}>
+                   <Grid.Column width={8}>
+                  <Header  as="h5" color='gray' >
+                   {likes[item['likes']] != 0 ? Object.values(likes[item['likes']]).length :0}
+                   {' Likes & '}
+                   {replies[item['replies']] != 0 ? Object.values(replies[item['replies']]).length :0}
+                   {' Replies'}
+                 </Header>
+                 </Grid.Column>
+                 <Grid.Column width={3}>
+ 
+                 </Grid.Column>
+                 <Grid.Column width={5}>
                  <Header  as="h5" color='gray' >
-                  {likes[item['likes']] != 0 ? Object.values(likes[item['likes']]).length :0}
-                  {' Likes & '}
-                  {replies[item['replies']] != 0 ? Object.values(replies[item['replies']]).length :0}
-                  {' Replies'}
-                </Header>
-                </Grid.Column>
-                <Grid.Column width={3}>
-
-                </Grid.Column>
-                <Grid.Column width={5}>
-                <Header  as="h5" color='gray' >
-                  {`${time}`}
-                </Header>
-                </Grid.Column>
-                  
-                  
-                     </Grid.Row>
-                     {/* <Grid.Column width={3} >
-                       <Button color='red' size="mini" onClick={()=>{updateLike();}}>
-                         <Icon name='heart' />
-                            Like
-                       </Button>
-
-                     </Grid.Column> */}
-              </Grid>
-                : <Loader active inline='centered' />  }
-              </Segment>
-               {/* <Segment raised attached style={{marginTop:"-15px"}}> */}
-               {/* <Button color='red' onClick={()=>{updateLike();}}>
-                  <Icon name='heart' />
-                    Like
-                </Button> */}
+                   {`${time}`}
+                 </Header>
+                 </Grid.Column>
+                   
+                   
+                      </Grid.Row>
+                      {/* <Grid.Column width={3} >
+                        <Button color='red' size="mini" onClick={()=>{updateLike();}}>
+                          <Icon name='heart' />
+                             Like
+                        </Button>
+ 
+                      </Grid.Column> */}
+               </Grid>
+                 : <Loader active inline='centered' />  }
+               </Segment>
+                {/* <Segment raised attached style={{marginTop:"-15px"}}> */}
+                {/* <Button color='red' onClick={()=>{updateLike();}}>
+                   <Icon name='heart' />
+                     Like
+                 </Button> */}
+                 
+    
+                 {/* <Label as='a' basic color='red' pointing='left'>
+                   {likes[item['likes']] != 0 ? Object.values(likes[item['likes']]).length:0}
+                 </Label>
+                 <Header style={{textAlign:"center", marginTop:"-10px"}} as='h6'> {`${time}`}</Header> */}
+ 
+                 {/* </Segment> */}
+                 {replies[item['replies']] != 0 && showReply? 
+                  Object.values(replies[item['replies']]).map(id => <ReturnReply key={id.posterid+id.createdAt} reply={id}></ReturnReply>)
                 
-   
-                {/* <Label as='a' basic color='red' pointing='left'>
-                  {likes[item['likes']] != 0 ? Object.values(likes[item['likes']]).length:0}
-                </Label>
-                <Header style={{textAlign:"center", marginTop:"-10px"}} as='h6'> {`${time}`}</Header> */}
+                 :""}
+                
+            <Segment attached='bottom'>
+                    {/* onSubmit={()=>handleSubmitReply()} */}
+              <Form >
+               <AddReply item={item} id={id} />
+                <Button fluid onClick={()=>{updateLike();}} >
+                   <Icon color="" name='heart' />
+                     { Object.values(likes[item['likes']]).includes(user.id) ? "Unlike": "Like"}
+                   </Button> 
+              </Form> 
+            </Segment>
+            {replies[item['replies']] != 0 && !showReply? 
+                <Form.Button fluid positive onClick = {()=>setShowReply(true)} style={{marginTop:"10px"}}>Show Replies</Form.Button> 
+ 
+                 :
+                 replies[item['replies']] != 0 ? <Form.Button fluid positive onClick = {()=>setShowReply(false)} style={{marginTop:"10px"}}>Hide Replies</Form.Button> 
+                   : ""
+                 }
+                 </div>       
+             )
 
-                {/* </Segment> */}
-                {replies[item['replies']] != 0 && showReply? 
-                 Object.values(replies[item['replies']]).map(id => <ReturnReply key={id.posterid+id.createdAt} reply={id}></ReturnReply>)
-               
-                :""}
-               
-           <Segment attached='bottom'>
-                   {/* onSubmit={()=>handleSubmitReply()} */}
-             <Form >
-              <AddReply item={item} id={id} />
-               <Button fluid onClick={()=>{updateLike();}} >
-                  <Icon color="" name='heart' />
-                    { Object.values(likes[item['likes']]).includes(user.id) ? "Unlike": "Like"}
-                  </Button> 
-             </Form> 
-           </Segment>
-           {replies[item['replies']] != 0 && !showReply? 
-               <Form.Button fluid positive onClick = {()=>setShowReply(true)} style={{marginTop:"10px"}}>Show Replies</Form.Button> 
-
-                :
-                replies[item['replies']] != 0 ? <Form.Button fluid positive onClick = {()=>setShowReply(false)} style={{marginTop:"10px"}}>Hide Replies</Form.Button> 
-                  : ""
-                }
-                </div>       
-            )
+          }
+          else if(type=='song'){
+            return(
+              <div>
+               <Segment attached>
+                  
+                  {poster ? 
+                   <Grid centered >
+                     <Grid.Row>
+                       <Header as={'h3'}>{trackName}</Header>
+                     </Grid.Row>
+                     <Grid.Row>
+                      <Grid.Column width={5}>        
+                           <Image circular src={poster.image} size='medium' ></Image>
+                           <Grid.Row>
+                         <Header as={"h4"} textAlign="center" style={{marginTop:
+                         "10px"}}>
+                             {`${poster.name}`}
+                         </Header>
+                         </Grid.Row>
+                       </Grid.Column>
+                       <Grid.Column width={11}>
+                          <Label as='a' basic color='red' size="huge" pointing='left' style={{marginTop:"12px"}}>
+                             {item['content']}
+                         </Label>
+                      </Grid.Column>
+                      </Grid.Row>
+                      <Grid.Row style={{marginTop:"-20px", marginBottom: "-10px"}}>
+                   <Grid.Column width={8}>
+                  <Header  as="h5" color='gray' >
+                   {likes[item['likes']] != 0 ? Object.values(likes[item['likes']]).length :0}
+                   {' Likes & '}
+                   {replies[item['replies']] != 0 ? Object.values(replies[item['replies']]).length :0}
+                   {' Replies'}
+                 </Header>
+                 </Grid.Column>
+                 <Grid.Column width={3}>
+ 
+                 </Grid.Column>
+                 <Grid.Column width={5}>
+                 <Header  as="h5" color='gray' >
+                   {`${time}`}
+                 </Header>
+                 </Grid.Column>
+                   
+                   
+                      </Grid.Row>
+                      {/* <Grid.Column width={3} >
+                        <Button color='red' size="mini" onClick={()=>{updateLike();}}>
+                          <Icon name='heart' />
+                             Like
+                        </Button>
+ 
+                      </Grid.Column> */}
+               </Grid>
+                 : <Loader active inline='centered' />  }
+               </Segment>
+                {/* <Segment raised attached style={{marginTop:"-15px"}}> */}
+                {/* <Button color='red' onClick={()=>{updateLike();}}>
+                   <Icon name='heart' />
+                     Like
+                 </Button> */}
+                 
+    
+                 {/* <Label as='a' basic color='red' pointing='left'>
+                   {likes[item['likes']] != 0 ? Object.values(likes[item['likes']]).length:0}
+                 </Label>
+                 <Header style={{textAlign:"center", marginTop:"-10px"}} as='h6'> {`${time}`}</Header> */}
+ 
+                 {/* </Segment> */}
+                 {replies[item['replies']] != 0 && showReply? 
+                  Object.values(replies[item['replies']]).map(id => <ReturnReply key={id.posterid+id.createdAt} reply={id}></ReturnReply>)
+                
+                 :""}
+                
+            <Segment attached='bottom'>
+                    {/* onSubmit={()=>handleSubmitReply()} */}
+              <Form >
+               <AddReply item={item} id={id} />
+                <Button fluid onClick={()=>{updateLike();}} >
+                   <Icon color="" name='heart' />
+                     { Object.values(likes[item['likes']]).includes(user.id) ? "Unlike": "Like"}
+                   </Button> 
+              </Form> 
+            </Segment>
+            {replies[item['replies']] != 0 && !showReply? 
+                <Form.Button fluid positive onClick = {()=>setShowReply(true)} style={{marginTop:"10px"}}>Show Replies</Form.Button> 
+ 
+                 :
+                 replies[item['replies']] != 0 ? <Form.Button fluid positive onClick = {()=>setShowReply(false)} style={{marginTop:"10px"}}>Hide Replies</Form.Button> 
+                   : ""
+                 }
+                 </div>       
+             )
+          }
+        
+            
          }
           else{
             return(<Loader active inline='centered' />)
           }
         });
 
-        function useEventListener(eventName, handler, element = window){
-          // Create a ref that stores handler
-          const savedHandler = useRef();
-          
-          // Update ref.current value if handler changes.
-          // This allows our effect below to always get latest handler ...
-          // ... without us needing to pass it in effect deps array ...
-          // ... and potentially cause effect to re-run every render.
-          useEffect(() => {
-            savedHandler.current = handler;
-          }, [handler]);
         
-          useEffect(
-            () => {
-              // Make sure element supports addEventListener
-              // On 
-              const isSupported = element && element.addEventListener;
-              if (!isSupported) return;
-              
-              // Create event listener that calls handler function stored in ref
-              const eventListener = event => savedHandler.current(event);
-              
-              // Add event listener
-              element.addEventListener(eventName, eventListener);
-              
-              // Remove event listener on cleanup
-              return () => {
-                element.removeEventListener(eventName, eventListener);
-              };
-            },
-            [eventName, element] // Re-run if eventName or element changes
-          );
-        };
-
 export default ReturnPost;
 
 // useEffect(() => {

@@ -8,6 +8,7 @@ import {dbArtists, dbPosts, dbReplies, dbLikes} from '../firebase/firebase'
 import {InfoContext} from '../App'
 import DateToTime from '../DateToTime'
 import ReturnPost from './Post'
+import ReturnHomepagePost from './ReturnHomepagePost'
 const mongoose = require('mongoose');
 const s = new Spotify();
 
@@ -111,7 +112,8 @@ const HomePagePosts = () =>{
       <Container>
       <Header as='h1' content={"Homepagefeed"} textAlign='center' dividing />
       {/* {returnPosts.length > 0 ? returnPosts.map(id=> <ReturnHomePagePost postid={id} />) : "No posts as yet"} */}
-     {returnPosts && posts ? returnPosts.map(id => <ReturnHomepagePost item={posts[id]} id={id} />) : " "}
+     {/* {returnPosts && posts ? returnPosts.map(id => <ReturnHomepagePost item={posts[id]} id={id} />) : " "} */}
+     <ReturnHomepagePost item={posts['-MAUybwcC0MyDfwFhnqg']} id={'-MAUybwcC0MyDfwFhnqg'} />
       </Container>
     </div> 
    
