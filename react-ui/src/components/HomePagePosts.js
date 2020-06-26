@@ -16,19 +16,20 @@ const HomePagePosts = () =>{
      const {replies, setReplies, artists, setArtists, messages, setMessages, songs, setSongs, posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshtoken} = React.useContext(InfoContext);
     //  const [timeout, setTime]=useState(false);
      const [returnPosts, setReturnPosts]=useState([]);
-     useEffect(initializeState, [artists, songs]);
+     const [orderedTime, setOrderedTime]=useState(false);
+     useEffect(initializeState, [artists, songs, posts]);
      function initializeState(){
       // console.log(user);
       // console.log(user['favoriteartists']);
-      console.log(user);
-      console.log(user.favoriteartists);
-      console.log(user['favoriteartists']);
+      // console.log(user);
+      // console.log(user.favoriteartists);
+      // console.log(user['favoriteartists']);
 
       var temp=[];
      for(let i=0; i<user.favoriteartists.length;i++){
-       console.log("Outside of IF");
-       console.log("This is i ", i);  
-       console.log(user['favoriteartists'][i]);
+      //  console.log("Outside of IF");
+      //  console.log("This is i ", i);  
+      //  console.log(user['favoriteartists'][i]);
        if(artists && artists[user['favoriteartists'][i]]){
         console.log(artists[user['favoriteartists'][i]]['name']);
 
@@ -37,13 +38,13 @@ const HomePagePosts = () =>{
 
       if(artists &&artists[user['favoriteartists'][i]] &&artists[user.favoriteartists[i]]['posts']!="None"){
         var values= Object.values(artists[user['favoriteartists'][i]]['posts']);
-        console.log("Inside of IF");
-        console.log("This is i ", i);  
-        console.log(user['favoriteartists'][i]);
-        console.log(values);
+        // console.log("Inside of IF");
+        // console.log("This is i ", i);  
+        // console.log(user['favoriteartists'][i]);
+        // console.log(values);
 
         if(values.length>=3){
-          console.log("Here");
+          // console.log("Here");
           values.slice(-3).map(id=>temp.push(id));
         }
 
@@ -53,7 +54,7 @@ const HomePagePosts = () =>{
         }
 
         else if(values.length==1){
-          console.log("Here3");
+          // console.log("Here3");
           values.slice(-1).map(id=>temp.push(id));;
         }
  
@@ -84,9 +85,13 @@ const HomePagePosts = () =>{
          }
         }
        }
-
-      setReturnPosts(temp);
-      console.log("Ran initialize State");
+       if(posts){
+         temp.sort((a,b)=>posts[b]['createdAt']-posts[a]['createdAt']);
+         setReturnPosts(temp);
+         setOrderedTime(true);
+       }
+       setReturnPosts(temp);
+      // console.log("Ran initialize State");
       
 
     }
@@ -112,7 +117,7 @@ const HomePagePosts = () =>{
       <Container>
       <Header as='h1' content={"What's been up with your favorite music?"} textAlign='center' dividing />
       {/* {returnPosts.length > 0 ? returnPosts.map(id=> <ReturnHomePagePost postid={id} />) : "No posts as yet"} */}
-     {returnPosts && posts ? returnPosts.map(id => 
+     {returnPosts && posts && orderedTime? returnPosts.map(id => 
       <Segment raised style={{marginTop: "40px"}}>
         <ReturnHomepagePost item={posts[id]} id={id} />
       </Segment>
