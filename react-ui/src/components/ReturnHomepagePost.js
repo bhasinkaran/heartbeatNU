@@ -14,6 +14,9 @@ const ReturnPost = React.memo(({item, id}) =>{
         const {replies, setReplies, artists, setArtists, messages, setMessages, songs, setSongs,posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshToken} = React.useContext(InfoContext);
         const [poster, setPoster]=useState("");
         const [showReply, setShowReply]=useState(false);
+        const [type, setType]=useState("");
+        const [artistName, setArtistName]=useState("");
+        const [songName, setSongName]=useState("");
     
         const replyRef = useRef();
 
@@ -28,6 +31,14 @@ const ReturnPost = React.memo(({item, id}) =>{
             .catch(function (error) {
               console.log(error);
             });
+            if(item['artistid'] && artists){
+              setType('artist');
+              setArtistName(artists[item['artistid']]['name']);
+            }
+            else if (item['trackid'] && songs){
+              setType('track');
+              setArtistName(songs[item['trackid']]['name']);
+            }
             
    
             function updateLike(){

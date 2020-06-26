@@ -233,7 +233,7 @@ for(let i=0; i<realistic; i++){
 
         
         <Grid.Column width = {10}>
-         {user ? <HomePagePosts userLoaded={user}/> : ""}
+         {user ? <HomePagePosts /> : ""}
         </Grid.Column>
         
        

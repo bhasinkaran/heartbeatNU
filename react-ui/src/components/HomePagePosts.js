@@ -11,7 +11,7 @@ import ReturnPost from './Post'
 const mongoose = require('mongoose');
 const s = new Spotify();
 
-const HomePagePosts = ({userLoaded}) =>{
+const HomePagePosts = () =>{
      const {replies, setReplies, artists, setArtists, messages, setMessages, songs, setSongs, posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshtoken} = React.useContext(InfoContext);
     //  const [timeout, setTime]=useState(false);
      const [returnPosts, setReturnPosts]=useState([]);
@@ -89,16 +89,7 @@ const HomePagePosts = ({userLoaded}) =>{
       
 
     }
-    // useEffect(() => {
-    //   const handleData = snap => {
-    //     if (snap.val()) setArtists(snap.val());
-    //   }
-    //   dbArtists.on('value', handleData, error => alert(error));
-    //   return () => { dbArtists.off('value', handleData); };
-    // }, []);
-    //  setTimeout(() => {
-    //   setTime(true);
-    // }, 3000);
+    
      if(user){
        localStorage.setItem('user', JSON.stringify(user));
      }
@@ -120,7 +111,7 @@ const HomePagePosts = ({userLoaded}) =>{
       <Container>
       <Header as='h1' content={"Homepagefeed"} textAlign='center' dividing />
       {/* {returnPosts.length > 0 ? returnPosts.map(id=> <ReturnHomePagePost postid={id} />) : "No posts as yet"} */}
-     {returnPosts ? returnPosts.map(id => <div>{id}</div>) : " "}
+     {returnPosts && posts ? returnPosts.map(id => <ReturnHomepagePost item={posts[id]} id={id} />) : " "}
       </Container>
     </div> 
    
