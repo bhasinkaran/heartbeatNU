@@ -114,15 +114,6 @@ const HomePagePosts = () =>{
       {/* {returnPosts.length > 0 ? returnPosts.map(id=> <ReturnHomePagePost postid={id} />) : "No posts as yet"} */}
      {returnPosts && posts ? returnPosts.map(id => 
       <Segment raised style={{marginTop: "40px"}}>
-        {id}
-        <div>
-          ..... 
-        </div>
-        {posts[id]['trackid']}
-        <div>
-          ..... 
-        </div>
-        {posts[id]['artistid']}
         <ReturnHomepagePost item={posts[id]} id={id} />
       </Segment>
       ) 
