@@ -104,28 +104,28 @@ const ReturnPost = React.memo(({item, id}) =>{
                   
                   {poster ? 
                    <Grid centered >
-                     <Grid.Row>
+                        <Grid.Row>
+                          <div>
+
+                     <Image circular src={poster.image} size="small" avatar ></Image>
+
                        <Header as={'h3'}>{`${poster.name}`} {"posted to  "}{ type== 'artist' ?  artistName : trackName}{"'s wall"}</Header>
-                     </Grid.Row>
+                       </div>
+                </Grid.Row>
                      <Grid.Row>
-                      <Grid.Column width={5}>        
-                           <Image circular src={poster.image} size='small' ></Image>
-                           <Grid.Row>
-                         <Header as={"h4"} textAlign="center" style={{marginTop:
-                         "10px"}}>
-                             {`${poster.name}`}
-                         </Header>
-                         </Grid.Row>
-                       </Grid.Column>
-                       <Grid.Column width={11}>
-                          <Label as='a' basic color='red' size="huge" pointing='left' style={{marginTop:"12px"}}>
-                             {item['content']}
-                         </Label>
+                       <Grid.Column width={16}>
+                         <Segment compact centered>
+                          <Header as="h1">{item['content']}</Header>
+
+                         </Segment>
+                          {/* <Label as='a' basic color='red' size="huge" pointing='left' style={{marginTop:"12px"}}> */}
+                             
+                         {/* </Label> */}
                       </Grid.Column>
                       </Grid.Row>
                       <Grid.Row style={{marginTop:"-20px", marginBottom: "-10px"}}>
                    <Grid.Column width={8}>
-                  <Header  as="h5" color='gray' >
+                  <Header  as="h3" color='gray' >
                    {likes[item['likes']] != 0 ? Object.values(likes[item['likes']]).length :0}
                    {' Likes & '}
                    {replies[item['replies']] != 0 ? Object.values(replies[item['replies']]).length :0}
@@ -136,7 +136,7 @@ const ReturnPost = React.memo(({item, id}) =>{
  
                  </Grid.Column>
                  <Grid.Column width={5}>
-                 <Header  as="h5" color='gray' >
+                 <Header  as="h3" color='gray' >
                    {`${time}`}
                  </Header>
                  </Grid.Column>
