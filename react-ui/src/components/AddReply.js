@@ -72,7 +72,7 @@ const  AddReply =({item , id})=> {
                   setValue(e.target.value);
                   console.log(e.target.value);
                 }} rows={1} placeholder='Reply to post' /> 
-                <Form.Button fluid positive onClick = {()=>handleSubmitReply()} style={{marginTop:"10px"}}>Reply</Form.Button> 
+                {/* <Form.Button fluid positive onClick = {()=>handleSubmitReply()} style={{marginTop:"10px"}}>Reply</Form.Button>  */}
        </div>
 )}
 
