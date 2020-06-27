@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {Input, Divider} from 'semantic-ui-react'
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -50,9 +51,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SignInSide() {
+  const [nonSpotify, setNonSpotify] = useState(false);
+
   const classes = useStyles();
   var redirectableLogin= process.env.NODE_ENV === 'production' ? `https://pure-harbor-26317.herokuapp.com/login` : `http://localhost:8888/login`;
-
+  var redirectableSignup = process.env.NODE_ENV === 'production' ? `https://pure-harbor-26317.herokuapp.com/nonspotify/signup` : `http://localhost:3000/nonspotify/signup`;
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -65,7 +68,7 @@ export default function SignInSide() {
             <LockIcon style={{ color: 'green'}} />
           </Avatar>
          
-
+    {!nonSpotify ? <div> 
             <a href= {redirectableLogin }>
             <Button
               type="submit"
@@ -74,9 +77,45 @@ export default function SignInSide() {
               color="primary"
               className={classes.submit}
             >
-              Log in with spotify
+              Log in Spotify
             </Button>
              </a>
+
+            
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={()=>setNonSpotify(true)}
+            >
+              Other Login
+            </Button>
+            </div> :
+            
+            <div>
+                             <Divider  hidden />
+
+               <Input size="big" icon='users' iconPosition='left' placeholder='Enter Username...' />
+               <Divider   hidden />
+               <Input size="big" icon='users' iconPosition='left' placeholder='Enter Password...' />
+               <Divider />
+               <a href= {redirectableSignup }>
+              <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              
+            >
+              Sign up
+            </Button>
+            </a>
+              </div>}
+             
+             
         </div>
       </Grid>
     </Grid>
