@@ -17,6 +17,8 @@ const HomePagePosts = () =>{
     //  const [timeout, setTime]=useState(false);
      const [returnPosts, setReturnPosts]=useState([]);
      const [orderedTime, setOrderedTime]=useState(false);
+     const arrayColors = ['red','orange','yellow','olive','green','teal','blue','violet','purple','pink','brown','grey','black'];
+     const number = Math.floor((Math.random() * 12) );
      useEffect(initializeState, [artists, songs, posts]);
      function initializeState(){
       // console.log(user);
@@ -118,7 +120,7 @@ const HomePagePosts = () =>{
       <Header as='h1' content={"What's been up with your favorite music?"} textAlign='center' dividing />
       {/* {returnPosts.length > 0 ? returnPosts.map(id=> <ReturnHomePagePost postid={id} />) : "No posts as yet"} */}
      {returnPosts && posts && orderedTime? returnPosts.map(id => 
-      <Segment raised style={{marginTop: "40px"}}>
+      <Segment color={arrayColors[number]} raised style={{marginTop: "40px"}}>
         <ReturnHomepagePost item={posts[id]} id={id} />
       </Segment>
       ) 

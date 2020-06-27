@@ -17,7 +17,9 @@ const ReturnPost = React.memo(({item, id}) =>{
         const [type, setType]=useState("track");
         const [artistName, setArtistName]=useState("");
         const [trackName, setTrackName]=useState("");
-    
+        const arrayColors = ['red','orange','yellow','olive','green','teal','blue','violet','purple','pink','brown','grey','black'];
+        const number = Math.floor((Math.random() * 12) );
+
         const replyRef = useRef();
         useEffect(()=>{
            if(item && item['artistid'] && artists){
@@ -114,7 +116,7 @@ const ReturnPost = React.memo(({item, id}) =>{
                 </Grid.Row>
                      <Grid.Row>
                        <Grid.Column width={16} style={{alignContent:"center"}}>
-                         <Segment centered color='red'>
+                         <Segment centered color={arrayColors[number]}> 
                           <Header as="h1">{item['content']}</Header>
 
                          </Segment>
