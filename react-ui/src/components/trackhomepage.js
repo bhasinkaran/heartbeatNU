@@ -9,6 +9,7 @@ import {InfoContext} from '../App'
 import ReturnPost from './Post'
 import ReturnReply from './Reply'
 import DateToTime from '../DateToTime'
+import ReturnHomepagePost from './ReturnHomepagePost'
 const mongoose = require('mongoose');
 const s = new Spotify();
 
@@ -134,9 +135,7 @@ const TrackPage = () =>{
         {songs && songs[trackid] && songs[trackid]['posts']!="None" ? 
          Object.values(songs[trackid]['posts']).map(id=>
           <Segment raised style={{marginTop: "40px"}}>
-
-          
-        <ReturnPost key={id.toString()} id={id} item={posts[id]}/>
+              <ReturnHomepagePost key={id.toString()} item={posts[id]} id={id} includeHeader={false} />
         </Segment>
         ) 
         : " "}

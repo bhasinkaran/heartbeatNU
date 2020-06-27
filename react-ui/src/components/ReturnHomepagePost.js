@@ -10,7 +10,7 @@ import DateToTime from '../DateToTime'
 import ReturnReply from './Reply'
 import AddReply from './AddReply';
 
-const ReturnPost = React.memo(({item, id}) =>{
+const ReturnPost = React.memo(({item, id, includeHeader}) =>{
         const {replies, setReplies, artists, setArtists, messages, setMessages, songs, setSongs,posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshToken} = React.useContext(InfoContext);
         const [poster, setPoster]=useState("");
         const [showReply, setShowReply]=useState(false);
@@ -111,7 +111,7 @@ const ReturnPost = React.memo(({item, id}) =>{
 
                      <Image circular src={poster.image} size="small" avatar ></Image>
 
-                       <Header as={'h3'}>{`${poster.name}`} {"posted to  "}{ type== 'artist' ?  artistName : trackName}{"'s wall"}</Header>
+                     {includeHeader ?   <Header as={'h3'}>{`${poster.name}`} {"posted to  "}{ type== 'artist' ?  artistName : trackName}{"'s wall"}</Header> : <Header as={'h3'}>{`${poster.name}`}</Header>}
                        </div>
                 </Grid.Row>
                      <Grid.Row>
@@ -181,7 +181,7 @@ const ReturnPost = React.memo(({item, id}) =>{
             return(
               <div>
             <Loader active inline='centered' />
-            {id}
+            {/* {id} */}
             </div>
             
             )

@@ -121,7 +121,7 @@ const HomePagePosts = () =>{
       {/* {returnPosts.length > 0 ? returnPosts.map(id=> <ReturnHomePagePost postid={id} />) : "No posts as yet"} */}
      {returnPosts && posts && orderedTime? returnPosts.map(id => 
       <Segment color={arrayColors[number]} raised style={{marginTop: "40px"}}>
-        <ReturnHomepagePost item={posts[id]} id={id} />
+        <ReturnHomepagePost item={posts[id]} id={id} includeHeader={true} />
       </Segment>
       ) 
       : " "}
