@@ -113,14 +113,11 @@ const ReturnPost = React.memo(({item, id}) =>{
                        </div>
                 </Grid.Row>
                      <Grid.Row>
-                       <Grid.Column width={16}>
-                         <Segment compact centered>
+                       <Grid.Column width={16} style={{alignContent:"center"}}>
+                         <Segment centered color='red'>
                           <Header as="h1">{item['content']}</Header>
 
                          </Segment>
-                          {/* <Label as='a' basic color='red' size="huge" pointing='left' style={{marginTop:"12px"}}> */}
-                             
-                         {/* </Label> */}
                       </Grid.Column>
                       </Grid.Row>
                       <Grid.Row style={{marginTop:"-20px", marginBottom: "-10px"}}>
