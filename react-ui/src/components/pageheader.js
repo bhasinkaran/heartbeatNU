@@ -97,16 +97,22 @@ const PageHeader = ({access_token, id}) => {
       basic
       style={{ backgroundColor: "#1DB954", textAlign: "center", marginBottom: "10px" }}
       fluid="true">
+        <Grid centered >
+          <Grid.Row>
+          <Grid.Column width={"4"}>
           <Header
             as={Link}
             to={`/home/${access_token}/${id}`}
             inverted 
-            content="Nearify" 
-            size="large" 
+            content="Nearify: Everything About Music." 
+            size="huge" 
             color="black"
             style={{cursor: "default"}}
+            
           />
-          <Container>
+          </Grid.Column>
+
+         <Grid.Column width={5} >
             <Search
             loading={isLoading}
             onResultSelect={(e, {result})=>{
@@ -130,7 +136,10 @@ const PageHeader = ({access_token, id}) => {
             input={{ fluid: true }}
         //     {...this.props}
           />
-            </Container>
+          </Grid.Column>
+          </Grid.Row>
+          
+            </Grid>
     </Segment>
          
           {redirectArtist ? <Redirect to={`/artist/${result.id}`} push={true} /> : ""}

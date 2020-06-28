@@ -13,13 +13,21 @@ import {BrowserRouter, Route} from 'react-router-dom'
 import Signup from './components/signup';
 import ArtistPage from './components/artisthomepage'
 import TrackPage from './components/trackhomepage'
-
+import PageHeader from './components/pageheader'
 import {dbMessages, dbPosts, dbSongs, dbArtists, dbReplies, dbLikes} from './firebase/firebase';
 
 const s = new Spotify();
 
 export const InfoContext = React.createContext();
 function App() {
+  function withMenu(page){
+    return(
+      <div>
+        <PageHeader accesstoken={accesstoken} id={user.id}/>
+        {page}
+      </div>
+    )
+  }
   
   const [artists, setArtists]=useState("")
   const [messages, setMessages]=useState("")
@@ -92,10 +100,10 @@ function App() {
   return(
     <BrowserRouter>
       <InfoContext.Provider value={{replies, setReplies, artists, setArtists, messages, setMessages, songs, setSongs,posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshToken}}>
-        <Route exact path="/signup/:id/:access_token" render={()=><Signup />} />
+        <Route exact path="/signup/:id/:access_token" render={()=> <Signup />} />
         <Route exact path="/" render={()=><Login />} />
         
-        <Route exact path="/home/:id/:access_token/:refresh_token"  render = {()=> <Homepage ></Homepage>} />
+        <Route exact path="/home/:id/:access_token/:refresh_token"  render = {()=> withMenu(<Homepage ></Homepage>)} />
     
        
         <Route exact path="/artist/:artistid"  render = {()=> <ArtistPage ></ArtistPage>} />
