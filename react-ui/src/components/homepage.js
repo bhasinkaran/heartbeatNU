@@ -119,7 +119,7 @@ useEffect(attractedTo, [mongouser, allusers]);
 
  return (
     <div className="App">
-            <Grid padded >
+      <Grid padded >
       <Grid.Row stretched>  
         <Grid.Column width = {3}>
         {mongouser['favoritesongs'] ? <FavoriteSongs songs={mongouser['favoritesongs']} accesstoken={access_token} refreshtoken={refresh_token}/> : "" }

@@ -104,10 +104,8 @@ function App() {
         <Route exact path="/" render={()=><Login />} />
         
         <Route exact path="/home/:id/:access_token/:refresh_token"  render = {()=> withMenu(<Homepage ></Homepage>)} />
-    
-       
-        <Route exact path="/artist/:artistid"  render = {()=> <ArtistPage ></ArtistPage>} />
-        <Route exact path="/track/:trackid"  render = {()=> <TrackPage ></TrackPage>} />
+        <Route exact path="/artist/:artistid"  render = {()=> withMenu(<ArtistPage ></ArtistPage>)} />
+        <Route exact path="/track/:trackid"  render = {()=> withMenu(<TrackPage ></TrackPage>)} />
 
         {/* <Route exact path="/artist/:artistid/:bool"  render = {()=> <ArtistPage ></ArtistPage>} /> */}
 
