@@ -1,4 +1,4 @@
-import { Header, Segment, Grid, Icon, Container, Search } from 'semantic-ui-react';
+import { Header, Segment, Grid, Icon, Button, Search } from 'semantic-ui-react';
 import React, {useState} from 'react';
 import { Redirect, Link} from 'react-router-dom';
 import _ from 'lodash'
@@ -37,7 +37,7 @@ const PageHeader = ({access_token, id}) => {
     }
     for(let i=0; i<realistic; i++){
             let item=res.data.artists.items[i];
-            console.log(item);
+            // console.log(item);
             if(item.images[0]){
                     temp.push({title: item.name, image: item.images[0].url, description: item.genres[0], price: item.popularity, id: item.id, type: "artist"})
   
@@ -57,7 +57,7 @@ const PageHeader = ({access_token, id}) => {
               'Authorization': 'Bearer ' + accesstoken 
       }
   });
-  console.log("this is res SONG",ressong);
+  // console.log("this is res SONG",ressong);
   var max=ressong.data.tracks.items.length;
   var realistic=10;
   if(max<realistic){
@@ -85,7 +85,7 @@ const PageHeader = ({access_token, id}) => {
        return 1;
      };
     })       
-    console.log(temp);
+    // console.log(temp);
   
     setResults(temp);
     // console.log(temp);
@@ -112,7 +112,7 @@ const PageHeader = ({access_token, id}) => {
           />
           </Grid.Column>
 
-         <Grid.Column width={5} >
+         <Grid.Column width={4} >
             <Search
             loading={isLoading}
             onResultSelect={(e, {result})=>{
@@ -136,6 +136,13 @@ const PageHeader = ({access_token, id}) => {
             input={{ fluid: true }}
         //     {...this.props}
           />
+          </Grid.Column>
+          <Grid.Column width={1}>
+            <Button inverted icon='home' color ='black' >
+            </Button>
+            {/* <Button inverted icon='arrow left' color ='black' >
+              Logout
+            </Button> */}
           </Grid.Column>
           </Grid.Row>
           
