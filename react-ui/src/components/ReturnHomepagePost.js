@@ -145,7 +145,6 @@ const ReturnPost = React.memo(({item, id, includeHeader}) =>{
                </Grid>
                  : <div>
                    <Loader active inline='centered' />
-                 {id }
                  </div>
                    }
                </Segment>

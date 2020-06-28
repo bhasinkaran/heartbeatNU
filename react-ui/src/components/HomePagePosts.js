@@ -125,6 +125,7 @@ const HomePagePosts = () =>{
       </Segment>
       ) 
       : " "}
+      <Header as="h1" > To start using the website, go to your an artist's or song's page and then leave a post, reply or like!  </Header>
       
      {/* <ReturnHomepagePost item={posts['-MAUybwcC0MyDfwFhnqg']} id={'-MAUybwcC0MyDfwFhnqg'} /> */}
       </Container>
