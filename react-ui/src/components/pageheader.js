@@ -16,6 +16,10 @@ const PageHeader = ({access_token, id}) => {
   const [result, setResult]=useState("");
   const [redirectArtist, setRedirectArtist]=useState(false);
   const [redirectTrack, setRedirectTrack]=useState(false);
+  const [redirectLogout, setRedirectLogout]=useState(false);
+  const [logout, setLogout]=useState(false);
+  const [home, setRedirectHome]=useState(false);
+
   async function  handleSearchChange(valuee)  {
     setisLoading(true);
     setValue(valuee);
@@ -138,11 +142,20 @@ const PageHeader = ({access_token, id}) => {
           />
           </Grid.Column>
           <Grid.Column width={1}>
-            <Button inverted icon='home' color ='black' >
+            <Button onClick={()=>setRedirectHome(true)} inverted icon='home' color ='black' >
             </Button>
             {/* <Button inverted icon='arrow left' color ='black' >
               Logout
             </Button> */}
+          </Grid.Column>
+          <Grid.Column width={1}>
+
+            <Button inverted onClick={()=>{
+              setRedirectLogout(true);
+              setUser("");
+            }} icon='arrow left' color ='black' >
+              Logout
+            </Button>
           </Grid.Column>
           </Grid.Row>
           
@@ -151,6 +164,9 @@ const PageHeader = ({access_token, id}) => {
          
           {redirectArtist ? <Redirect to={`/artist/${result.id}`} push={true} /> : ""}
           {redirectTrack ? <Redirect to={`/track/${result.id}`} push={true} /> : ""}
+          {redirectLogout ? <Redirect to={`/`} push={true} /> : ""}
+          {home ? <Redirect to={`/home/${user.id}/${accesstoken}/${refreshtoken}`} push={true} /> : ""}
+
           </div>
     
     );
