@@ -24,6 +24,9 @@ const SettingsPage = () => {
                                         </Grid.Row>
                                         <Grid.Row>
                                                 <Header as={'h4'}>Email: {user.email}</Header>
+                                                <Grid.Row>
+                                                <Header as={'h4'}>(FYI we also know your top artists/songs but that's just so that we can give you content that's relevant for you lol.) {user.email}</Header>
+                                                </Grid.Row>
                                         </Grid.Row>
                                         <Grid.Row>
                                                 {user.image==="https://pngimg.com/uploads/music_notes/music_notes_PNG84.png" ? 
