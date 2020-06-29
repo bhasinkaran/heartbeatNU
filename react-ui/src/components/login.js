@@ -68,7 +68,8 @@ export default function SignInSide() {
             <LockIcon style={{ color: 'green'}} />
           </Avatar>
          
-    {!nonSpotify ? <div> 
+    {/* {!nonSpotify ?  */}
+    {/* <div>  */}
             <a href= {redirectableLogin }>
             <Button
               type="submit"
@@ -82,7 +83,7 @@ export default function SignInSide() {
              </a>
 
             
-            <Button
+            {/* <Button
               type="submit"
               fullWidth
               variant="contained"
@@ -92,28 +93,30 @@ export default function SignInSide() {
             >
               Other Login
             </Button>
-            </div> :
+            </div>  */}
+            {/* // :
             
-            <div>
-                             <Divider  hidden />
+            // <div>
+            //                  <Divider  hidden />
 
-               <Input size="big" icon='users' iconPosition='left' placeholder='Enter Username...' />
-               <Divider   hidden />
-               <Input size="big" icon='users' iconPosition='left' placeholder='Enter Password...' />
-               <Divider />
-               <a href= {redirectableSignup }>
-              <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
+            //    <Input size="big" icon='users' iconPosition='left' placeholder='Enter Username...' />
+            //    <Divider   hidden />
+            //    <Input size="big" icon='users' iconPosition='left' placeholder='Enter Password...' />
+            //    <Divider />
+            //    <a href= {redirectableSignup }>
+            //   <Button 
+            //   type="submit"
+            //   fullWidth
+            //   variant="contained"
+            //   color="primary"
+            //   className={classes.submit}
               
-            >
-              Sign up
-            </Button>
-            </a>
-              </div>}
+            // >
+            //   Sign up
+            // </Button>
+            // </a>
+            //   </div>}
+            */}
              
              
         </div>

@@ -17,6 +17,7 @@ const PageHeader = ({access_token, id}) => {
   const [redirectArtist, setRedirectArtist]=useState(false);
   const [redirectTrack, setRedirectTrack]=useState(false);
   const [redirectLogout, setRedirectLogout]=useState(false);
+  const [redirectSettings, setRedirectSettings]=useState(false);
   const [logout, setLogout]=useState(false);
   const [home, setRedirectHome]=useState(false);
 
@@ -103,7 +104,7 @@ const PageHeader = ({access_token, id}) => {
       fluid="true">
         <Grid centered >
           <Grid.Row>
-          <Grid.Column width={"4"}>
+          <Grid.Column width={"5"}>
           <Header
             as={Link}
             to={`/home/${access_token}/${id}`}
@@ -116,7 +117,7 @@ const PageHeader = ({access_token, id}) => {
           />
           </Grid.Column>
 
-         <Grid.Column width={4} >
+         <Grid.Column width={5} >
             <Search
             loading={isLoading}
             onResultSelect={(e, {result})=>{
@@ -142,20 +143,21 @@ const PageHeader = ({access_token, id}) => {
           />
           </Grid.Column>
           <Grid.Column width={1}>
+            <Button.Group>
             <Button onClick={()=>setRedirectHome(true)} inverted icon='home' color ='black' >
             </Button>
-            {/* <Button inverted icon='arrow left' color ='black' >
-              Logout
-            </Button> */}
-          </Grid.Column>
-          <Grid.Column width={1}>
-
+            <Button onClick={()=>setRedirectSettings(true)} inverted icon='settings' color ='black' >
+            </Button>
             <Button inverted onClick={()=>{
               setRedirectLogout(true);
               setUser("");
             }} icon='arrow left' color ='black' >
               Logout
             </Button>
+            </Button.Group>
+            {/* <Button inverted icon='arrow left' color ='black' >
+              Logout
+            </Button> */}
           </Grid.Column>
           </Grid.Row>
           

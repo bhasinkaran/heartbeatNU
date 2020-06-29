@@ -128,9 +128,7 @@ const FavoriteArtists = ({accesstoken, artists, refreshtoken}) =>{
              return(
     <div className="FavoriteArtists ">
            
-            
-    
-        <Header  size='huge'>Top Artist</Header>
+        <Header  size='huge'>Top Artists</Header>
 
         <Grid.Row >  
         {artistimages.length > 15 ? indexarray.slice(0,2).map(id=><ReturnFavArtist key = {id.toString()} id={id} />) : ""}
