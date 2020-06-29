@@ -68,7 +68,8 @@ export default function SignInSide() {
             <LockIcon style={{ color: 'green'}} />
           </Avatar>
          
-    {!nonSpotify ? <div> 
+    {/* {!nonSpotify ?  */}
+    {/* <div>  */}
             <a href= {redirectableLogin }>
             <Button
               type="submit"
@@ -81,7 +82,7 @@ export default function SignInSide() {
             </Button>
              </a>
 
-            
+{/*             
             <Button
               type="submit"
               fullWidth
@@ -114,7 +115,7 @@ export default function SignInSide() {
             </Button>
             </a>
               </div>}
-             
+              */}
              
         </div>
       </Grid>
