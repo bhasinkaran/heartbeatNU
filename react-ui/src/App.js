@@ -15,6 +15,7 @@ import ArtistPage from './components/artisthomepage'
 import TrackPage from './components/trackhomepage'
 import PageHeader from './components/pageheader'
 import {dbMessages, dbPosts, dbSongs, dbArtists, dbReplies, dbLikes} from './firebase/firebase';
+import SettingsPage from './components/settingspage';
 
 const s = new Spotify();
 
@@ -102,6 +103,7 @@ function App() {
       <InfoContext.Provider value={{replies, setReplies, artists, setArtists, messages, setMessages, songs, setSongs,posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshToken}}>
         <Route exact path="/signup/:id/:access_token" render={()=> <Signup />} />
         <Route exact path="/" render={()=><Login />} />
+        <Route exact path="/settings" render={()=>withMenu(<SettingsPage />)} />
         
         <Route exact path="/home/:id/:access_token/:refresh_token"  render = {()=> withMenu(<Homepage ></Homepage>)} />
         <Route exact path="/artist/:artistid"  render = {()=> withMenu(<ArtistPage ></ArtistPage>)} />

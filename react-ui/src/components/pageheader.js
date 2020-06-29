@@ -167,6 +167,7 @@ const PageHeader = ({access_token, id}) => {
           {redirectArtist ? <Redirect to={`/artist/${result.id}`} push={true} /> : ""}
           {redirectTrack ? <Redirect to={`/track/${result.id}`} push={true} /> : ""}
           {redirectLogout ? <Redirect to={`/`} push={true} /> : ""}
+          {redirectSettings ? <Redirect to={`/settings`} push={true} /> : ""}
           {home ? <Redirect to={`/home/${user.id}/${accesstoken}/${refreshtoken}`} push={true} /> : ""}
 
           </div>
