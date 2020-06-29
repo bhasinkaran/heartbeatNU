@@ -1,7 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/database';
 import apiKey from './api-Key';
-import 'firebase/storage'
 
 const firebaseConfig = {
         apiKey: apiKey,
@@ -16,8 +15,6 @@ const firebaseConfig = {
 
 
 firebase.initializeApp(firebaseConfig);
-const storage = firebase.storage();
-export default storage;
 export const dbArtists = firebase.database().ref().child('artists');
 export const dbSongs  = firebase.database().ref().child('songs');
 export const dbPosts = firebase.database().ref().child('posts');
