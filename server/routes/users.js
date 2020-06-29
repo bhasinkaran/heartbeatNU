@@ -107,7 +107,7 @@ router.route('/add').get((req,res)=>{
                               console.log(topsongs);
   
   
-                              const newUser=new User({"name": displayname,"favoriteartists": ids, "favoritesongs": topsongs, "id":id, "email":email, "image":image, "url": externalurl, "postsfollowing": [], imagetype: true});
+                              const newUser=new User({"name": displayname,"favoriteartists": ids, "favoritesongs": topsongs, "id":id, "email":email, "image":image, "url": externalurl, "postsfollowing": [] });
                               newUser.save()
                               .then(()=>{
                                 var url =  process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/home/${id}/${req.query.access_token}/${req.query.refresh_token}`: `http://localhost:3000/home/${id}/${req.query.access_token}/${req.query.refresh_token}`;
@@ -135,32 +135,6 @@ router.route('/add').get((req,res)=>{
     });
 
 });
-
-router.route('/add/nonspotify').post((req,res)=>{
-  var displayname=req.query.displayname;
-  var ids = req.query.favartists;
-  var topsongs  = req.query.topsongs;
-  var email= req.query.email;
-  var image  = req.query.url
-
-
-  const newUser=new User({"name": displayname,"favoriteartists": ids, "favoritesongs": topsongs, "id":id, "email":email, "image":image, "url": externalurl, "postsfollowing": [] });
-  newUser.save()
-  .then(()=>{
-    var url =  process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/home/${id}/${req.query.access_token}/${req.query.refresh_token}`: `http://localhost:3000/home/${id}/${req.query.access_token}/${req.query.refresh_token}`;
-        res.redirect(url);
-
-    // var url =  process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/signup/${id}/${req.query.access_token}`: `http://localhost:3000/signup/${id}/${req.query.access_token}`;
-    // res.status(200).redirect(url);
-
-  })
-  .catch(err=>{
-       console.log(displayname)
-       console.log(ids)
-       res.status(400).json('Error: '+err)
-  }); 
-
-})
 router.route('/').get((req,res)=>{
   User.find()
   .then(user=>res.json(user))

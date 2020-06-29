@@ -24,7 +24,6 @@ export const dbPosts = firebase.database().ref().child('posts');
 export const dbMessages = firebase.database().ref().child('messages');
 export const dbReplies = firebase.database().ref().child('replies');
 export const dbLikes = firebase.database().ref().child('likes');
-export const dbUsers = firebase.database().ref().child('users');
 
 
 

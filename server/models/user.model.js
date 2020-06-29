@@ -20,10 +20,6 @@ const userSchema=new Schema({
         type: String,
         required:false
     },
-    imagetype:{
-        type: Boolean,
-        required: true
-    },
     id:{
         type: String,
         required: true,
