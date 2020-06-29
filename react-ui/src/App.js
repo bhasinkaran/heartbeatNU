@@ -102,7 +102,7 @@ function App() {
     <BrowserRouter>
       <InfoContext.Provider value={{replies, setReplies, artists, setArtists, messages, setMessages, songs, setSongs,posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshToken}}>
         <Route exact path="/signup/:id/:access_token" render={()=> <Signup />} />
-        {/* <Route exact path="/signup/nonspotify" render={()=> <SignUpNonSpotify />} /> */}
+        <Route exact path="/signup/nonspotify" render={()=> <SignUpNonSpotify />} />
 
         <Route exact path="/" render={()=><Login />} />
         
@@ -112,7 +112,7 @@ function App() {
 
         {/* <Route exact path="/artist/:artistid/:bool"  render = {()=> <ArtistPage ></ArtistPage>} /> */}
 
-        {/* <Route exact path="/map" render={()=><MapLeaflet />} /> */}
+        <Route exact path="/map" render={()=><MapLeaflet />} />
       </InfoContext.Provider>
     </BrowserRouter>
   );
