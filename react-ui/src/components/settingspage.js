@@ -15,7 +15,7 @@ const SettingsPage = () => {
         return(
                 <div>
                         <Container>
-                                <Grid>
+                                <Grid centered>
                                         <Grid.Row>
                                              <Header as={'h2'}> Helloooo, {user.name}. What's up?</Header>   
                                         </Grid.Row>
