@@ -8,6 +8,8 @@ import './App.css';
 import Spotify from 'spotify-web-api-js';
 import Homepage from './components/homepage';
 import Login from './components/login'
+import {Segment, Sidebar} from 'semantic-ui-react'
+import SideBar from './components/Sidebar'
 import MapLeaflet from './components/MapLeaflet'
 import {BrowserRouter, Route} from 'react-router-dom'
 import Signup from './components/signup';
@@ -16,16 +18,25 @@ import TrackPage from './components/trackhomepage'
 import PageHeader from './components/pageheader'
 import {dbMessages, dbPosts, dbSongs, dbArtists, dbReplies, dbLikes} from './firebase/firebase';
 import SettingsPage from './components/settingspage';
+import FavoriteArtists from './components/favartists'
+import FavoriteSongs from './components/favsongs';
 
 const s = new Spotify();
 
 export const InfoContext = React.createContext();
 function App() {
   function withMenu(page){
+    if(user)
     return(
       <div>
         <PageHeader accesstoken={accesstoken} id={user.id}/>
-        {page}
+        <Sidebar.Pushable as={Segment}>
+        <SideBar />
+        <Sidebar.Pusher>
+          {page}
+        </Sidebar.Pusher>
+      </Sidebar.Pushable>
+
       </div>
     )
   }
@@ -39,6 +50,11 @@ function App() {
   const [user, setUser]=useState("")
   const [accesstoken, setAccesToken]=useState("")
   const [refreshtoken, setRefreshToken]=useState("")
+  const [visible, setVisible] = useState(false);
+  const [mongouser, settmongouser]=useState("");
+  const [allusers, setAllusers] = useState("");
+  const [attractedUsers,setAttracted]=useState("");
+
   
   React.useEffect(()=>{
     if(user){
@@ -53,6 +69,33 @@ function App() {
     }
     
   }, []);
+  var redirectUri= process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/users/` : `http://localhost:8888/users/`
+  useEffect( handleData, [user]);
+  function handleData(){
+    if(user)
+    axios.get(`${redirectUri}${user['id']}`)
+      .then(response => {
+       settmongouser(response.data[0]);
+       setUser(response.data[0]);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+  axios.get(`${redirectUri}`)
+      .then(response => {
+       setAllusers(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    };
+useEffect(attractedTo, [mongouser, allusers]);
+  function attractedTo(){
+      if(allusers!="" && mongouser){
+        setAttracted(allusers.filter(item => item.gender == mongouser.type && item.id!=mongouser.id));
+      }
+    };
 
   useEffect(() => {
     const handleData = snap => {
@@ -100,7 +143,7 @@ function App() {
   // const [context, setContext] = React.useState(info);
   return(
     <BrowserRouter>
-      <InfoContext.Provider value={{replies, setReplies, artists, setArtists, messages, setMessages, songs, setSongs,posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshToken}}>
+      <InfoContext.Provider value={{replies, mongouser, allusers, attractedUsers, visible, setVisible, setReplies, artists, setArtists, messages, setMessages, songs, setSongs,posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshToken}}>
         <Route exact path="/signup/:id/:access_token" render={()=> <Signup />} />
         <Route exact path="/" render={()=><Login />} />
         <Route exact path="/settings" render={()=>withMenu(<SettingsPage />)} />
@@ -108,6 +151,8 @@ function App() {
         <Route exact path="/home/:id/:access_token/:refresh_token"  render = {()=> withMenu(<Homepage ></Homepage>)} />
         <Route exact path="/artist/:artistid"  render = {()=> withMenu(<ArtistPage ></ArtistPage>)} />
         <Route exact path="/track/:trackid"  render = {()=> withMenu(<TrackPage ></TrackPage>)} />
+        <Route exact path="/tracks"  render = {()=> withMenu(<FavoriteSongs />) } />
+        <Route exact path="/artists"  render = {()=> withMenu(<FavoriteArtists />) } />
 
         {/* <Route exact path="/artist/:artistid/:bool"  render = {()=> <ArtistPage ></ArtistPage>} /> */}
 

@@ -77,6 +77,7 @@ useEffect(attractedTo, [mongouser, allusers]);
         setAttracted(allusers.filter(item => item.gender == mongouser.type && item.id!=mongouser.id));
       }
     };
+    //----------------------------------------------------
 // useEffect(rankAttractedTo, [attractedTo]);
 // function rankAttractedTo(){
 //   function comparedistance(a,b){
@@ -114,7 +115,6 @@ useEffect(attractedTo, [mongouser, allusers]);
 //     copyUsers.sort(comparedistance);
 //     setAttracted(copyUsers);
 //   }
-  
 // }
 
  return (

@@ -186,6 +186,10 @@ app.get('/refresh_token', function(req, res) {
     response.sendFile(path.resolve(__dirname, '../react-ui/build', 'index.html'));
   });
 
+  // app.use(express.static(path.resolve(__dirname, '../react-ui/build')))
+  // .use(cors())
+  // .use(cookieParser());
+
   app.listen(port, function () {
     console.error(`listening on port ${port}`);
   });

@@ -4,11 +4,13 @@ import { Redirect, Link} from 'react-router-dom';
 import _ from 'lodash'
 import axios from 'axios'
 import {InfoContext} from '../App'
+import { Sidebar } from 'semantic-ui-react'
+
 
 
 
 const PageHeader = ({access_token, id}) => {
-  const {replies, setReplies, artists, setArtists, messages, setMessages, songs, setSongs, posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshToken} = React.useContext(InfoContext);
+  const {replies, setReplies, artists, visible, setVisible, setArtists, messages, setMessages, songs, setSongs, posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshToken} = React.useContext(InfoContext);
 
   const [value, setValue]=useState("");
   const [results, setResults]=useState([]);
@@ -153,6 +155,11 @@ const PageHeader = ({access_token, id}) => {
               setUser("");
             }} icon='arrow left' color ='black' >
               Logout
+            </Button>
+            <Button inverted onClick={()=>{
+              setVisible(true);
+            }} icon='arrow left' color ='black' >
+              Menu
             </Button>
             </Button.Group>
             {/* <Button inverted icon='arrow left' color ='black' >
