@@ -9,34 +9,34 @@ var spotifyApi = new Spotify({
     redirectUri: process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/users/callback` : `http://localhost:8888/users/callback`
 });
 
-router.route('/login').get((req,res)=>{
-    var scopes = ['user-read-private', 'user-read-email', 'user-read-playback-state', 'user-top-read', 'user-library-read'];
-    var state='spotify_auth_state';
-    var url = spotifyApi.createAuthorizeURL(scopes, state);
+// router.route('/login').get((req,res)=>{
+//     var scopes = ['user-read-private', 'user-read-email', 'user-read-playback-state', 'user-top-read', 'user-library-read'];
+//     var state='spotify_auth_state';
+//     var url = spotifyApi.createAuthorizeURL(scopes, state);
 
-    res.redirect(url);
-});
-router.route('/callback').get((req,res)=>{
+//     res.redirect(url);
+// });
+// router.route('/callback').get((req,res)=>{
 
-      // The code that's returned as a query parameter to the redirect URI
-      var code = req.query.code;
+//       // The code that's returned as a query parameter to the redirect URI
+//       var code = req.query.code;
       
-      // Retrieve an access token and a refresh token
-      spotifyApi.authorizationCodeGrant(code).then(
-        function(data) {
-          console.log('The token expires in ' + data.body['expires_in']);
-          console.log('The access token is ' + data.body['access_token']);
-          console.log('The refresh token is ' + data.body['refresh_token']);
+//       // Retrieve an access token and a refresh token
+//       spotifyApi.authorizationCodeGrant(code).then(
+//         function(data) {
+//           console.log('The token expires in ' + data.body['expires_in']);
+//           console.log('The access token is ' + data.body['access_token']);
+//           console.log('The refresh token is ' + data.body['refresh_token']);
       
-          // Set the access token on the API object to use it in later calls
-          spotifyApi.setAccessToken(data.body['access_token']);
-          spotifyApi.setRefreshToken(data.body['refresh_token']);
-        },
-        function(err) {
-          console.log('Something went wrong!', err);
-        }
-      );
-});
+//           // Set the access token on the API object to use it in later calls
+//           spotifyApi.setAccessToken(data.body['access_token']);
+//           spotifyApi.setRefreshToken(data.body['refresh_token']);
+//         },
+//         function(err) {
+//           console.log('Something went wrong!', err);
+//         }
+//       );
+// });
 
 // route to display all users.
 
@@ -204,7 +204,7 @@ router.route('/dating/add').get((req,res)=>{
                             const newUser=new User({"name": displayname,"favoriteartists": ids, "favoritesongs": topsongs, "id":id, "email":email, "image":image, "url": externalurl, "postsfollowing": [] });
                             newUser.save()
                             .then(()=>{
-                              var url =  process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/home/${id}/${req.query.access_token}/${req.query.refresh_token}`: `http://localhost:3000/home/${id}/${req.query.access_token}/${req.query.refresh_token}`;
+                              var url =  process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/dating/home/${id}/${req.query.access_token}/${req.query.refresh_token}`: `http://localhost:3000/dating/home/${id}/${req.query.access_token}/${req.query.refresh_token}`;
                                   res.redirect(url);
          
                               // var url =  process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/signup/${id}/${req.query.access_token}`: `http://localhost:3000/signup/${id}/${req.query.access_token}`;
