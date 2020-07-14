@@ -16,6 +16,7 @@ var client_id = '75dfedc5f2d847e7bfad7f2da2f9c611'; // Your client id
 var client_secret =  process.env.NODE_ENV == 'production' ? process.env.SECRETKEY : configg;
 var redirect_uri = process.env.PORT ? `https://pure-harbor-26317.herokuapp.com/callback` : `http://localhost:8888/callback`; // Your redirect uri
 
+var redirect_uri_dating = process.env.PORT ? `https://pure-harbor-26317.herokuapp.com/callback/dating` : `http://localhost:8888/callback/dating`; // Your redirect uri
 
 /**
  * Generates a random string containing numbers and letters
@@ -70,6 +71,22 @@ app.get('/login', function(req, res) {
       state: state
     }));
 });
+// app.get('/login/dating', function(req, res) {
+
+//   var state = generateRandomString(16);
+//   res.cookie(stateKey, state);
+
+//   // your application requests authorization
+//   var scope = 'user-read-private user-read-email user-read-playback-state user-top-read user-library-read';
+//   res.redirect('https://accounts.spotify.com/authorize?' +
+//     querystring.stringify({
+//       response_type: 'code',
+//       client_id: client_id,
+//       scope: scope,
+//       redirect_uri: redirect_uri_dating,
+//       state: state
+//     }));
+// });
 
 app.get('/callback', function(req, res) {
 
@@ -136,6 +153,70 @@ app.get('/callback', function(req, res) {
   });
 }
 });
+// app.get('/callback/dating', function(req, res) {
+
+//   // your application requests refresh and access tokens
+//   // after checking the state parameter
+
+//   var code = req.query.code || null;
+//   var state = req.query.state || null;
+//   var storedState = req.cookies ? req.cookies[stateKey] : null;
+
+//   if (state === null || state !== storedState) {
+//     res.redirect('/#' +
+//       querystring.stringify({
+//         error: 'state_mismatch'
+//       }));
+//   } else {
+//     res.clearCookie(stateKey);
+//     var authOptions = {
+//       url: 'https://accounts.spotify.com/api/token',
+//       form: {
+//         code: code,
+//         redirect_uri: redirect_uri,
+//         grant_type: 'authorization_code'
+//       },
+//       headers: {
+//         'Authorization': 'Basic ' + (new Buffer(client_id + ':' + client_secret).toString('base64'))
+//       },
+//       json: true
+//     };
+
+//     request.post(authOptions, function(error, response, body) {
+//       if (!error && response.statusCode === 200) {
+
+//         var access_token = body.access_token,
+//             refresh_token = body.refresh_token;
+
+//         var options = {
+//           url: 'https://api.spotify.com/v1/me',
+//           headers: { 'Authorization': 'Bearer ' + access_token },
+//           json: true
+//         };
+
+//         // use the access token to access the Spotify Web API
+//         request.get(options, function(error, response, body) {
+//           console.log(body.id);
+//         });
+
+//         // we can also pass the token to the browser to make requests from there
+//         var redirectable=process.env.PORT ? 'http://pure-harbor-26317.herokuapp.com/users/dating/add/?': 'http://localhost:8888/users/dating/add/?';
+//         res.redirect(redirectable +
+//         querystring.stringify({
+//           access_token: access_token,
+//           refresh_token: refresh_token,
+//         }));
+//     } else {
+//       console.log(response.statusCode);
+//       console.log(response)
+//       res.redirect('/#' +
+//         querystring.stringify({
+//           error: 'invalid_token'
+//         }));
+//     }
+//   });
+// }
+// });
 
 
 

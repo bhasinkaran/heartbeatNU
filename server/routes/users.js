@@ -135,6 +135,100 @@ router.route('/add').get((req,res)=>{
     });
 
 });
+router.route('/dating/add').get((req,res)=>{
+    
+  //getting display name
+  var options3 = {
+      url: 'https://api.spotify.com/v1/me',
+      headers: { 'Authorization': 'Bearer ' + req.query.access_token },
+      json: true
+    };
+
+    request.get(options3, function(error, response, body) {
+      console.log("this is the display name")
+      console.log(body.display_name);
+      var displayname=body.display_name;
+      var email=body.email;
+      var id=body.id;
+      var image;
+      if(body.images[0]){
+        image=body.images[0].url;
+      }
+      else{
+        image="https://pngimg.com/uploads/music_notes/music_notes_PNG84.png"
+      } 
+      var externalurl=body.external_urls.spotify
+      console.log(body);
+      User.findOne({id:id}, function(err, user){
+        console.log(err);
+        console.log(user);
+        if(err){
+    // console.log(err);
+        }
+        else{
+          console.log(user);
+
+          if(user){
+            console.log("came here")
+            console.log(user)
+            console.log(err)
+          var url =  process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/dating/home/${id}/${req.query.access_token}/${req.query.refresh_token}`: `http://localhost:3000/dating/home/${id}/${req.query.access_token}/${req.query.refresh_token}`;
+          res.redirect(url);
+         
+        }
+      
+      else{
+        var options2 = {
+          url: 'https://api.spotify.com/v1/me/top/artists',
+          headers: { 'Authorization': 'Bearer ' + req.query.access_token },
+          json: true
+        };
+        
+        request.get(options2, function(error, response, body2) {
+          console.log("this is not using the API")
+           var ids = body2.items.map(item=>item.id)
+           console.log(ids)
+
+                      var songs = {
+                          url: 'https://api.spotify.com/v1/me/top/tracks',
+                          headers: { 'Authorization': 'Bearer ' + req.query.access_token },
+                          json: true
+                       };
+
+                           request.get(songs, function( error, response, songsbody){
+
+                            var topsongs=songsbody.items.map(id=>id.id);
+                            console.log(topsongs);
+
+
+                            const newUser=new User({"name": displayname,"favoriteartists": ids, "favoritesongs": topsongs, "id":id, "email":email, "image":image, "url": externalurl, "postsfollowing": [] });
+                            newUser.save()
+                            .then(()=>{
+                              var url =  process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/home/${id}/${req.query.access_token}/${req.query.refresh_token}`: `http://localhost:3000/home/${id}/${req.query.access_token}/${req.query.refresh_token}`;
+                                  res.redirect(url);
+         
+                              // var url =  process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/signup/${id}/${req.query.access_token}`: `http://localhost:3000/signup/${id}/${req.query.access_token}`;
+                              // res.status(200).redirect(url);
+
+                            })
+                            .catch(err=>{
+                                 console.log(displayname)
+                                 console.log(ids)
+                                 res.status(400).json('Error: '+err)
+                            }); 
+
+          });
+
+      });
+
+      }
+    }
+
+    });
+
+  });
+
+});
 router.route('/').get((req,res)=>{
   User.find()
   .then(user=>res.json(user))

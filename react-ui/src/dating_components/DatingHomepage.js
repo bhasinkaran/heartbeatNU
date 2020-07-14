@@ -8,14 +8,14 @@ import Spotify from 'spotify-web-api-js';
 import FavoriteArtists from '../components/favartists'
 import FavoriteSongs from '../components/favsongs'
 import HomePagePosts from '../components/HomePagePosts'
-
+import MatchedPeople from './matchedpeople'
 import PageHeader from './pageheader'
 import {InfoContext} from '../App'
 
 const mongoose = require('mongoose');
 const s = new Spotify();
 
-const HomePageFeed = () =>{
+const DatingHomePageFeed = () =>{
   
   var {id, access_token, refresh_token } = useParams();
   const {replies, setReplies, artists, setArtists, messages, setMessages, songs, setSongs, posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshToken} = React.useContext(InfoContext);
@@ -127,7 +127,7 @@ function rankAttractedTo(){
 
         
         <Grid.Column width = {10}>
-         {user ? <HomePagePosts /> : ""}
+         {user ? <MatchedPeople /> : ""}
         </Grid.Column>
         
        
@@ -145,5 +145,5 @@ function rankAttractedTo(){
   );
 }
 
-export default HomePageFeed;
+export default DatingHomePageFeed;
 

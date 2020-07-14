@@ -77,45 +77,6 @@ useEffect(attractedTo, [mongouser, allusers]);
         setAttracted(allusers.filter(item => item.gender == mongouser.type && item.id!=mongouser.id));
       }
     };
-    //----------------------------------------------------
-// useEffect(rankAttractedTo, [attractedTo]);
-// function rankAttractedTo(){
-//   function comparedistance(a,b){
-//     let lat1=mongouser.location[0];
-//     let lon1=mongouser.location[1];
-//     let distance1=distance(lat1,lon1,a);
-//     let distance2=distance(lat1,lon1,b);
-//     return distance2-distance1;
-//   }
-//   function distance(lat1, lon1,user2) {
-//     let lat2 = user2.location[0];
-//     let lon2=user2.location[1];
-//     if ((lat1 == lat2) && (lon1 == lon2)) {
-//       return 0;
-//     }
-//     else {
-//       var radlat1 = Math.PI * lat1/180;
-//       var radlat2 = Math.PI * lat2/180;
-//       var theta = lon1-lon2;
-//       var radtheta = Math.PI * theta/180;
-//       var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
-//       if (dist > 1) {
-//         dist = 1;
-//       }
-//       dist = Math.acos(dist);
-//       dist = dist * 180/Math.PI;
-//       dist = dist * 60 * 1.1515;
-//       return dist;
-//     }
-   
-//   }
-//   // console.log(attractedUsers);
-//   var copyUsers = attractedUsers;
-//   if(attractedUsers){
-//     copyUsers.sort(comparedistance);
-//     setAttracted(copyUsers);
-//   }
-// }
 
  return (
     <div className="App">
@@ -125,8 +86,7 @@ useEffect(attractedTo, [mongouser, allusers]);
         {mongouser['favoritesongs'] ? <FavoriteSongs songs={mongouser['favoritesongs']} accesstoken={access_token} refreshtoken={refresh_token}/> : "" }
 
         </Grid.Column>
-
-        
+    
         <Grid.Column width = {10}>
          {user ? <HomePagePosts /> : ""}
         </Grid.Column>
@@ -141,8 +101,6 @@ useEffect(attractedTo, [mongouser, allusers]);
       {redirectArtist ? <Redirect to={`/artist/${result.id}`} push={true} /> : ""}
       {redirectTrack ? <Redirect to={`/track/${result.id}`} push={true} /> : ""}
 
-      {/* {redirectsong ? <Redirect to={`/song/${result.id}`} push={true} /> : ""} */}
-
       {/* {!user   && timeout?  <Redirect to="/" push={true} /> : ""} */}
      
       
@@ -152,46 +110,3 @@ useEffect(attractedTo, [mongouser, allusers]);
 }
 
 export default HomePageFeed;
-
-
- {/* <div> Now Playing {nowPlaying.name}
-      </div> */}
-      {/* <div>
-        <img src={nowPlaying.image} width="250" >
-        </img>
-      </div>
-      <div>{artists.map(obj=>obj['name'])}
-      </div> */}
-      {/* <button onClick={()=>getNowPlaying()}>
-        Check Now Playing
-      </button>
-      <button onClick={()=>getTopArtists()}>
-        Check Top Artists
-      </button> */}
-       {/* <div id="map"></div> */}
-     {/* <button onClick = {()=>CheckLocation()}>
-        geolocation test
-      </button> */}
-
-      // function getNowPlaying(){
-      //   s.setAccessToken(access_token);
-      //   s.getMyCurrentPlaybackState()
-      //     .then((response)=>{
-      //       // console.log(response)
-      //       setNowPlaying({
-      //         name: response.item.name,
-      //         image: response.item.album.images[0].url
-      //       })
-      //     }
-      //     ).catch(err=>console.log(err))
-      // }
-      // function getTopArtists(){
-      //   s.setAccessToken(access_token)
-      //   s.getMyTopArtists()
-      //   .then((response)=>{
-      //     console.log(response);
-      //     // setArtists(response.items)
-      
-    
-      //   }).catch(err=>console.log(err))
-      // }

@@ -20,13 +20,14 @@ import {dbMessages, dbPosts, dbSongs, dbArtists, dbReplies, dbLikes} from './fir
 import SettingsPage from './components/settingspage';
 import FavoriteArtists from './components/favartists'
 import FavoriteSongs from './components/favsongs';
+import DatingHomePageFeed from './dating_components/DatingHomepage';
+import DatingLogin from './dating_components/DatingLogin'
 
 const s = new Spotify();
 
 export const InfoContext = React.createContext();
 function App() {
   function withMenu(page){
-    if(user)
     return(
       <div>
         <PageHeader accesstoken={accesstoken} id={user.id}/>
@@ -39,7 +40,9 @@ function App() {
 
       </div>
     )
+    
   }
+  
   
   const [artists, setArtists]=useState("")
   const [messages, setMessages]=useState("")
@@ -143,12 +146,15 @@ useEffect(attractedTo, [mongouser, allusers]);
   // const [context, setContext] = React.useState(info);
   return(
     <BrowserRouter>
-      <InfoContext.Provider value={{replies, mongouser, allusers, attractedUsers, visible, setVisible, setReplies, artists, setArtists, messages, setMessages, songs, setSongs,posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshToken}}>
+      <InfoContext.Provider value={{replies, mongouser, allusers, attractedUsers, setReplies, artists, setArtists, messages, setMessages, songs, setSongs,posts, setPosts, likes, setLikes, user, setUser, visible, setVisible, accesstoken, setAccesToken, refreshtoken, setRefreshToken}}>
+        {/* NEARIFY ROUTES */}
         <Route exact path="/signup/:id/:access_token" render={()=> <Signup />} />
         <Route exact path="/" render={()=><Login />} />
         <Route exact path="/settings" render={()=>withMenu(<SettingsPage />)} />
         
         <Route exact path="/home/:id/:access_token/:refresh_token"  render = {()=> withMenu(<Homepage ></Homepage>)} />
+        {/* <Route exact path="/home/:id/:access_token/:refresh_token"  render = {()=> withMenu(<div >Hello</div>)} /> */}
+
         <Route exact path="/artist/:artistid"  render = {()=> withMenu(<ArtistPage ></ArtistPage>)} />
         <Route exact path="/track/:trackid"  render = {()=> withMenu(<TrackPage ></TrackPage>)} />
         <Route exact path="/tracks"  render = {()=> withMenu(<FavoriteSongs />) } />
@@ -157,6 +163,14 @@ useEffect(attractedTo, [mongouser, allusers]);
         {/* <Route exact path="/artist/:artistid/:bool"  render = {()=> <ArtistPage ></ArtistPage>} /> */}
 
         <Route exact path="/map" render={()=><MapLeaflet />} />
+
+
+
+        {/* DATING ROUTES */}
+        <Route exact path="/dating/home/:id/:access_token/:refresh_token" render={()=><DatingHomePageFeed />} />
+        <Route exact path="/dating" render={()=><DatingLogin />} />
+
+
       </InfoContext.Provider>
     </BrowserRouter>
   );
