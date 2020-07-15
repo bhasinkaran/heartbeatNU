@@ -14,8 +14,12 @@ const Signup = () => {
   const [gender, setGender] = useState("");
   const [type, setType] = useState("");
   const [redirect, setRedirect] = useState(false)
-  const [firstName, setFirstName] = useState("")
-  const [lastName, setLastName] = useState("")
+  const [image1, setImage1] = useState("")
+  const [image2, setImage2] = useState("")
+  const [image3, setImage3] = useState("")
+  const [fileImage1, setFileImage] = useState("")
+  const [fileImage2, setFileImage2] = useState("")
+  const [fileImage3, setFileImage3] = useState("")
   const [phone, setPhone] = useState("");
   const [location, setLocation] = useState(null);
   const [redirectableLogin, setRedirectableLogin]=useState("");
@@ -29,7 +33,7 @@ const Signup = () => {
         gender: gender,
         type: type,
         phone: phone,
-        location: location
+        location: location,
       }))
       .then(response => {
        console.log(response);
@@ -81,8 +85,6 @@ const Signup = () => {
   }
   function CheckPass() {
     if(gender!="" && type !="" && !isNaN(Number(phone))){
-    
-    
       var temp = process.env.NODE_ENV === 'production' ? `https://pure-harbor-26317.herokuapp.com/home/${id}/${access_token}/${refresh_token}` : `http://localhost:3000/home/${id}/${access_token}/${refresh_token}`;
     
       setRedirectableLogin(temp);
@@ -98,8 +100,7 @@ const Signup = () => {
   }
   return (
     <div ref={contextRef}>
-      <PageHeader />
-      <Sticky context={contextRef} >
+
         <Grid textAlign='center' style={{ height: '10vh' }} padded>
           <Divider hidden />
           <Grid.Row>
@@ -169,6 +170,30 @@ const Signup = () => {
                     onChange={()=>setType("Both")}
                  />
                  </Form.Field>
+                 <Form.Input fluid
+
+onChange={(e) => { 
+      console.log(e.target.files[0])
+      setFileImage(e.target.files[0]) }}
+label='Upload 1:'
+type="file"
+/>
+<Form.Input fluid
+
+onChange={(e) => { 
+      console.log(e.target.files[0])
+      setFileImage2(e.target.files[0]) }}
+label='Upload 2:'
+type="file"
+/>
+<Form.Input fluid
+
+onChange={(e) => { 
+      console.log(e.target.files[0])
+      setFileImage3(e.target.files[0]) }}
+label='Upload 3:'
+type="file"
+/>
                   <Button color='teal' fluid size='large' onClick={() => CheckLocation()}>
                     Continue
                  </Button>
@@ -190,9 +215,6 @@ const Signup = () => {
           </Grid.Row>
         </Grid>
 
-
-
-      </Sticky>
     </div>
   );
 };

@@ -50,8 +50,6 @@ const userSchema=new Schema({
     datingimages: {
         type:Array
     }
-
-
 },
 {
     timestamps: true,

@@ -9,35 +9,6 @@ var spotifyApi = new Spotify({
     redirectUri: process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/users/callback` : `http://localhost:8888/users/callback`
 });
 
-// router.route('/login').get((req,res)=>{
-//     var scopes = ['user-read-private', 'user-read-email', 'user-read-playback-state', 'user-top-read', 'user-library-read'];
-//     var state='spotify_auth_state';
-//     var url = spotifyApi.createAuthorizeURL(scopes, state);
-
-//     res.redirect(url);
-// });
-// router.route('/callback').get((req,res)=>{
-
-//       // The code that's returned as a query parameter to the redirect URI
-//       var code = req.query.code;
-      
-//       // Retrieve an access token and a refresh token
-//       spotifyApi.authorizationCodeGrant(code).then(
-//         function(data) {
-//           console.log('The token expires in ' + data.body['expires_in']);
-//           console.log('The access token is ' + data.body['access_token']);
-//           console.log('The refresh token is ' + data.body['refresh_token']);
-      
-//           // Set the access token on the API object to use it in later calls
-//           spotifyApi.setAccessToken(data.body['access_token']);
-//           spotifyApi.setRefreshToken(data.body['refresh_token']);
-//         },
-//         function(err) {
-//           console.log('Something went wrong!', err);
-//         }
-//       );
-// });
-
 // route to display all users.
 
 
@@ -207,7 +178,7 @@ router.route('/dating/add').get((req,res)=>{
                               // var url =  process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/dating/home/${id}/${req.query.access_token}/${req.query.refresh_token}`: `http://localhost:3000/dating/home/${id}/${req.query.access_token}/${req.query.refresh_token}`;
                               //     res.redirect(url);
          
-                              var url =  process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/signup/${id}/${req.query.access_token}/${req.query.refresh_token}`: `http://localhost:3000/signup/${id}/${req.query.access_token}/${refresh_token}`;
+                              var url =  process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/signup/${id}/${req.query.access_token}/${req.query.refresh_token}`: `http://localhost:3000/signup/${id}/${req.query.access_token}/${req.query.refresh_token}`;
                               res.status(200).redirect(url);
 
                             })
@@ -248,6 +219,11 @@ router.route('/signup/:id/').post((req,res)=>{
     doc.phone=req.query.phone;
     doc.location=req.query.location;
      console.log(req.query.location)
+    //  var temp = [];
+    //  temp.push(req.query.image1);
+    //  temp.push(req.query.image2);
+    //  temp.push(req.query.image3);
+     doc.datingimages=temp;
     doc.save();
   }).then(user=>console.log(json(user))).catch(err=>res.status(400).json("Error: "+err));
   ;
@@ -294,6 +270,19 @@ router.route('/addpost/:id/:postid').post((req,res)=>{
       
       // doc.postsfolowing=temp;
       // console.log(temp);
+  } )
+  .then(user=>res.status(200).json(user))
+  .catch(err=>res.status(400).json('Error: '+err));
+});
+router.route('/addpost/:id/:image_url').post((req,res)=>{
+  User.findOne({id:req.params.id}, function(err, doc){
+    console.log('before');
+    console.log(doc.postsfollowing);  
+    console.log('after');
+    doc.datingimages.addToSet(req.params.image_url);
+    
+    doc.save();
+
   } )
   .then(user=>res.status(200).json(user))
   .catch(err=>res.status(400).json('Error: '+err));
