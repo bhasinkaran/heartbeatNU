@@ -4,7 +4,9 @@ import { Button, Form, Icon, Message, Progress, Image } from 'semantic-ui-react'
 import { Link, Redirect, useParams } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css';
 import axios from 'axios'
+import storage from '../firebase/firebase'
 var querystring = require('querystring');
+
 
 const Signup = () => {
 //   const someContext = useContext(AppState);
@@ -29,11 +31,103 @@ const Signup = () => {
     CheckPass();
     if (redirect && location!==null) {
       var backendroute = process.env.NODE_ENV === 'production' ? `https://pure-harbor-26317.herokuapp.com/users/signup/${id}?` : `http://localhost:8888/users/signup/${id}?`;
+
+      const uploadCute =  storage.ref(`users/${id}/cute`).put(fileImage1);
+      uploadCute.on(
+      "state_changed",
+      snapshot => {
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        // setProgress(progress);
+      },
+      error => {
+        console.log(error);
+      },
+      () => {
+         storage
+          .ref("users")
+          .child(id)
+          .child('cute')
+          .getDownloadURL()
+          .then(url => {
+           setImage1(url);
+          });
+      }
+    );
+    const uploadFlirt =  storage.ref(`users/${id}/flirt`).put(fileImage2);
+    uploadFlirt.on(
+      "state_changed",
+      snapshot => {
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        // setProgress(progress);
+      },
+      error => {
+        console.log(error);
+      },
+      () => {
+         storage
+          .ref("users")
+          .child(id)
+          .child('flirt')
+          .getDownloadURL()
+          .then(url => {
+           setImage2(url);
+          });
+      }
+    );
+    const uploadCandid =  storage.ref(`users/${id}/candid`).put(fileImage3);
+     uploadCandid.on(
+        "state_changed",
+        snapshot => {
+          const progress = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          // setProgress(progress);
+        },
+        error => {
+          console.log(error);
+        },
+        () => {
+           storage
+            .ref("users")
+            .child(id)
+            .child('candid')
+            .getDownloadURL()
+            .then(url => {
+              setImage3(url);
+            });
+        }
+      );
+
+
       axios.post(backendroute+querystring.stringify({
         gender: gender,
         type: type,
         phone: phone,
         location: location,
+        // datingimages: [image1, image2, image3],
+      }))
+      .then(response => {
+       console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+      // window.location.assign(redirectableLogin);
+    }
+    console.log(redirect)
+    console.log(location)
+    console.log(location!==null)
+  },[redirect, location]);
+  useEffect(() => {
+    var backendroute_image = process.env.NODE_ENV === 'production' ? `https://pure-harbor-26317.herokuapp.com/users/signup/${id}/2?` : `http://localhost:8888/users/signup/${id}/2?`;
+
+    if(image1&&image2&&image3){
+      axios.post(backendroute_image+querystring.stringify({
+        datingimages: [image1, image2, image3],
       }))
       .then(response => {
        console.log(response);
@@ -42,13 +136,9 @@ const Signup = () => {
         console.log(error);
       });
       window.location.assign(redirectableLogin);
-
-      
     }
-    console.log(redirect)
-    console.log(location)
-    console.log(location!==null)
-  },[redirect, location]);
+
+  }, [image1,image2,image3]);
 
 
   const PageHeader = () => {
@@ -95,9 +185,7 @@ const Signup = () => {
     }
    
   };
-  function functiontoredirect() {
-    window.location.assign(redirectableLogin);
-  }
+  
   return (
     <div ref={contextRef}>
 
@@ -175,7 +263,7 @@ const Signup = () => {
 onChange={(e) => { 
       console.log(e.target.files[0])
       setFileImage(e.target.files[0]) }}
-label='Upload 1:'
+label='Upload a cute photo:'
 type="file"
 />
 <Form.Input fluid
@@ -183,7 +271,7 @@ type="file"
 onChange={(e) => { 
       console.log(e.target.files[0])
       setFileImage2(e.target.files[0]) }}
-label='Upload 2:'
+label='Upload a ;) photo:'
 type="file"
 />
 <Form.Input fluid
@@ -191,7 +279,7 @@ type="file"
 onChange={(e) => { 
       console.log(e.target.files[0])
       setFileImage3(e.target.files[0]) }}
-label='Upload 3:'
+label='Upload a candid photo:'
 type="file"
 />
                   <Button color='teal' fluid size='large' onClick={() => CheckLocation()}>

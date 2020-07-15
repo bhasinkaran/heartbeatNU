@@ -223,7 +223,14 @@ router.route('/signup/:id/').post((req,res)=>{
     //  temp.push(req.query.image1);
     //  temp.push(req.query.image2);
     //  temp.push(req.query.image3);
-     doc.datingimages=temp;
+    //  doc.datingimages=req.query.datingimages;
+    doc.save();
+  }).then(user=>console.log(json(user))).catch(err=>res.status(400).json("Error: "+err));
+  ;
+});
+router.route('/signup/:id/2/').post((req,res)=>{
+  User.findOne({ id: req.params.id }, function (err, doc){
+     doc.datingimages=req.query.datingimages;
     doc.save();
   }).then(user=>console.log(json(user))).catch(err=>res.status(400).json("Error: "+err));
   ;
