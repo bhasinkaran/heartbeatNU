@@ -15,7 +15,7 @@ import {InfoContext} from '../App'
 const MatchedPeople = () => {
         const {replies, setReplies, artists, setArtists, messages, setMessages, songs, setSongs, posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshToken} = React.useContext(InfoContext);
 
-
+        console.log(user);
         return(
                 <Container>
                         Matched Peeps

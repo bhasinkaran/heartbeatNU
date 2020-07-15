@@ -12,7 +12,7 @@ import {Segment, Sidebar} from 'semantic-ui-react'
 import SideBar from './components/Sidebar'
 import MapLeaflet from './components/MapLeaflet'
 import {BrowserRouter, Route} from 'react-router-dom'
-import Signup from './components/signup';
+import Signup from './dating_components/signup';
 import ArtistPage from './components/artisthomepage'
 import TrackPage from './components/trackhomepage'
 import PageHeader from './components/pageheader'
@@ -148,7 +148,7 @@ useEffect(attractedTo, [mongouser, allusers]);
     <BrowserRouter>
       <InfoContext.Provider value={{replies, mongouser, allusers, attractedUsers, setReplies, artists, setArtists, messages, setMessages, songs, setSongs,posts, setPosts, likes, setLikes, user, setUser, visible, setVisible, accesstoken, setAccesToken, refreshtoken, setRefreshToken}}>
         {/* NEARIFY ROUTES */}
-        <Route exact path="/signup/:id/:access_token" render={()=> <Signup />} />
+        <Route exact path="/signup/:id/:access_token/:refresh_token" render={()=> <Signup />} />
         <Route exact path="/" render={()=><Login />} />
         <Route exact path="/settings" render={()=>withMenu(<SettingsPage />)} />
         

@@ -46,6 +46,9 @@ const userSchema=new Schema({
     },
     url:{
         type: String
+    },
+    datingimages: {
+        type:Array
     }
 
 

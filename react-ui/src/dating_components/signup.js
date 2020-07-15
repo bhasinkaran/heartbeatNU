@@ -8,7 +8,7 @@ var querystring = require('querystring');
 
 const Signup = () => {
 //   const someContext = useContext(AppState);
-  const {id, access_token} = useParams();
+  const {id, access_token, refresh_token} = useParams();
   const [error, setError] = useState(false);
   const [pass, setPass] = useState("");
   const [gender, setGender] = useState("");
@@ -82,9 +82,8 @@ const Signup = () => {
   function CheckPass() {
     if(gender!="" && type !="" && !isNaN(Number(phone))){
     
-      
     
-      var temp = process.env.NODE_ENV === 'production' ? `https://pure-harbor-26317.herokuapp.com/home/${id}/${access_token}` : `http://localhost:3000/home/${id}/${access_token}`;
+      var temp = process.env.NODE_ENV === 'production' ? `https://pure-harbor-26317.herokuapp.com/home/${id}/${access_token}/${refresh_token}` : `http://localhost:3000/home/${id}/${access_token}/${refresh_token}`;
     
       setRedirectableLogin(temp);
       setRedirect(true);

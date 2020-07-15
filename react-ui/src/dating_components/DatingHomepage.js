@@ -3,12 +3,13 @@ import {Redirect} from 'react-router-dom'
 import _ from 'lodash'
 import React, {useState, useEffect, useContext} from 'react';
 import {Container, Search, Grid} from 'semantic-ui-react'
-import {Router , useParams} from  'react-router-dom';
+import {Router , useParams, Link} from  'react-router-dom';
 import Spotify from 'spotify-web-api-js';
-import FavoriteArtists from '../components/favartists'
-import FavoriteSongs from '../components/favsongs'
-import HomePagePosts from '../components/HomePagePosts'
+import FavoriteArtists from './favartists'
+import FavoriteSongs from './favsongs'
+// import HomePagePosts from '../components/HomePagePosts'
 import MatchedPeople from './matchedpeople'
+import {Button} from 'semantic-ui-react'
 import PageHeader from './pageheader'
 import {InfoContext} from '../App'
 
@@ -127,7 +128,7 @@ function rankAttractedTo(){
 
         
         <Grid.Column width = {10}>
-         {user ? <MatchedPeople /> : ""}
+         {user && mongouser['location']&&mongouser['location'].length>0? <MatchedPeople /> : <Button as={Link} to={`/signup/${user['id']}/${accesstoken}/${refreshtoken}`} > Sign up for dating! </Button>}
         </Grid.Column>
         
        
