@@ -14,13 +14,22 @@ import { InfoContext } from '../App'
 
 const ReturnPreview = ({person}) => {
         const { attractedUsers, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshToken } = React.useContext(InfoContext);
-      
+        const [number, setNumber] = useState(0);
+        const[change, setChange]= useState(true);
+        useEffect(()=>{
+                setNumber((number+1)%3)
+                setTimeout(()=>{
+                        setChange(!change);
+                        console.log(change);
+                },2000)
+        }, [change])
 
         
         return (
                 <div>
-                       <Card>
-    <Image src={person['datingimages'][Math.floor(Math.random()*3)]} wrapped ui={false} />
+                       <Card fluid>
+    <Image src={person['datingimages'][number]} fluid size='huge' />
+    {/* wrapped ui={false}  */}
     <Card.Content>
       <Card.Header>{person['name']}</Card.Header>
 
