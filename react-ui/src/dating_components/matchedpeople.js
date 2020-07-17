@@ -21,7 +21,9 @@ const MatchedPeople = () => {
         if(orderedAttracted)
         return (
                 <Container>
-                        <ReturnPreview person={orderedAttracted[index]} />
+                        {orderedAttracted.length>index ? <ReturnPreview person={orderedAttracted[index]} />: 
+                        "No matches yet."}
+                        
                 </Container>
         );
         else{

@@ -24,7 +24,7 @@ const ReturnPreview = ({ person }) => {
                         console.log(change);
                 }, 2000)
         }, [change])
-
+        
         return (
                 <div>
                         <Card fluid>
