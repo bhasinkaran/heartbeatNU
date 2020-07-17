@@ -49,6 +49,9 @@ const userSchema=new Schema({
     },
     datingimages: {
         type:Array
+    },
+    matchedpeople: {
+        type:Array
     }
 },
 {

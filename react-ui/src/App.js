@@ -143,7 +143,7 @@ useEffect(attractedTo, [mongouser, allusers]);
     return () => { dbPosts.off('value', handleData); };
   }, []);
  
-  // const [context, setContext] = React.useState(info);
+  
   return(
     <BrowserRouter>
       <InfoContext.Provider value={{replies, mongouser, allusers, attractedUsers, setReplies, artists, setArtists, messages, setMessages, songs, setSongs,posts, setPosts, likes, setLikes, user, setUser, visible, setVisible, accesstoken, setAccesToken, refreshtoken, setRefreshToken}}>

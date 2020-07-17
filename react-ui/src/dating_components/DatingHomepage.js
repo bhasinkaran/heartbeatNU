@@ -128,7 +128,7 @@ function rankAttractedTo(){
 
         
         <Grid.Column width = {10}>
-         {user && mongouser['location']&&mongouser['location'].length>0? <MatchedPeople /> : <Button as={Link} to={`/signup/${user['id']}/${accesstoken}/${refreshtoken}`} > Sign up for dating! </Button>}
+         {user && mongouser['location']&&mongouser['location'].length>0? <MatchedPeople /> : <Button as={Link} to={`/signup/${user['id']}/${accesstoken}/${refreshtoken}`} > Complete your dating profile signup process! </Button>}
         </Grid.Column>
         
        

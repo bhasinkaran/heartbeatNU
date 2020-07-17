@@ -43,40 +43,21 @@ const HomePageFeed = () =>{
   setTimeout(() => {
     setTime(true);
   }, 3000);
-  
-  useEffect(handleState, []);
-  function handleState()
-  {
-    // setContext(context => ({ ...context, userid: id }));
-    console.log("Did the job!")
-  }
+
   var redirectUri= process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/users/` : `http://localhost:8888/users/`
 
-useEffect( handleData, []);
-  function handleData(){
-    axios.get(`${redirectUri}${id}`)
-      .then(response => {
-       settmongouser(response.data[0]);
-       setUser(response.data[0]);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+        useEffect(handleData, []);
+        function handleData() {
+                axios.get(`${redirectUri}${id}`)
+                        .then(response => {
+                                settmongouser(response.data[0]);
+                                setUser(response.data[0]);
+                        })
+                        .catch(function (error) {
+                                console.log(error);
+                        });
+        };
 
-  axios.get(`${redirectUri}`)
-      .then(response => {
-       setAllusers(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    };
-useEffect(attractedTo, [mongouser, allusers]);
-  function attractedTo(){
-      if(allusers!=""){
-        setAttracted(allusers.filter(item => item.gender == mongouser.type && item.id!=mongouser.id));
-      }
-    };
 
  return (
     <div className="App">
