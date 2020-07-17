@@ -27,9 +27,7 @@ const DatingHomePageFeed = () =>{
   s.setAccessToken(access_token);
   // s.setRefreshToken(refresh_token);
   const[nowPlaying, setNowPlaying]=useState({name: "not checked",image:""});
-  const [mongouser, settmongouser]=useState("");
   const [allusers, setAllusers] = useState("");
-  const [attractedUsers,setAttracted]=useState("");
   const [value, setValue]=useState("");
   const [results, setResults]=useState([]);
   const [isLoading, setisLoading]=useState(false);
@@ -57,8 +55,8 @@ useEffect( handleData, []);
   function handleData(){
     axios.get(`${redirectUri}${id}`)
       .then(response => {
-       settmongouser(response.data[0]);
        setUser(response.data[0]);
+       console.log(response.data[0]);
       })
       .catch(function (error) {
         console.log(error);
@@ -72,68 +70,25 @@ useEffect( handleData, []);
         console.log(error);
       });
     };
-useEffect(attractedTo, [mongouser, allusers]);
-  function attractedTo(){
-      if(allusers!=""){
-        setAttracted(allusers.filter(item => item.gender == mongouser.type && item.id!=mongouser.id));
-      }
-    };
-useEffect(rankAttractedTo, [attractedTo]);
-function rankAttractedTo(){
-  function comparedistance(a,b){
-    let lat1=mongouser.location[0];
-    let lon1=mongouser.location[1];
-    let distance1=distance(lat1,lon1,a);
-    let distance2=distance(lat1,lon1,b);
-    return distance2-distance1;
-  }
-  function distance(lat1, lon1,user2) {
-    let lat2 = user2.location[0];
-    let lon2=user2.location[1];
-    if ((lat1 == lat2) && (lon1 == lon2)) {
-      return 0;
-    }
-    else {
-      var radlat1 = Math.PI * lat1/180;
-      var radlat2 = Math.PI * lat2/180;
-      var theta = lon1-lon2;
-      var radtheta = Math.PI * theta/180;
-      var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
-      if (dist > 1) {
-        dist = 1;
-      }
-      dist = Math.acos(dist);
-      dist = dist * 180/Math.PI;
-      dist = dist * 60 * 1.1515;
-      return dist;
-    }
-   
-  }
-  // console.log(attractedUsers);
-  var copyUsers = attractedUsers;
-  if(attractedUsers){
-    copyUsers.sort(comparedistance);
-    setAttracted(copyUsers);
-  }
-}
+
 
  return (
     <div className="App">
       <Grid padded >
       <Grid.Row stretched>  
         <Grid.Column width = {3}>
-        {mongouser['favoritesongs'] ? <FavoriteSongs songs={mongouser['favoritesongs']} accesstoken={access_token} refreshtoken={refresh_token}/> : "" }
+        {user['favoritesongs'] ? <FavoriteSongs songs={user['favoritesongs']} accesstoken={access_token} refreshtoken={refresh_token}/> : "" }
 
         </Grid.Column>
 
         
         <Grid.Column width = {10}>
-         {user && mongouser['location']&&mongouser['location'].length>0? <MatchedPeople /> : <Button as={Link} to={`/signup/${user['id']}/${accesstoken}/${refreshtoken}`} > Complete your dating profile signup process! </Button>}
+         {user && user['location']&&user['location'].length>0? <MatchedPeople /> : <Button as={Link} to={`/signup/${user['id']}/${accesstoken}/${refreshtoken}`} > Complete your dating profile signup process! </Button>}
         </Grid.Column>
         
        
         <Grid.Column width = {3}> 
-      {mongouser['favoriteartists'] ? <FavoriteArtists artists={mongouser['favoriteartists']} accesstoken={access_token} refreshtoken={refresh_token}/> : "" }
+      {user['favoriteartists'] ? <FavoriteArtists artists={user['favoriteartists']} accesstoken={access_token} refreshtoken={refresh_token}/> : "" }
       </Grid.Column>
       </Grid.Row>
        </Grid>

@@ -26,9 +26,6 @@ const HomePageFeed = () =>{
   s.setAccessToken(access_token);
   // s.setRefreshToken(refresh_token);
   const[nowPlaying, setNowPlaying]=useState({name: "not checked",image:""});
-  const [mongouser, settmongouser]=useState("");
-  const [allusers, setAllusers] = useState("");
-  const [attractedUsers,setAttracted]=useState("");
   const [value, setValue]=useState("");
   const [results, setResults]=useState([]);
   const [isLoading, setisLoading]=useState(false);
@@ -50,7 +47,6 @@ const HomePageFeed = () =>{
         function handleData() {
                 axios.get(`${redirectUri}${id}`)
                         .then(response => {
-                                settmongouser(response.data[0]);
                                 setUser(response.data[0]);
                         })
                         .catch(function (error) {
@@ -64,7 +60,7 @@ const HomePageFeed = () =>{
       <Grid padded >
       <Grid.Row stretched>  
         <Grid.Column width = {3}>
-        {mongouser['favoritesongs'] ? <FavoriteSongs songs={mongouser['favoritesongs']} accesstoken={access_token} refreshtoken={refresh_token}/> : "" }
+        {user['favoritesongs'] ? <FavoriteSongs songs={user['favoritesongs']} accesstoken={access_token} refreshtoken={refresh_token}/> : "" }
 
         </Grid.Column>
     
@@ -74,7 +70,7 @@ const HomePageFeed = () =>{
         
        
         <Grid.Column width = {3}> 
-      {mongouser['favoriteartists'] ? <FavoriteArtists artists={mongouser['favoriteartists']} accesstoken={access_token} refreshtoken={refresh_token}/> : "" }
+      {user['favoriteartists'] ? <FavoriteArtists artists={user['favoriteartists']} accesstoken={access_token} refreshtoken={refresh_token}/> : "" }
       </Grid.Column>
       </Grid.Row>
        </Grid>

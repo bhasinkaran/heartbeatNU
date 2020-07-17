@@ -10,7 +10,7 @@ import { InfoContext } from '../App';
 const mongoose = require('mongoose');
 const s = new Spotify();
 const FavoriteSongs = ({ songs, refreshtoken }) => {
-        const { accesstoken, mongouser } = useContext(InfoContext);
+        const { accesstoken, user } = useContext(InfoContext);
         const [songnames, setNames] = useState([]);
         const [songimages, setImages] = useState([]);
         const [orderedSongs, setOrderedSongs] = useState([]);
@@ -18,22 +18,22 @@ const FavoriteSongs = ({ songs, refreshtoken }) => {
         const [indexarray, setIndex] = useState(array);
 
         s.setAccessToken(accesstoken);
-        useEffect(initializeState, [mongouser]);
+        useEffect(initializeState, [user]);
         var temp = [];
         var temp2 = [];
         var temp3 = [];
         function initializeState() {
-                console.log(mongouser);
-                if (mongouser) {
+                console.log(user);
+                if (user) {
 
 
-                        for (let i = 0; i < mongouser['favoritesongs'].length; i++) {
+                        for (let i = 0; i < user['favoritesongs'].length; i++) {
                                 //     console.log("This is songs",songs)
-                                s.getTrack(mongouser['favoritesongs'][i]).then(
+                                s.getTrack(user['favoritesongs'][i]).then(
                                         res => {
                                                 temp.push(res.name);
                                                 temp2.push(res.album.images[0].url);
-                                                temp3.push(mongouser['favoritesongs'][i]);
+                                                temp3.push(user['favoritesongs'][i]);
                                                 //      console.log("Inside then")
                                                 //      console.log(res);
                                                 //      console.log(temp);
@@ -150,8 +150,6 @@ const FavoriteSongs = ({ songs, refreshtoken }) => {
                         <Grid.Row>
                                 {songimages.length > 19 ? indexarray.slice(14, 21).map(id => returnThirdFavSong(id)) : ""}
                         </Grid.Row>
-
-
                 </div>
 
         )

@@ -8,7 +8,7 @@ import axios from 'axios'
 const mongoose = require('mongoose');
 const s = new Spotify();
 const FavoriteArtists = () => {
-        const { accesstoken, mongouser } = React.useContext(InfoContext);
+        const { accesstoken, user } = React.useContext(InfoContext);
         const [artistnames, setNames] = useState([]);
         const [artistimages, setImages] = useState([]);
         const [orderedArtists, setOrdererdArtists] = useState([]);
@@ -17,21 +17,21 @@ const FavoriteArtists = () => {
         const [indexarray, setIndex] = useState(array);
 
         s.setAccessToken(accesstoken);
-        useEffect(initializeState, [mongouser]);
+        useEffect(initializeState, [user]);
         var temp = [];
         var temp2 = [];
         var temp3 = [];
         function initializeState() {
                 //     console.log(artists);
-                if(mongouser)
-                for (let i = 0; i < mongouser['favoriteartists'].length; i++) {
+                if(user)
+                for (let i = 0; i < user['favoriteartists'].length; i++) {
 
-                        s.getArtist(mongouser['favoriteartists'][i]).then(
+                        s.getArtist(user['favoriteartists'][i]).then(
                                 res => {
                                         //      console.log(artists[i]);
                                         temp.push(res.name);
                                         temp2.push(res.images[0].url);
-                                        temp3.push(mongouser['favoriteartists'][i]);
+                                        temp3.push(user['favoriteartists'][i]);
                                         //      console.log(temp);
                                         //      console.log(res);
                                         //      console.log(temp);

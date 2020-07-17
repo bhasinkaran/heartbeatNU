@@ -54,9 +54,9 @@ function App() {
   const [accesstoken, setAccesToken]=useState("")
   const [refreshtoken, setRefreshToken]=useState("")
   const [visible, setVisible] = useState(false);
-  const [mongouser, settmongouser]=useState("");
   const [allusers, setAllusers] = useState("");
   const [attractedUsers,setAttracted]=useState("");
+  const [orderedAttracted,setOrderedAttracted]=useState("");
 
   
   React.useEffect(()=>{
@@ -78,7 +78,6 @@ function App() {
     if(user)
     axios.get(`${redirectUri}${user['id']}`)
       .then(response => {
-       settmongouser(response.data[0]);
        setUser(response.data[0]);
       })
       .catch(function (error) {
@@ -93,10 +92,10 @@ function App() {
         console.log(error);
       });
     };
-useEffect(attractedTo, [mongouser, allusers]);
+useEffect(attractedTo, [user, allusers]);
   function attractedTo(){
-      if(allusers!="" && mongouser){
-        setAttracted(allusers.filter(item => item.gender == mongouser.type && item.id!=mongouser.id));
+      if(allusers!="" && user){
+        setAttracted(allusers.filter(item => item.gender == user.type && item.id!=user.id));
       }
     };
 
@@ -142,11 +141,49 @@ useEffect(attractedTo, [mongouser, allusers]);
     dbPosts.on('value', handleData, error => alert(error));
     return () => { dbPosts.off('value', handleData); };
   }, []);
+  useEffect(rankAttractedTo, [attractedUsers]);
+        function rankAttractedTo(){
+          function comparedistance(a,b){
+            let lat1=user.location[0];
+            let lon1=user.location[1];
+            let distance1=distance(lat1,lon1,a);
+            let distance2=distance(lat1,lon1,b);
+            return distance2-distance1;
+          }
+          function distance(lat1, lon1,user2) {
+            let lat2 = user2.location[0];
+            let lon2=user2.location[1];
+            if ((lat1 == lat2) && (lon1 == lon2)) {
+              return 0;
+            }
+            else {
+              var radlat1 = Math.PI * lat1/180;
+              var radlat2 = Math.PI * lat2/180;
+              var theta = lon1-lon2;
+              var radtheta = Math.PI * theta/180;
+              var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+              if (dist > 1) {
+                dist = 1;
+              }
+              dist = Math.acos(dist);
+              dist = dist * 180/Math.PI;
+              dist = dist * 60 * 1.1515;
+              return dist;
+            }
+           
+          }
+          // console.log(attractedUsers);
+          var copyUsers = attractedUsers;
+          if(attractedUsers){
+            copyUsers.sort(comparedistance);
+            setOrderedAttracted(copyUsers);
+          }
+        }
  
   
   return(
     <BrowserRouter>
-      <InfoContext.Provider value={{replies, mongouser, allusers, attractedUsers, setReplies, artists, setArtists, messages, setMessages, songs, setSongs,posts, setPosts, likes, setLikes, user, setUser, visible, setVisible, accesstoken, setAccesToken, refreshtoken, setRefreshToken}}>
+      <InfoContext.Provider value={{replies, allusers, attractedUsers,orderedAttracted, setReplies, artists, setArtists, messages, setMessages, songs, setSongs,posts, setPosts, likes, setLikes, user, setUser, visible, setVisible, accesstoken, setAccesToken, refreshtoken, setRefreshToken}}>
         {/* NEARIFY ROUTES */}
         <Route exact path="/signup/:id/:access_token/:refresh_token" render={()=> <Signup />} />
         <Route exact path="/" render={()=><Login />} />
