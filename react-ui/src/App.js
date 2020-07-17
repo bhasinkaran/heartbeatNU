@@ -121,7 +121,8 @@ useEffect(attractedTo, [user, allusers]);
     return () => { dbReplies.off('value', handleData); };
   }, []);
   useEffect(() => {
-    const handleData = snap => {
+    const handleData = snap => 
+    {
       if (snap.val()) setSongs(snap.val());
     }
     dbSongs.on('value', handleData, error => alert(error));
