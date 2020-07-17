@@ -52,6 +52,9 @@ const userSchema=new Schema({
     },
     matchedpeople: {
         type:Array
+    },
+    liked: {
+        type:Array
     }
 },
 {
