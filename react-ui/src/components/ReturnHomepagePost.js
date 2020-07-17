@@ -31,7 +31,7 @@ const ReturnPost = React.memo(({item, id, includeHeader}) =>{
               setTrackName(songs[item['trackid']]['name']);
               console.log("here!")
             }
-        })
+        }, [item])
 
        if(item ){
            var redirectUri= process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/users/` : `http://localhost:8888/users/`

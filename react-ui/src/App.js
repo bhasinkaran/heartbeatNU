@@ -75,15 +75,6 @@ function App() {
   var redirectUri= process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/users/` : `http://localhost:8888/users/`
   useEffect( handleData, [user]);
   function handleData(){
-    if(user)
-    axios.get(`${redirectUri}${user['id']}`)
-      .then(response => {
-       setUser(response.data[0]);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-
   axios.get(`${redirectUri}`)
       .then(response => {
        setAllusers(response.data);
@@ -95,6 +86,8 @@ function App() {
 useEffect(attractedTo, [user, allusers]);
   function attractedTo(){
       if(allusers!="" && user){
+        console.log(allusers);
+        console.log(user);
         setAttracted(allusers.filter(item => item.gender == user.type && item.id!=user.id));
       }
     };

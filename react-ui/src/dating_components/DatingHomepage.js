@@ -26,52 +26,19 @@ const DatingHomePageFeed = () =>{
   setRefreshToken(refresh_token);
   s.setAccessToken(access_token);
   // s.setRefreshToken(refresh_token);
-  const[nowPlaying, setNowPlaying]=useState({name: "not checked",image:""});
-  const [allusers, setAllusers] = useState("");
-  const [value, setValue]=useState("");
-  const [results, setResults]=useState([]);
+ 
   const [isLoading, setisLoading]=useState(false);
   const [result, setResult]=useState("");
   const [redirectArtist, setRedirectArtist]=useState(false);
   const [redirectTrack, setRedirectTrack]=useState(false);
   const [timeout, setTime]=useState(false);
-  const [newTrack, setNewTrack]=useState(false);
-  const [newArtist, setNewArtist]=useState(false);
-
+ 
   // const [newArtist]
   setTimeout(() => {
     setTime(true);
   }, 3000);
   
-  useEffect(handleState, []);
-  function handleState()
-  {
-    // setContext(context => ({ ...context, userid: id }));
-    console.log("Did the job!")
-  }
-  var redirectUri= process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/users/` : `http://localhost:8888/users/`
-
-useEffect( handleData, []);
-  function handleData(){
-    axios.get(`${redirectUri}${id}`)
-      .then(response => {
-       setUser(response.data[0]);
-       console.log(response.data[0]);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-
-  axios.get(`${redirectUri}`)
-      .then(response => {
-       setAllusers(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    };
-
-
+  
  return (
     <div className="App">
       <Grid padded >
