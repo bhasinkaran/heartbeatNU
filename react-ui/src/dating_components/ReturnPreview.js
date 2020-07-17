@@ -28,7 +28,7 @@ const ReturnPreview = ({person}) => {
         return (
                 <div>
                        <Card fluid>
-    <Image src={person['datingimages'][number]} fluid size='huge' />
+    <Image rounded centered src={person['datingimages'][number]} fluid size='huge' />
     {/* wrapped ui={false}  */}
     <Card.Content>
       <Card.Header>{person['name']}</Card.Header>
