@@ -13,34 +13,10 @@ import PageHeader from './pageheader'
 import { InfoContext } from '../App'
 
 const MatchedPeople = () => {
-        const { replies, setReplies, artists, setArtists, messages, setMessages, songs, setSongs, posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshToken } = React.useContext(InfoContext);
+        const { replies, setReplies, mongouser, artists, setArtists, messages, setMessages, songs, setSongs, posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshToken } = React.useContext(InfoContext);
         var redirectUri= process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/users/` : `http://localhost:8888/users/`
 
-        useEffect(handleData, []);
-        function handleData() {
-                axios.get(`${redirectUri}${id}`)
-                        .then(response => {
-                                settmongouser(response.data[0]);
-                                setUser(response.data[0]);
-                        })
-                        .catch(function (error) {
-                                console.log(error);
-                        });
 
-                axios.get(`${redirectUri}`)
-                        .then(response => {
-                                setAllusers(response.data);
-                        })
-                        .catch(function (error) {
-                                console.log(error);
-                        });
-        };
-        useEffect(attractedTo, [mongouser, allusers]);
-        function attractedTo() {
-                if (allusers != "") {
-                        setAttracted(allusers.filter(item => item.gender == mongouser.type && item.id != mongouser.id));
-                }
-        };
         function rankAttractedTo() {
                 function comparedistance(a, b) {
                         let lat1 = mongouser.location[0];
