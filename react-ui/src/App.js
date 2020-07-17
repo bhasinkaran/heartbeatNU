@@ -174,9 +174,9 @@ useEffect(attractedTo, [user, allusers]);
             let arr2=b['favoritesongs'];
             let arr3=a['favoriteartists'];
             let arr4=b['favoriteartists'];
-            arr1.filter(x=>arr2.includes(x));
-            arr3.filter(x=>arr4.includes(x));
-            return arr1.length+arr3.length;
+            let intersection1=arr1.filter(x=>arr2.includes(x));
+            let intersection2=arr3.filter(x=>arr4.includes(x));
+            return intersection1.length+intersection2.length;
           }
           // console.log(attractedUsers);
           var copyUsers = attractedUsers;
