@@ -140,9 +140,11 @@ useEffect(attractedTo, [user, allusers]);
           function comparedistance(a,b){
             let lat1=user.location[0];
             let lon1=user.location[1];
+            let score1=matchMusic(a,user);
+            let score2=matchMusic(b,user);
             let distance1=distance(lat1,lon1,a);
             let distance2=distance(lat1,lon1,b);
-            return distance2-distance1;
+            return distance2/Math.min(score2,1)-distance1/Math.min(score1,1);
           }
           function distance(lat1, lon1,user2) {
             let lat2 = user2.location[0];
@@ -165,6 +167,16 @@ useEffect(attractedTo, [user, allusers]);
               return dist;
             }
            
+          }
+          function matchMusic(a,b){
+            let score=0;
+            let arr1=a['favoritesongs'];
+            let arr2=b['favoritesongs'];
+            let arr3=a['favoriteartists'];
+            let arr4=b['favoriteartists'];
+            arr1.filter(x=>arr2.includes(x));
+            arr3.filter(x=>arr4.includes(x));
+            return arr1.length+arr3.length;
           }
           // console.log(attractedUsers);
           var copyUsers = attractedUsers;

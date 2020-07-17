@@ -19,15 +19,17 @@ const TrackPage = () =>{
      const {replies, setReplies, artists, setArtists, messages, setMessages, songs, setSongs, posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshtoken} = React.useContext(InfoContext);
      localStorage.setItem('user', JSON.stringify(user));
      const [name, setName] = useState("");
+     const[artistName, setArtistName]=useState("");
      const [image, setImage]=useState("");
      const [image2, setImage2]=useState("");
      const [image3, setImage3]=useState("");
      const [valuee, setValuee]=useState("");
-     if(songs && !songs[trackid] && name){
+     if(songs && !songs[trackid] && name&& artistName){
       const constant = {
         id: trackid,
         name: name,
         posts: "None",
+        artist: artistName
       }
       const dataToPush = {
         [trackid]: constant
@@ -44,6 +46,7 @@ const TrackPage = () =>{
                 res => {
                   console.log(res);
                            setName(res.name);
+                           setArtistName(res.artists[0].name)
                            if(res.album.images[0].url){
                               console.log("THE IMAGE",res.album.images[0].url);
 
