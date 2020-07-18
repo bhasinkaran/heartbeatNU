@@ -4,13 +4,8 @@ import _ from 'lodash'
 import React, { useState, useEffect, useContext } from 'react';
 import { Container, Card, Header, Search, Image, Icon, Grid, Label } from 'semantic-ui-react'
 
-import FavoriteArtists from '../components/favartists'
-import FavoriteSongs from '../components/favsongs'
-import HomePagePosts from '../components/HomePagePosts'
 
-import PageHeader from './pageheader'
-import SongsPreview from './PreviewComponents/songspreview'
-import { InfoContext } from '../App'
+import SongsPreview from './songspreview'
 
 const ReturnPreview = ({ person }) => {
 

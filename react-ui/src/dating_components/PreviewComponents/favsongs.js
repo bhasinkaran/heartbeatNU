@@ -4,7 +4,7 @@ import Spotify from 'spotify-web-api-js';
 import { Grid, Image, Header, Search, Button, Container } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-import { InfoContext } from '../App';
+import { InfoContext } from '../../App';
 
 
 const mongoose = require('mongoose');

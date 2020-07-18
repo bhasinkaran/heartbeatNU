@@ -3,7 +3,7 @@ import React, { useState, useEffect, isValidElement } from 'react';
 import Spotify from 'spotify-web-api-js';
 import { Grid, Image, Header, Search, Button, Container } from 'semantic-ui-react'
 import { Link, Redirect } from 'react-router-dom'
-import { InfoContext } from '../App';
+import { InfoContext } from '../../App';
 import axios from 'axios'
 const mongoose = require('mongoose');
 const s = new Spotify();

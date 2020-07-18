@@ -11,7 +11,7 @@ import HomePagePosts from '../components/HomePagePosts'
 
 import PageHeader from './pageheader'
 import { InfoContext } from '../App'
-import ReturnPreview from './ReturnPreview'
+import ReturnPreview from './PreviewComponents/ReturnPreview'
 
 const MatchedPeople = () => {
         const { attractedUsers, user, setUser, orderedAttracted, accesstoken, setAccesToken, refreshtoken, setRefreshToken } = React.useContext(InfoContext);
