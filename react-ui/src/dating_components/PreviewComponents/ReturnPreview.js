@@ -2,7 +2,7 @@ import axios from 'axios'
 import { Redirect } from 'react-router-dom'
 import _ from 'lodash'
 import React, { useState, useEffect, useContext } from 'react';
-import { Container, Card, Header, Search, Image, Icon, Grid, Label } from 'semantic-ui-react'
+import { Container, Card,Segment, Header, Search, Image, Icon, Grid, Label } from 'semantic-ui-react'
 
 
 import SongsPreview from './songspreview'
@@ -21,28 +21,34 @@ const ReturnPreview = ({ person }) => {
         }, [change])
 
         return (
-                <div>
-                        <Card fluid>
-                                <Image rounded centered src={person['datingimages'][number]} fluid size='huge' />
-                                {/* wrapped ui={false}  */}
-                                <Card.Content>
-                                        <Card.Header>{person['name']}</Card.Header>
+                <Segment raised>
+                        <Header size='huge' textAlign='center' >{person['name']}</Header>
+                                        <Image rounded centered src={person['datingimages'][number]} fluid size='huge' />
 
-                                        <Card.Description>
-                                                <Header>Favorite Songs</Header>
-                                                <SongsPreview person={person} />
+                </Segment>
+                // <div>
+                //         <Card fluid>
+                //                 {/* wrapped ui={false}  */}
+                //                 <Card.Content>
+                //                         <Card.Header size='massive' >{person['name']}</Card.Header>
 
-                                                {/* {person['favoritesongs'].map(id=>getSong(id))} */}
-                                        </Card.Description>
-                                </Card.Content>
-                                <Card.Content extra>
-                                        <a>
-                                                <Icon name='user' />
-                                                        22 Friends
-                                                 </a>
-                                </Card.Content>
-                        </Card>
-                </div>
+                //                         <Card.Description>
+                //                                 {/* <Header>Favorite Songs</Header> */}
+                //                                 {/* <SongsPreview person={person} /> */}
+
+                //                                 {/* {person['favoritesongs'].map(id=>getSong(id))} */}
+                //                         </Card.Description>
+                //                 </Card.Content>
+                //                 <Image rounded centered src={person['datingimages'][number]} fluid size='huge' />
+
+                //                 {/* <Card.Content extra>
+                //                         <a>
+                //                                 <Icon name='user' />
+                //                                         22 Friends
+                //                                  </a>
+                //                 </Card.Content> */}
+                //         </Card>
+                // </div>
         );
 
 }

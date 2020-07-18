@@ -69,7 +69,7 @@ const OverLapArtists = ({person}) => {
                                         {/* mobile={16} tablet={8} computer={8} */}
                                         <Link to={`/artist/${orderedArtists[id]}`} >
                                                 <Image size='small' rounded src={imageurl} verticalAlign='middle' />
-                                                <Header size='small'>{artistname}</Header>
+                                                <Header style={{marginTop:"5px"}} size='small'>{artistname}</Header>
                                         </Link>
 
                                         <br></br>
