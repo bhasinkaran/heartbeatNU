@@ -5,6 +5,7 @@ import { Grid, Image, Header, Search, Button, Container } from 'semantic-ui-reac
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { InfoContext } from '../../App';
+import NoneInCommon from './NoneInCommon';
 
 
 const mongoose = require('mongoose');
@@ -74,35 +75,11 @@ const OverLapSongs = ({person}) => {
         }
         
         return (
-                <div className="FavoriteArtists ">
-
-
-
+                <div className="OverlappingSongs ">
                         <Header size='huge'>Song Matches</Header>
-
                         <Grid.Row >
-                                {songimages.length > 0 ? indexarray.map(id => <ReturnFavSong key={id.toString()} id={id} />) : "None common"}
+                                {songimages.length > 0 ? indexarray.map(id => <ReturnFavSong key={id.toString()} id={id} />) : <NoneInCommon type={"favoritesongs"} person={person} /> }
                         </Grid.Row>
-
-                        {/* <Grid.Row >
-                                {songimages.length > 15 ? indexarray.slice(2, 4).map(id => <ReturnFavSong key={id.toString()} id={id} />) : ""}
-                        </Grid.Row>
-
-                        <Grid.Row >
-                                {songimages.length > 15 ? indexarray.slice(4, 6).map(id => <ReturnFavSong key={id.toString()} id={id} />) : ""}
-                        </Grid.Row>
-
-                        <Grid.Row>
-                                {songimages.length > 15 ? indexarray.slice(6, 10).map(id => returnSecondFavSong(id)) : ""}
-                        </Grid.Row>
-
-                        <Grid.Row>
-                                {songimages.length > 19 ? indexarray.slice(10, 14).map(id => returnSecondFavSong(id)) : ""}
-                        </Grid.Row>
-
-                        <Grid.Row>
-                                {songimages.length > 19 ? indexarray.slice(14, 21).map(id => returnThirdFavSong(id)) : ""}
-                        </Grid.Row> */}
                 </div>
 
         )

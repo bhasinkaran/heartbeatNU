@@ -5,8 +5,10 @@ import { Grid, Image, Header, Search, Button, Container } from 'semantic-ui-reac
 import { Link, Redirect } from 'react-router-dom'
 import { InfoContext } from '../../App';
 import axios from 'axios'
+import NoneInCommon from './NoneInCommon'
 const mongoose = require('mongoose');
 const s = new Spotify();
+
 const OverLapArtists = ({person}) => {
         const { accesstoken, user } = React.useContext(InfoContext);
         const [artistnames, setNames] = useState([]);
@@ -30,7 +32,7 @@ const OverLapArtists = ({person}) => {
                                         res => {
                                                 //      console.log(artists[i]);
                                                 temp.push(res.name);
-                                                console.log(res.name)
+                                                // console.log(res.name)
                                                 temp2.push(res.images[0].url);
                                                 temp3.push(user['favoriteartists'][i]);
                                                 //      console.log(temp);
@@ -74,7 +76,6 @@ const OverLapArtists = ({person}) => {
                                 </div>);
                 }
                 else {
-                        // console.log(imageurl)
                         return null;
                 }
         }
@@ -82,38 +83,14 @@ const OverLapArtists = ({person}) => {
 
         return (
                 <div className="FavoriteArtists ">
-
                         <Header size='huge'>Artist Matches</Header>
-
-                        <Grid.Row >
-                                {artistimages.length > 0 ? indexarray.map(id => <ReturnFavArtist key={id.toString()} id={id} />) : ""}
-                        </Grid.Row>
-
-                        {/* <Grid.Row >
-                                {artistimages.length > 15 ? indexarray.slice(2, 4).map(id => <ReturnFavArtist key={id.toString()} id={id} />) : ""}
-                        </Grid.Row>
-
-                        <Grid.Row >
-                                {artistimages.length > 15 ? indexarray.slice(4, 6).map(id => <ReturnFavArtist key={id.toString()} id={id} />) : ""}
-                        </Grid.Row>
-
                         <Grid.Row>
-                                {artistimages.length > 15 ? indexarray.slice(6, 10).map(id => returnSecondFavArtist(id)) : ""}
+                                {artistimages.length > 0 ? indexarray.map(id => <ReturnFavArtist key={id.toString()} id={id} />) : <NoneInCommon person = {person} type="favoriteartists"/>}
                         </Grid.Row>
-
-                        <Grid.Row>
-                                {artistimages.length > 19 ? indexarray.slice(10, 14).map(id => returnSecondFavArtist(id)) : ""}
-                        </Grid.Row>
-
-                        <Grid.Row>
-                                {artistimages.length > 19 ? indexarray.slice(14, 21).map(id => returnThirdFavArtist(id)) : ""}
-                        </Grid.Row> */}
-
-
                 </div>
-
         )
 }
+
 
 
 export default OverLapArtists;
