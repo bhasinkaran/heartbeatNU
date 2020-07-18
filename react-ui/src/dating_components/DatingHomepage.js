@@ -5,13 +5,12 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Container, Search, Grid } from 'semantic-ui-react'
 import { Router, useParams, Link } from 'react-router-dom';
 import Spotify from 'spotify-web-api-js';
-import FavoriteArtists from './PreviewComponents/favartists'
-import FavoriteSongs from './PreviewComponents/favsongs'
+import OverLapArtists from './PreviewComponents/OverLapArtists'
+import OverLapSongs from './PreviewComponents/OverLapSongs'
 // import HomePagePosts from '../components/HomePagePosts'
 import MatchedPeople from './matchedpeople'
 import ReturnPreview from './PreviewComponents/ReturnPreview'
 import { Button } from 'semantic-ui-react'
-import PageHeader from './pageheader'
 import { InfoContext } from '../App'
 
 const mongoose = require('mongoose');
@@ -57,7 +56,7 @@ const DatingHomePageFeed = () => {
       <Grid padded >
         <Grid.Row stretched>
           <Grid.Column width={3}>
-            {user['favoritesongs'] ? <FavoriteSongs songs={user['favoritesongs']} accesstoken={access_token} refreshtoken={refresh_token} /> : ""}
+            {user['favoritesongs'] &&  orderedAttracted&&orderedAttracted.length > index? <OverLapSongs person={orderedAttracted[index]} /> : ""}
 
           </Grid.Column>
 
@@ -71,7 +70,7 @@ const DatingHomePageFeed = () => {
 
 
           <Grid.Column width={3}>
-            {user['favoriteartists'] ? <FavoriteArtists artists={user['favoriteartists']} accesstoken={access_token} refreshtoken={refresh_token} /> : ""}
+            {user['favoriteartists'] &&  orderedAttracted&&orderedAttracted.length > index ? <OverLapArtists  person={orderedAttracted[index]} /> : ""}
           </Grid.Column>
         </Grid.Row>
       </Grid>
