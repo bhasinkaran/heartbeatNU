@@ -64,8 +64,8 @@ const FavoriteSongs = ({ songs, refreshtoken }) => {
                         return (
                                 <Grid.Column key={id.toString()} mobile={16} tablet={8} computer={8} id={id}>
                                         <Link to={`/track/${orderedSongs[id]}`} >
-                                                <Image size='huge' rounded verticalAlign='middle' src={imageurl} />
-                                                <Header size='huge'>{songName}</Header>
+                                                <Image size='small' rounded verticalAlign='middle' src={imageurl} />
+                                                <Header style={{marginTop:"5px"}} size='small'>{songName}</Header>
                                         </Link>
 
                                         <br></br>

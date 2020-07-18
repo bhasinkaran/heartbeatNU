@@ -21,7 +21,19 @@ const DatingHomePageFeed = () =>{
   var {id, access_token, refresh_token } = useParams();
   const {replies, setReplies, artists, setArtists, messages, setMessages, songs, setSongs, posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshToken} = React.useContext(InfoContext);
   
-  
+  var redirectUri= process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/users/` : `http://localhost:8888/users/`
+
+        useEffect(handleData, []);
+        function handleData() {
+                axios.get(`${redirectUri}${id}`)
+                        .then(response => {
+                                setUser(response.data[0]);
+                        })
+                        .catch(function (error) {
+                                console.log(error);
+                        });
+        };
+
   setAccesToken(access_token); // double check on the logic behind this. 
   setRefreshToken(refresh_token);
   s.setAccessToken(access_token);

@@ -24,7 +24,7 @@ const ReturnPreview = ({ person }) => {
                         console.log(change);
                 }, 2000)
         }, [change])
-        
+
         return (
                 <div>
                         <Card fluid>
@@ -34,6 +34,7 @@ const ReturnPreview = ({ person }) => {
                                         <Card.Header>{person['name']}</Card.Header>
 
                                         <Card.Description>
+                                                <Header>Favorite Songs</Header>
                                                 <SongsPreview person={person} />
 
                                                 {/* {person['favoritesongs'].map(id=>getSong(id))} */}

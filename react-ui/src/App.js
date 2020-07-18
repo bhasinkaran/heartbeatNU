@@ -144,7 +144,11 @@ useEffect(attractedTo, [user, allusers]);
             let score2=matchMusic(b,user);
             let distance1=distance(lat1,lon1,a);
             let distance2=distance(lat1,lon1,b);
-            return distance2/Math.min(score2,1)-distance1/Math.min(score1,1);
+
+            // distance2/
+            // distance1/
+            // find a way to use distance eventually once off campus etc.
+            return Math.min(score2,1)-Math.min(score1,1);
           }
           function distance(lat1, lon1,user2) {
             let lat2 = user2.location[0];
