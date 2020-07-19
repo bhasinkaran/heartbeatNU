@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, isValidElement } from 'react';
 import Spotify from 'spotify-web-api-js';
-import { Grid, Image, Header, Search, Button, Container } from 'semantic-ui-react'
+import { Grid, Image, Header,Divider, Search, Button, Container } from 'semantic-ui-react'
 import { Link, Redirect } from 'react-router-dom'
 import { InfoContext } from '../../App';
 import axios from 'axios'
@@ -65,13 +65,11 @@ const OverLapArtists = ({person}) => {
                 if (imageurl) {
                         //      console.log(imageurl);
                         return (
-                                <div key={id.toString()} id={id}>
+                                <div style={{marginTop:"-25px"}} key={id.toString()} id={id}>
                                         {/* mobile={16} tablet={8} computer={8} */}
-                                        <Link to={`/artist/${orderedArtists[id]}`} >
-                                                <Image size='small' rounded src={imageurl} verticalAlign='middle' />
+                                        {/* <Link to={`/artist/${orderedArtists[id]}`} > */}
+                                                <Image  style={{marginTop:"5px"}}  size='small' rounded src={imageurl} verticalAlign='middle' />
                                                 <Header style={{marginTop:"5px"}} size='small'>{artistname}</Header>
-                                        </Link>
-
                                         <br></br>
                                 </div>);
                 }
@@ -84,9 +82,9 @@ const OverLapArtists = ({person}) => {
         return (
                 <div className="FavoriteArtists ">
                         <Header size='huge'>Artist Matches</Header>
-                        <Grid.Row>
+                       <Divider hidden/>
                                 {artistimages.length > 0 ? indexarray.map(id => <ReturnFavArtist key={id.toString()} id={id} />) : <NoneInCommon person = {person} type="favoriteartists"/>}
-                        </Grid.Row>
+                        
                 </div>
         )
 }

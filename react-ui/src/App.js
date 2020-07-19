@@ -22,6 +22,7 @@ import FavoriteArtists from './components/favartists'
 import FavoriteSongs from './components/favsongs';
 import DatingHomePageFeed from './dating_components/DatingHomepage';
 import DatingLogin from './dating_components/DatingLogin'
+import PageHeaderDating from './dating_components/pageheaderdating';
 
 const s = new Spotify();
 
@@ -40,7 +41,20 @@ function App() {
 
       </div>
     )
-    
+  }
+  function withMenuDating(page){
+    return(
+      <div>
+        <PageHeaderDating accesstoken={accesstoken} id={user.id}/>
+        <Sidebar.Pushable as={Segment}>
+        <SideBar />
+        <Sidebar.Pusher>
+          {page}
+        </Sidebar.Pusher>
+      </Sidebar.Pushable>
+
+      </div>
+    )
   }
   
   
@@ -221,7 +235,7 @@ useEffect(attractedTo, [user, allusers]);
 
 
         {/* DATING ROUTES */}
-        <Route exact path="/dating/home/:id/:access_token/:refresh_token" render={()=><DatingHomePageFeed />} />
+        <Route exact path="/dating/home/:id/:access_token/:refresh_token" render={()=>withMenuDating(<DatingHomePageFeed />)} />
         <Route exact path="/dating" render={()=><DatingLogin />} />
 
 

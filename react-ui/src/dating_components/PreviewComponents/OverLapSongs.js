@@ -58,15 +58,29 @@ const OverLapSongs = ({person}) => {
                 // console.log(artistimages)
                 if (imageurl) {
                         //      console.log(imageurl);
-                        return (
-                                <Grid.Column key={id.toString()} mobile={16} tablet={8} computer={8} id={id}>
-                                        <Link to={`/track/${orderedSongs[id]}`} >
-                                                <Image size='small' rounded verticalAlign='middle' src={imageurl} />
-                                                <Header style={{marginTop:"5px"}} size='small'>{songName}</Header>
-                                        </Link>
+                       
+                                // <Grid.Column key={id.toString()} mobile={16} tablet={8} computer={8} id={id}>
+                                        {/* <Link to={`/track/${orderedSongs[id]}`} > */}
+                                      
 
-                                        <br></br>
-                                </Grid.Column>);
+                                                {/* <Image size='small' rounded verticalAlign='middle' src={imageurl} />
+                                                <Header style={{marginTop:"5px"}} size='small'>{songName}</Header> */}
+                                                
+                                        {/* </Link> */}
+
+                                      
+                                // </Grid.Column>
+                                return(<div style={{marginTop:"-25px"}} key={id.toString()} id={id}>
+                                {/* mobile={16} tablet={8} computer={8} */}
+                                {/* <Link to={`/artist/${orderedArtists[id]}`} > */}
+                                        <Image  style={{marginTop:"5px"}}  size='small' rounded src={imageurl} verticalAlign='middle' />
+                                        <Header style={{marginTop:"5px"}} size='small'>{songName}</Header>
+                                <br></br>
+                        </div>
+
+                                );
+                               
+                                
                 }
                 else {
                         // console.log(imageurl)

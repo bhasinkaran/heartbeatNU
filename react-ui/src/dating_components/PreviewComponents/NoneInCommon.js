@@ -75,14 +75,15 @@ const NoneInCommon = ({ person, type }) => {
                 if (image) {
                         //      console.log(imageurl);
                         return (
-                                <Grid.Column key={id.toString()} mobile={16} tablet={8} computer={8} id={id}>
-                                        {/* <Link to={ type=="favoriteartists" ? :`/track/${orderedSongs[id]}`} > */}
-                                                <Image size='small' rounded verticalAlign='middle' src={image} />
+                               
+                                        <div style={{marginTop:"-25px"}} key={id.toString()} id={id}>
+                                                <Image  style={{marginTop:"5px"}} size='small' rounded verticalAlign='middle' src={image} />
                                                 <Header style={{marginTop:"5px"}} size='small'>{name}</Header>
-                                        {/* </Link> */}
-
+                                               
                                         <br></br>
-                                </Grid.Column>);
+                                        </div>
+                               
+                                );
                 }
                 else {
                         // console.log(imageurl)
@@ -93,6 +94,7 @@ const NoneInCommon = ({ person, type }) => {
         return (
                 <div>
                         <Header>{person['name']} doesn't have any in common, but they can talk to you about their favorites including:</Header>
+                        <br></br>
                         {names.map((item,index)=>
                                 <ReturnPreview id={index}/>
                         )}
