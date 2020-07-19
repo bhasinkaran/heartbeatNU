@@ -12,6 +12,7 @@ import MatchedPeople from './matchedpeople'
 import ReturnPreview from './PreviewComponents/ReturnPreview'
 import { Button } from 'semantic-ui-react'
 import { InfoContext } from '../App'
+import { dbUsers } from '../firebase/firebase';
 
 const mongoose = require('mongoose');
 const s = new Spotify();
@@ -19,10 +20,18 @@ const s = new Spotify();
 const DatingHomePageFeed = () => {
 
   var { id, access_token, refresh_token } = useParams();
-  const { replies, setReplies, artists, setArtists, messages, setMessages, orderedAttracted, songs, setSongs, posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshToken } = React.useContext(InfoContext);
+  const { replies, setReplies, artists, setArtists, messages, setMessages, orderedAttracted, songs, setSongs, posts, setPosts, likes, setLikes, users,user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshToken } = React.useContext(InfoContext);
 
   var redirectUri = process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/users/` : `http://localhost:8888/users/`
   const [index, setIndex] = useState(0);
+  useEffect(initializeCheck, [user,users]);
+  function initializeCheck() {
+    if(users&&!users[user.id]){
+      const data={id:user.id}
+      dbUsers.child(id).update(data);
+    }
+  };
+
   useEffect(handleData, []);
   function handleData() {
     axios.get(`${redirectUri}${id}`)

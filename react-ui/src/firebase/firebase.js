@@ -19,6 +19,7 @@ firebase.initializeApp(firebaseConfig);
 const storage = firebase.storage();
 export default storage;
 export const dbArtists = firebase.database().ref().child('artists');
+export const dbUsers = firebase.database().ref().child('users');
 export const dbSongs  = firebase.database().ref().child('songs');
 export const dbPosts = firebase.database().ref().child('posts');
 export const dbMessages = firebase.database().ref().child('messages');

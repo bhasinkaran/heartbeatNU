@@ -16,7 +16,7 @@ import Signup from './dating_components/signup';
 import ArtistPage from './components/artisthomepage'
 import TrackPage from './components/trackhomepage'
 import PageHeader from './components/pageheader'
-import {dbMessages, dbPosts, dbSongs, dbArtists, dbReplies, dbLikes} from './firebase/firebase';
+import {dbMessages, dbPosts, dbSongs, dbUsers, dbArtists, dbReplies, dbLikes} from './firebase/firebase';
 import SettingsPage from './components/settingspage';
 import FavoriteArtists from './components/favartists'
 import FavoriteSongs from './components/favsongs';
@@ -57,6 +57,7 @@ function App() {
   const [allusers, setAllusers] = useState("");
   const [attractedUsers,setAttracted]=useState("");
   const [orderedAttracted,setOrderedAttracted]=useState("");
+  const [users, setUsers]=useState("");
 
   
   React.useEffect(()=>{
@@ -91,7 +92,13 @@ useEffect(attractedTo, [user, allusers]);
         setAttracted(allusers.filter(item => item.gender == user.type && item.id!=user.id));
       }
     };
-
+    useEffect(() => {
+      const handleData = snap => {
+        if (snap.val()) setUsers(snap.val());
+      }
+      dbUsers.on('value', handleData, error => alert(error));
+      return () => { dbUsers.off('value', handleData); };
+    }, []);
   useEffect(() => {
     const handleData = snap => {
       if (snap.val()) setArtists(snap.val());
@@ -193,7 +200,7 @@ useEffect(attractedTo, [user, allusers]);
   
   return(
     <BrowserRouter>
-      <InfoContext.Provider value={{replies, allusers, attractedUsers,orderedAttracted, setReplies, artists, setArtists, messages, setMessages, songs, setSongs,posts, setPosts, likes, setLikes, user, setUser, visible, setVisible, accesstoken, setAccesToken, refreshtoken, setRefreshToken}}>
+      <InfoContext.Provider value={{replies, users, allusers, attractedUsers,orderedAttracted, setReplies, artists, setArtists, messages, setMessages, songs, setSongs,posts, setPosts, likes, setLikes, user, setUser, visible, setVisible, accesstoken, setAccesToken, refreshtoken, setRefreshToken}}>
         {/* NEARIFY ROUTES */}
         <Route exact path="/signup/:id/:access_token/:refresh_token" render={()=> <Signup />} />
         <Route exact path="/" render={()=><Login />} />
