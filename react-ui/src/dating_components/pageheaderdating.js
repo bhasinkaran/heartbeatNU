@@ -12,7 +12,7 @@ import { Button, Dropdown, Menu } from 'semantic-ui-react'
 
 const PageHeaderDating = ({ access_token, id }) => {
   const { replies, setReplies, artists, visible, setVisible, setArtists, messages, setMessages, songs, setSongs, posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshToken } = React.useContext(InfoContext);
-  const [activeItem, setActiveItem] = useState('');
+  const [activeItem, setActiveItem] = useState('home');
   const [value, setValue] = useState("");
   const [results, setResults] = useState([]);
   const [isLoading, setisLoading] = useState(false);
@@ -21,62 +21,15 @@ const PageHeaderDating = ({ access_token, id }) => {
   const [redirectSettings, setRedirectSettings] = useState(false);
   const [logout, setLogout] = useState(false);
   const [home, setRedirectHome] = useState(false);
-
+  // const [redirect, setR]
+  // setTimeout(()=>setActiveItem('home'), 500);
 
   return (
     <div style={{marginBottom:"-10px"}} >
-      {/* <Segment
-      basic
-      style={{ backgroundColor: "#1DB954", textAlign: "center", marginBottom: "10px" }}
-      fluid="true">
-        <Grid centered >
-          <Grid.Row>
-          <Grid.Column width={"5"}>
-          <Header
-            as={Link}
-            to={`/dating/home/${access_token}/${id}`}
-            inverted 
-            content="UpNext" 
-            size="huge" 
-            color="black"
-            style={{cursor: "default"}}
-            
-          />
-          </Grid.Column>
-
-         <Grid.Column width={5} >
-
-          </Grid.Column>
-          <Grid.Column width={1}>
-            <Button.Group>
-            <Button onClick={()=>setRedirectHome(true)} inverted icon='home' color ='black' >
-            </Button>
-            <Button onClick={()=>setRedirectSettings(true)} inverted icon='settings' color ='black' >
-            </Button>
-            <Button inverted onClick={()=>{
-              setRedirectLogout(true);
-              setUser("");
-            }} icon='arrow left' color ='black' >
-              Logout
-            </Button>
-            <Button inverted onClick={()=>{
-              setVisible(true);
-            }} icon='arrow left' color ='black' >
-              Menu
-            </Button>
-            </Button.Group>
-             <Button inverted icon='arrow left' color ='black' >
-              Logout
-            </Button> 
-          </Grid.Column>
-          </Grid.Row>
-          
-            </Grid>
-    </Segment>
-          */}
+      
       <Grid centered >
         <Grid.Row>
-          <Grid.Column width='5'>
+          {/* <Grid.Column width='5'>
             <Header
               as={Link}
               to={`/dating/home/${user.id}/${access_token}/${id}`}
@@ -86,10 +39,14 @@ const PageHeaderDating = ({ access_token, id }) => {
               style={{marginLeft:"150px", marginTop:"120px" , textAlign:'center', cursor: "default" }}
               textAlign='center'
             />
-          </Grid.Column>
-          <Grid.Column width='11'>
+          </Grid.Column> */}
+          <Grid.Column width='16'>
             <Menu inverted color={'purple'} size='large' widths={4} >
-
+              <Menu.Item
+                name='Up Next LOGO'
+                // active={activeItem === 'home'}
+                // onClick={() => setActiveItem('home')}
+              />
               <Menu.Item
                 name='home'
                 active={activeItem === 'home'}
@@ -129,7 +86,7 @@ const PageHeaderDating = ({ access_token, id }) => {
 
       { redirectLogout ? <Redirect to={`/`} push={true} /> : "" }
   { redirectSettings ? <Redirect to={`/settings`} push={true} /> : "" }
-  { activeItem === 'home' ? <Redirect to={`/dating/home/${user.id}/${accesstoken}/${refreshtoken}`} push={true} /> : "" }
+  { activeItem === 'home' && user && accesstoken && refreshtoken? <Redirect to={`/dating/home/${user.id}/${accesstoken}/${refreshtoken}`} push={true} /> : "" }
   { activeItem === 'messages' ? <Redirect to={`/dating/messages`} push={true} /> : "" }
 
     </div >
