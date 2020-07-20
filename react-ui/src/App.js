@@ -23,6 +23,8 @@ import FavoriteSongs from './components/favsongs';
 import DatingHomePageFeed from './dating_components/DatingHomepage';
 import DatingLogin from './dating_components/DatingLogin'
 import PageHeaderDating from './dating_components/pageheaderdating';
+import NoMatchModal from './dating_components/EdgeCaseModals/NoMatchModal';
+import NoMessagesModal from './dating_components/EdgeCaseModals/NoMessageModal';
 
 const s = new Spotify();
 
@@ -46,6 +48,8 @@ function App() {
     return(
       <div>
         <PageHeaderDating accesstoken={accesstoken} id={user.id}/>
+        <NoMatchModal />
+        <NoMessagesModal />
         {/* <Sidebar.Pushable as={Segment}>
         <SideBar />
         <Sidebar.Pusher> */}
@@ -72,8 +76,10 @@ function App() {
   const [attractedUsers,setAttracted]=useState("");
   const [orderedAttracted,setOrderedAttracted]=useState("");
   const [users, setUsers]=useState("");
+  const [nomatchmodal, setNoMatchModal]=useState(false);
+  const [nomessagemodal, setNoMessagesModal]=useState(false);
 
-  
+  useEffect(()=>console.log(nomatchmodal), [nomatchmodal]);
   React.useEffect(()=>{
     if(user){
       localStorage.setItem('user', JSON.stringify(user));
@@ -214,7 +220,7 @@ useEffect(attractedTo, [user, allusers]);
   
   return(
     <BrowserRouter>
-      <InfoContext.Provider value={{replies, users, allusers, attractedUsers,orderedAttracted, setReplies, artists, setArtists, messages, setMessages, songs, setSongs,posts, setPosts, likes, setLikes, user, setUser, visible, setVisible, accesstoken, setAccesToken, refreshtoken, setRefreshToken}}>
+      <InfoContext.Provider value={{nomatchmodal, setNoMatchModal,nomessagemodal, setNoMessagesModal, replies, users, allusers, attractedUsers,orderedAttracted, setReplies, artists, setArtists, messages, setMessages, songs, setSongs,posts, setPosts, likes, setLikes, user, setUser, visible, setVisible, accesstoken, setAccesToken, refreshtoken, setRefreshToken}}>
         {/* NEARIFY ROUTES */}
         <Route exact path="/signup/:id/:access_token/:refresh_token" render={()=> <Signup />} />
         <Route exact path="/" render={()=><Login />} />

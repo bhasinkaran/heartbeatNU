@@ -10,8 +10,8 @@ import { Button, Dropdown, Menu } from 'semantic-ui-react'
 
 
 
-const PageHeaderDating = ({ access_token, id }) => {
-  const { replies, setReplies, artists, visible, setVisible, setArtists, messages, setMessages, songs, setSongs, posts, setPosts, likes, setLikes, user, setUser, accesstoken, setAccesToken, refreshtoken, setRefreshToken } = React.useContext(InfoContext);
+const PageHeaderDating = () => {
+  const {users, user,  accesstoken, refreshtoken, setNoMatchModal, setNoMessagesModal } = React.useContext(InfoContext);
   const [activeItem, setActiveItem] = useState('home');
   const [value, setValue] = useState("");
   const [results, setResults] = useState([]);
@@ -21,31 +21,28 @@ const PageHeaderDating = ({ access_token, id }) => {
   const [redirectSettings, setRedirectSettings] = useState(false);
   const [logout, setLogout] = useState(false);
   const [home, setRedirectHome] = useState(false);
-  // const [redirect, setR]
-  // setTimeout(()=>setActiveItem('home'), 500);
+  function switchActive(){
+    if(activeItem=='messages'){
+      setNoMessagesModal(true);
+    }
+    if(activeItem=='matches'){
+      setNoMatchModal(true);
+    }
+    setActiveItem('home');
+    return(<Redirect to={`/dating/home/${user.id}/${accesstoken}/${refreshtoken}`} push={true} />)
+  }
 
   return (
     <div style={{marginBottom:"-10px"}} >
       
       <Grid centered >
         <Grid.Row>
-          {/* <Grid.Column width='5'>
-            <Header
-              as={Link}
-              to={`/dating/home/${user.id}/${access_token}/${id}`}
-              content="UpNext"
-              size='huge'
-              color="purple"
-              style={{marginLeft:"150px", marginTop:"120px" , textAlign:'center', cursor: "default" }}
-              textAlign='center'
-            />
-          </Grid.Column> */}
+          
           <Grid.Column width='16'>
             <Menu inverted color={'purple'} size='large' widths={4} >
               <Menu.Item
                 name='Up Next LOGO'
-                // active={activeItem === 'home'}
-                // onClick={() => setActiveItem('home')}
+                
               />
               <Menu.Item
                 name='home'
@@ -70,24 +67,15 @@ const PageHeaderDating = ({ access_token, id }) => {
 
 
 
-      {/* <Menu.Menu position='right'> */}
-      {/* // <Dropdown item text='Language'>
-          //   <Dropdown.Menu>
-          //     <Dropdown.Item>English</Dropdown.Item>
-          //     <Dropdown.Item>Russian</Dropdown.Item>
-          //     <Dropdown.Item>Spanish</Dropdown.Item>
-          //   </Dropdown.Menu>
-          // </Dropdown>  */}
-
-      {/* <Menu.Item>
-            <Button primary>Sign Up</Button>
-          </Menu.Item>
-        </Menu.Menu> */}
-
       { redirectLogout ? <Redirect to={`/`} push={true} /> : "" }
   { redirectSettings ? <Redirect to={`/settings`} push={true} /> : "" }
   { activeItem === 'home' && user && accesstoken && refreshtoken? <Redirect to={`/dating/home/${user.id}/${accesstoken}/${refreshtoken}`} push={true} /> : "" }
-  { activeItem === 'messages' ? <Redirect to={`/dating/messages`} push={true} /> : "" }
+  { activeItem === 'messages' &&  user && users[user.id]['chats']? <Redirect to={`/dating/messages`} push={true} /> : 
+   activeItem === 'messages' ? switchActive() : "" }
+   { activeItem === 'matches' &&  user && users[user.id]['matches']? <Redirect to={`/dating/matches`} push={true} /> : 
+   activeItem === 'matches' ? 
+   switchActive()
+    : "" }
 
     </div >
 
