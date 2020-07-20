@@ -46,12 +46,12 @@ function App() {
     return(
       <div>
         <PageHeaderDating accesstoken={accesstoken} id={user.id}/>
-        <Sidebar.Pushable as={Segment}>
+        {/* <Sidebar.Pushable as={Segment}>
         <SideBar />
-        <Sidebar.Pusher>
+        <Sidebar.Pusher> */}
           {page}
-        </Sidebar.Pusher>
-      </Sidebar.Pushable>
+        {/* </Sidebar.Pusher>
+      </Sidebar.Pushable> */}
 
       </div>
     )
