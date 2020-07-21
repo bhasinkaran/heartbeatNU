@@ -72,7 +72,7 @@ const DatingHomePageFeed = () => {
 
 
           <Grid.Column width={10}>
-            {user && user['location'] && user['location'].length > 0 && orderedAttracted&&orderedAttracted.length > index ? <ReturnPreview person={orderedAttracted[index]} /> :
+            {user && user['location'] && user['location'].length > 0 && orderedAttracted&&orderedAttracted.length > index ? <ReturnPreview setIndex={setIndex} person={orderedAttracted[index]} /> :
               user && user['location'] && user['location'].length > 0 ? "No matches yet."
                 :
                 <Button as={Link} to={`/signup/${user['id']}/${accesstoken}/${refreshtoken}`} > Complete your dating profile signup process! </Button>}
