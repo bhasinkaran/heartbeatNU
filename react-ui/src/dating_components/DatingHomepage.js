@@ -62,6 +62,7 @@ const DatingHomePageFeed = () => {
 
   return (
     <div className="App">
+      <div style={{marginLeft:"30px", marginRight:"30px"}}>
       <Grid padded >
         <Grid.Row stretched>
           <Grid.Column width={3}>
@@ -83,7 +84,7 @@ const DatingHomePageFeed = () => {
           </Grid.Column>
         </Grid.Row>
       </Grid>
-
+      </div>
       {redirectArtist ? <Redirect to={`/artist/${result.id}`} push={true} /> : ""}
       {redirectTrack ? <Redirect to={`/track/${result.id}`} push={true} /> : ""}
 

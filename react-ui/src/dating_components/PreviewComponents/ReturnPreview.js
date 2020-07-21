@@ -2,13 +2,12 @@ import axios from 'axios'
 import { Redirect } from 'react-router-dom'
 import _ from 'lodash'
 import React, { useState, useEffect, useContext } from 'react';
-import { Container, Card,Segment, Header, Search, Image, Icon, Grid, Label } from 'semantic-ui-react'
+import { Container, Card,Button, Segment, Header, Search, Image, Icon, Grid, Label } from 'semantic-ui-react'
 
 
 import SongsPreview from './songspreview'
 
 const ReturnPreview = ({ person }) => {
-
         const [number, setNumber] = useState(0);
         const [change, setChange] = useState(true);
 
@@ -23,8 +22,15 @@ const ReturnPreview = ({ person }) => {
         return (
                 <Segment raised>
                         <Header size='huge' textAlign='center' >{person['name']}</Header>
-                                        <Image rounded centered src={person['datingimages'][number]} fluid size='huge' />
+                        <Header size='medium' style={{marginTop:"5px"}} textAlign='center' >Want to know {person['name']} better? </Header>
 
+                        <Button.Group style={{marginBottom:"5px"}} fluid>
+                                <Button>No</Button>
+                                <Button.Or />
+                                <Button positive>Yes</Button>
+                        </Button.Group>
+                        <Image rounded centered src={person['datingimages'][number]} fluid size='huge' />
+                        
                 </Segment>
                 // <div>
                 //         <Card fluid>
