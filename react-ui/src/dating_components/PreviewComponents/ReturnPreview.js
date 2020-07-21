@@ -8,13 +8,14 @@ import {dbUsers} from '../../firebase/firebase'
 
 import SongsPreview from './songspreview'
 
-const ReturnPreview = ({setIndex, person }) => {
+const ReturnPreview = ({increaseIndex, person }) => {
         const [number, setNumber] = useState(0);
         const [change, setChange] = useState(true);
         const {user}= useContext(InfoContext)
         function updateLike(){
-                dbUsers.child(user.id).child(interested).push(person['id']);
-                setIndex(index+1)
+                dbUsers.child(user.id).child('interested').push(person['id']);
+                increaseIndex();
+                console.log("IN SIDE")
         }
         useEffect(() => {
                 setNumber((number + 1) % 3)
@@ -30,9 +31,9 @@ const ReturnPreview = ({setIndex, person }) => {
                         <Header size='medium' style={{marginTop:"5px"}} textAlign='center' >Want to know {person['name']} better? </Header>
 
                         <Button.Group style={{marginBottom:"5px"}} fluid>
-                                <Button onClick={()=>setIndex(index+1)} >No</Button>
+                                <Button onClick={()=>increaseIndex()} >No</Button>
                                 <Button.Or />
-                                <Button positive={()=>updateLike()}>Yes</Button>
+                                <Button positive onClick={updateLike}>Yes</Button>
                         </Button.Group>
                         <Image rounded centered src={person['datingimages'][number]} fluid size='huge' />
                         
