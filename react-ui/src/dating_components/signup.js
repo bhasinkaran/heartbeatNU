@@ -25,6 +25,9 @@ const Signup = () => {
   const [phone, setPhone] = useState("");
   const [location, setLocation] = useState(null);
   const [redirectableLogin, setRedirectableLogin]=useState("");
+  const [fname, setFName]=useState("");
+  const [lname, setLName]=useState("");
+
   const contextRef = createRef();
 
   useEffect(() => {
@@ -105,9 +108,11 @@ const Signup = () => {
 
       axios.post(backendroute+querystring.stringify({
         gender: gender,
-        type: type,
+        // type: type,
         phone: phone,
         location: location,
+        fname: fname,
+        lname:lname
         // datingimages: [image1, image2, image3],
       }))
       .then(response => {
@@ -174,8 +179,9 @@ const Signup = () => {
     
   }
   function CheckPass() {
-    if(gender!="" && type !="" && !isNaN(Number(phone))){
-      var temp = process.env.NODE_ENV === 'production' ? `https://pure-harbor-26317.herokuapp.com/home/${id}/${access_token}/${refresh_token}` : `http://localhost:3000/home/${id}/${access_token}/${refresh_token}`;
+    if(gender!="" &&  !isNaN(Number(phone))){
+      // type !=""
+      var temp = process.env.NODE_ENV === 'production' ? `https://pure-harbor-26317.herokuapp.com/dating/home/${id}/${access_token}/${refresh_token}` : `http://localhost:3000/dating/home/${id}/${access_token}/${refresh_token}`;
     
       setRedirectableLogin(temp);
       setRedirect(true);
@@ -198,6 +204,18 @@ const Signup = () => {
               </Header>
               <Form size='large' warning={error}>
                 <Segment stacked>
+                <Form.Input
+                    required={true}
+                    onChange={(e) => { setFName(e.target.value) }}
+                    id='form-subcomponent-shorthand-input-first-name'
+                    placeholder='First Name'
+                  />
+                  <Form.Input
+                    required={true}
+                    onChange={(e) => { setLName(e.target.value) }}
+                    id='form-subcomponent-shorthand-input-first-name'
+                    placeholder='Last Name'
+                  />
                   <Form.Input
                     required={true}
                     onChange={(e) => { setPhone(e.target.value) }}
@@ -205,7 +223,7 @@ const Signup = () => {
                     placeholder='US Phone number'
                   />
                   <Form.Field>
-                    Gender? 
+                    Gender
                   </Form.Field>
                 <Form.Field>
                  <Checkbox
@@ -231,8 +249,8 @@ const Signup = () => {
                     onChange={()=> setGender("Non-Binary")}
                  />
                  </Form.Field>
-                 <Form.Field>
-                    Into? Like your type?
+                 {/* <Form.Field>
+                    Looking for a relationship ?
                   </Form.Field>
                 <Form.Field>
                  <Checkbox
@@ -257,7 +275,10 @@ const Signup = () => {
                     checked={type=="Both"}
                     onChange={()=>setType("Both")}
                  />
-                 </Form.Field>
+                 </Form.Field> */}
+                  <Form.Field>
+                    Upload some pictures!
+                  </Form.Field>
                  <Form.Input fluid
 
 onChange={(e) => { 

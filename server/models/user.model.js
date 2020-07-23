@@ -55,7 +55,17 @@ const userSchema=new Schema({
     },
     liked: {
         type:Array
+    },
+    fname:{
+        type:String,
+        required:true
+    },
+    lname:{
+        type:String,
+        required:true
+
     }
+
 },
 {
     timestamps: true,
