@@ -211,7 +211,7 @@ useEffect(attractedTo, [user, allusers]);
           }
           // console.log(attractedUsers);
           var copyUsers = allusers;
-          if(attractedUsers&&users&&user){
+          if(attractedUsers&&users&&user&&users[user.id]){
             console.log(allusers);
             console.log(user);
 
