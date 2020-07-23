@@ -215,9 +215,20 @@ router.route('/:id').get((req,res)=>{
 router.route('/signup/:id/').post((req,res)=>{
   User.findOne({ id: req.params.id }, function (err, doc){
     doc.gender = req.query.gender;
-    doc.type = req.query.type;
+    // doc.type = req.query.type;
     doc.phone=req.query.phone;
     doc.location=req.query.location;
+    doc.fname=req.query.fname;
+    doc.lname=req.query.lname;
+    doc.bio=req.query.bio;
+    doc.ans1=req.query.ans1;
+    doc.ans2=req.query.ans2;
+    doc.ans3=req.query.ans3;
+
+
+    console.log(req.query.lname);
+    console.log(req.query.fname);
+
      console.log(req.query.location)
     //  var temp = [];
     //  temp.push(req.query.image1);

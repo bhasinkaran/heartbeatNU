@@ -55,6 +55,24 @@ const userSchema=new Schema({
     },
     liked: {
         type:Array
+    },
+    fname:{
+        type:String,
+    },
+    lname:{
+        type:String,
+    },
+    bio:{
+        type:String
+    },
+    ans1:{
+        type:String
+    },
+    ans2:{
+        type:String
+    },
+    ans3:{
+        type:String
     }
 },
 {
