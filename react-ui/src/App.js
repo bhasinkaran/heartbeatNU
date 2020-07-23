@@ -2,7 +2,7 @@ import axios from 'axios'
 import firebase from 'firebase/app';
 import 'firebase/database';
 import React, {useState, useContext, useEffect} from 'react';
-import {Router } from  'react-router-dom'
+import {Router, Redirect } from  'react-router-dom'
 import logo from './logo.svg';
 import './App.css';
 import Spotify from 'spotify-web-api-js';
@@ -226,7 +226,9 @@ useEffect(attractedTo, [user, allusers]);
       <InfoContext.Provider value={{nomatchmodal, setNoMatchModal,nomessagemodal, setNoMessagesModal, replies, users, allusers, attractedUsers,orderedAttracted, setReplies, artists, setArtists, messages, setMessages, songs, setSongs,posts, setPosts, likes, setLikes, user, setUser, visible, setVisible, accesstoken, setAccesToken, refreshtoken, setRefreshToken}}>
         {/* NEARIFY ROUTES */}
         <Route exact path="/signup/:id/:access_token/:refresh_token" render={()=> <Signup />} />
-        <Route exact path="/" render={()=><Login />} />
+        {/* <Route exact path="/" render={()=><Login />} /> */}
+        <Route exact path="/" render={()=><Redirect to='/dating' />} />
+
         <Route exact path="/settings" render={()=>withMenu(<SettingsPage />)} />
         
         <Route exact path="/home/:id/:access_token/:refresh_token"  render = {()=> withMenu(<Homepage ></Homepage>)} />
