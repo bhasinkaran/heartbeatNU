@@ -61,9 +61,19 @@ const userSchema=new Schema({
     },
     lname:{
         type:String,
-
+    },
+    bio:{
+        type:String
+    },
+    ans1:{
+        type:String
+    },
+    ans2:{
+        type:String
+    },
+    ans3:{
+        type:String
     }
-
 },
 {
     timestamps: true,
