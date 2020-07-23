@@ -220,6 +220,12 @@ router.route('/signup/:id/').post((req,res)=>{
     doc.location=req.query.location;
     doc.fname=req.query.fname;
     doc.lname=req.query.lname;
+    doc.bio=req.query.bio;
+    doc.ans1=req.query.ans1;
+    doc.ans2=req.query.ans2;
+    doc.ans3=req.query.ans3;
+
+
     console.log(req.query.lname);
     console.log(req.query.fname);
 

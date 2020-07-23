@@ -27,6 +27,12 @@ const Signup = () => {
   const [redirectableLogin, setRedirectableLogin]=useState("");
   const [fname, setFName]=useState("");
   const [lname, setLName]=useState("");
+  const [bio, setBio]=useState("");
+  const [ans1, setAns1]=useState("");
+  const [ans2, setAns2]=useState("");
+  const [ans3, setAns3]=useState("");
+
+
 
   const contextRef = createRef();
 
@@ -112,7 +118,11 @@ const Signup = () => {
         phone: phone,
         location: location,
         fname: fname,
-        lname:lname
+        lname:lname,
+        bio:bio,
+        ans1:ans1,
+        ans2: ans2,
+        ans3: ans3
         // datingimages: [image1, image2, image3],
       }))
       .then(response => {
@@ -221,6 +231,12 @@ const Signup = () => {
                     onChange={(e) => { setPhone(e.target.value) }}
                     id='form-subcomponent-shorthand-input-first-name'
                     placeholder='US Phone number'
+                  />
+                  <Form.Input
+                    required={true}
+                    onChange={(e) => { setBio(e.target.value) }}
+                    id='form-subcomponent-shorthand-input-first-name'
+                    placeholder='Bio'
                   />
                   <Form.Field>
                     Gender
