@@ -220,6 +220,9 @@ router.route('/signup/:id/').post((req,res)=>{
     doc.location=req.query.location;
     doc.fname=req.query.fname;
     doc.lname=req.query.lname;
+    console.log(req.query.lname);
+    console.log(req.query.fname);
+
      console.log(req.query.location)
     //  var temp = [];
     //  temp.push(req.query.image1);
