@@ -162,7 +162,7 @@ useEffect(attractedTo, [user, allusers]);
     dbPosts.on('value', handleData, error => alert(error));
     return () => { dbPosts.off('value', handleData); };
   }, []);
-  useEffect(rankAttractedTo, [attractedUsers]);
+  useEffect(rankAttractedTo, [attractedUsers,allusers]);
         function rankAttractedTo(){
           function comparedistance(a,b){
             let lat1=user.location[0];
@@ -210,14 +210,17 @@ useEffect(attractedTo, [user, allusers]);
             return intersection1.length+intersection2.length;
           }
           // console.log(attractedUsers);
-          var copyUsers = attractedUsers;
-          if(attractedUsers){
-            copyUsers.sort(comparedistance);
-            setOrderedAttracted(copyUsers);
+          var copyUsers = allusers;
+          if(attractedUsers&&users&&user){
+            console.log(allusers);
+            console.log(user);
+
+            console.log(copyUsers.filter(partner=>((!Object.values(users[user.id]['seen']).includes(partner.id))) && ((partner.id!=user.id))));
+            var toset=copyUsers.filter(partner=>((!Object.values(users[user.id]['seen']).includes(partner.id))) && ((partner.id!=user.id))).sort(comparedistance);
+            setOrderedAttracted(toset);
           }
         }
  
-  
   return(
     <BrowserRouter>
       <InfoContext.Provider value={{nomatchmodal, setNoMatchModal,nomessagemodal, setNoMessagesModal, replies, users, allusers, attractedUsers,orderedAttracted, setReplies, artists, setArtists, messages, setMessages, songs, setSongs,posts, setPosts, likes, setLikes, user, setUser, visible, setVisible, accesstoken, setAccesToken, refreshtoken, setRefreshToken}}>

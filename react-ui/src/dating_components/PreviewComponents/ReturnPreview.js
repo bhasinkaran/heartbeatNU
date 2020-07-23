@@ -14,6 +14,8 @@ const ReturnPreview = ({increaseIndex, person }) => {
         const {user}= useContext(InfoContext)
         function updateLike(){
                 dbUsers.child(user.id).child('interested').push(person['id']);
+                dbUsers.child(user.id).child('seen').push(person['id']);
+
                 increaseIndex();
                 console.log("IN SIDE")
         }
@@ -31,7 +33,10 @@ const ReturnPreview = ({increaseIndex, person }) => {
                         <Header size='medium' style={{marginTop:"5px"}} textAlign='center' >Want to know {person['name']} better? </Header>
 
                         <Button.Group style={{marginBottom:"5px"}} fluid>
-                                <Button onClick={()=>increaseIndex()} >No</Button>
+                                <Button onClick={()=>{
+                                        increaseIndex()
+                                        dbUsers.child(user.id).child('seen').push(person['id']);
+                                }} >No</Button>
                                 <Button.Or />
                                 <Button positive onClick={updateLike}>Yes</Button>
                         </Button.Group>

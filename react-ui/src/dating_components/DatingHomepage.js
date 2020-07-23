@@ -24,10 +24,10 @@ const DatingHomePageFeed = () => {
 
   var redirectUri = process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/users/` : `http://localhost:8888/users/`
   const [index, setIndex] = useState(0);
-  useEffect(initializeCheck, [user,users]);
+  useEffect(initializeCheck, [user,users,orderedAttracted]);
   function initializeCheck() {
     if(users&&!users[user.id]){
-      const data={id:user.id}
+      const data={id:user.id, seen:"None"}
       dbUsers.child(id).update(data);
     }
   };
