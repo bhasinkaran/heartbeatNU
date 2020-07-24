@@ -5,8 +5,8 @@ import { Link, Redirect } from 'react-router-dom'
 import { InfoContext } from '../../App';
 const s = new Spotify();
 const NoneInCommon = ({ person, type }) => {
-        console.log(type);
-        console.log(person);
+        // console.log(type);
+        // console.log(person);
         var array = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
         const { accesstoken, user } = React.useContext(InfoContext);
 
@@ -19,14 +19,14 @@ const NoneInCommon = ({ person, type }) => {
         useEffect(initializeState, [person]);
         function initializeState(){
                         for (let i = 0; i < person[type].length; i++) {
-                                console.log(type);
-                                console.log(person[type]);
+                                // console.log(type);
+                                // console.log(person[type]);
                                 if(type=='favoriteartists'){
                                         s.getArtist(person[type][i]).then(
                                                 res => {
                                                         //      console.log(artists[i]);
                                                         temp.push(res.name);
-                                                        console.log(res.name)
+                                                        // console.log(res.name)
                                                         temp2.push(res.images[0].url);
                                                         temp3.push(user['favoriteartists'][i]);
                                                         //      console.log(temp);
@@ -43,7 +43,7 @@ const NoneInCommon = ({ person, type }) => {
                                 }
                                 else
                                 {
-                                        console.log("In here")
+                                        // console.log("In here")
                                         s.getTrack(person[type][i]).then(
                                                 res => {
                                                         //      console.log(artists[i]);
@@ -57,7 +57,7 @@ const NoneInCommon = ({ person, type }) => {
                                                         //      console.log(temp);
                                                                 setNames(temp);
                                                                 setImages(temp2);
-                                                                console.log(temp);
+                                                                // console.log(temp);
                                                         // setOrdererdArtists(temp3);
                                                         }
                         

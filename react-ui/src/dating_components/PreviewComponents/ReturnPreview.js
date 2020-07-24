@@ -26,7 +26,7 @@ const ReturnPreview = ({increaseIndex, person }) => {
                 setNumber((number + 1) % 3)
                 setTimeout(() => {
                         setChange(!change);
-                        console.log(change);
+                        // console.log(change);
                 }, 2000)
         }, [change])
 

@@ -79,7 +79,7 @@ function App() {
   const [nomatchmodal, setNoMatchModal]=useState(false);
   const [nomessagemodal, setNoMessagesModal]=useState(false);
 
-  useEffect(()=>console.log(nomatchmodal), [nomatchmodal]);
+  // useEffect(()=>console.log(nomatchmodal), [nomatchmodal]);
   React.useEffect(()=>{
     if(user){
       localStorage.setItem('user', JSON.stringify(user));
@@ -107,8 +107,8 @@ function App() {
 useEffect(attractedTo, [user, allusers]);
   function attractedTo(){
       if(allusers!="" && user){
-        console.log(allusers);
-        console.log(user);
+        // console.log(allusers);
+        // console.log(user);
         setAttracted(allusers.filter(item => item.gender == user.type && item.id!=user.id));
       }
     };
@@ -212,8 +212,8 @@ useEffect(attractedTo, [user, allusers]);
           // console.log(attractedUsers);
           var copyUsers = allusers;
           if(attractedUsers&&users&&user&&users[user.id]){
-            console.log(allusers);
-            console.log(user);
+            // console.log(allusers);
+            // console.log(user);
 
             console.log(copyUsers.filter(partner=>((!Object.values(users[user.id]['seen']).includes(partner.id))) && ((partner.id!=user.id))));
             var toset=copyUsers.filter(partner=>((!Object.values(users[user.id]['seen']).includes(partner.id))) && ((partner.id!=user.id))).sort(comparedistance);
