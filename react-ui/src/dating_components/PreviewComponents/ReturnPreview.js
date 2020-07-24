@@ -4,7 +4,7 @@ import _ from 'lodash'
 import React, { useState, useEffect, useContext } from 'react';
 import { Container, Card,Button, Segment, Header, Search, Image, Icon, Grid, Label } from 'semantic-ui-react'
 import {InfoContext} from '../../App'
-import {dbUsers} from '../../firebase/firebase'
+import {dbUsers, dbChats,} from '../../firebase/firebase'
 
 
 const ReturnPreview = ({increaseIndex, person }) => {
@@ -15,6 +15,10 @@ const ReturnPreview = ({increaseIndex, person }) => {
                 dbUsers.child(user.id).child('seen').push(person['id']);
                 if(Object.values(users[person['id']]['interested']).includes(user.id)){
                         dbUsers.child(user.id).child('matched').push(person['id']);
+                        var key = dbChats.push({person1: user.id, person2: person.id});
+                        const k=key.getKey();
+                        dbUsers.child(user.id).child('chats').push(k);
+                        dbUsers.child(person.id).child('chats').push(k);
                 }
                 else{
                         dbUsers.child(user.id).child('interested').push(person['id']);

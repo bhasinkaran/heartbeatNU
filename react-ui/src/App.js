@@ -16,7 +16,7 @@ import Signup from './dating_components/signup';
 import ArtistPage from './components/artisthomepage'
 import TrackPage from './components/trackhomepage'
 import PageHeader from './components/pageheader'
-import {dbMessages, dbPosts, dbSongs, dbUsers, dbArtists, dbReplies, dbLikes} from './firebase/firebase';
+import {dbMessages, dbChats, dbPosts, dbSongs, dbUsers, dbArtists, dbReplies, dbLikes} from './firebase/firebase';
 import SettingsPage from './components/settingspage';
 import FavoriteArtists from './components/favartists'
 import FavoriteSongs from './components/favsongs';
@@ -61,7 +61,7 @@ function App() {
     )
   }
   
-  
+  const [chats, setChats]=useState("")
   const [artists, setArtists]=useState("")
   const [messages, setMessages]=useState("")
   const [songs, setSongs]=useState("")
@@ -142,6 +142,13 @@ function App() {
   }, []);
   useEffect(() => {
     const handleData = snap => {
+      if (snap.val()) setChats(snap.val());
+    }
+    dbChats.on('value', handleData, error => alert(error));
+    return () => { dbChats.off('value', handleData); };
+  }, []);
+  useEffect(() => {
+    const handleData = snap => {
       if (snap.val()) setReplies(snap.val());
     }
     dbReplies.on('value', handleData, error => alert(error));
@@ -203,7 +210,7 @@ function App() {
  
   return(
     <BrowserRouter>
-      <InfoContext.Provider value={{nomatchmodal, setNoMatchModal,nomessagemodal, setNoMessagesModal, replies, users, allusers, attractedUsers,orderedAttracted, setReplies, artists, setArtists, messages, setMessages, songs, setSongs,posts, setPosts, likes, setLikes, user, setUser, visible, setVisible, accesstoken, setAccesToken, refreshtoken, setRefreshToken}}>
+      <InfoContext.Provider value={{nomatchmodal, setNoMatchModal,nomessagemodal, setNoMessagesModal, replies, users, allusers, attractedUsers,orderedAttracted, setReplies, artists, setArtists, messages, setMessages, songs, setSongs,posts, setPosts, likes, setLikes, user, setUser, chats,visible, setVisible, accesstoken, setAccesToken, refreshtoken, setRefreshToken}}>
         {/* NEARIFY ROUTES */}
         <Route exact path="/signup/:id/:access_token/:refresh_token" render={()=> <Signup />} />
         {/* <Route exact path="/" render={()=><Login />} /> */}
