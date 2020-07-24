@@ -104,14 +104,14 @@ function App() {
         console.log(error);
       });
     };
-useEffect(attractedTo, [user, allusers]);
-  function attractedTo(){
-      if(allusers!="" && user){
-        // console.log(allusers);
-        // console.log(user);
-        setAttracted(allusers.filter(item => item.gender == user.type && item.id!=user.id));
-      }
-    };
+// useEffect(attractedTo, [user, allusers]);
+//   function attractedTo(){
+//       if(allusers!="" && user){
+//         // console.log(allusers);
+//         // console.log(user);
+//         setAttracted(allusers.filter(item => item.gender == user.type && item.id!=user.id));
+//       }
+//     };
     useEffect(() => {
       const handleData = snap => {
         if (snap.val()) setUsers(snap.val());
@@ -162,43 +162,22 @@ useEffect(attractedTo, [user, allusers]);
     dbPosts.on('value', handleData, error => alert(error));
     return () => { dbPosts.off('value', handleData); };
   }, []);
-  useEffect(rankAttractedTo, [attractedUsers,allusers]);
+  useEffect(rankAttractedTo, [user, users,allusers]);
         function rankAttractedTo(){
           function comparedistance(a,b){
             let lat1=user.location[0];
             let lon1=user.location[1];
             let score1=matchMusic(a,user);
             let score2=matchMusic(b,user);
-            let distance1=distance(lat1,lon1,a);
-            let distance2=distance(lat1,lon1,b);
+            // let distance1=distance(lat1,lon1,a);
+            // let distance2=distance(lat1,lon1,b);
 
             // distance2/
             // distance1/
             // find a way to use distance eventually once off campus etc.
             return Math.min(score2,1)-Math.min(score1,1);
           }
-          function distance(lat1, lon1,user2) {
-            let lat2 = user2.location[0];
-            let lon2=user2.location[1];
-            if ((lat1 == lat2) && (lon1 == lon2)) {
-              return 0;
-            }
-            else {
-              var radlat1 = Math.PI * lat1/180;
-              var radlat2 = Math.PI * lat2/180;
-              var theta = lon1-lon2;
-              var radtheta = Math.PI * theta/180;
-              var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
-              if (dist > 1) {
-                dist = 1;
-              }
-              dist = Math.acos(dist);
-              dist = dist * 180/Math.PI;
-              dist = dist * 60 * 1.1515;
-              return dist;
-            }
-           
-          }
+          
           function matchMusic(a,b){
             let score=0;
             let arr1=a['favoritesongs'];
@@ -211,12 +190,13 @@ useEffect(attractedTo, [user, allusers]);
           }
           // console.log(attractedUsers);
           var copyUsers = allusers;
-          if(attractedUsers&&users&&user&&users[user.id]){
+          if(allusers&&users&&user&&users[user.id]){
             // console.log(allusers);
             // console.log(user);
 
             console.log(copyUsers.filter(partner=>((!Object.values(users[user.id]['seen']).includes(partner.id))) && ((partner.id!=user.id))));
             var toset=copyUsers.filter(partner=>((!Object.values(users[user.id]['seen']).includes(partner.id))) && ((partner.id!=user.id))).sort(comparedistance);
+            console.log(toset);
             setOrderedAttracted(toset);
           }
         }
@@ -258,3 +238,26 @@ useEffect(attractedTo, [user, allusers]);
 export default App;
 
 //test for push 2
+
+// function distance(lat1, lon1,user2) {
+//   let lat2 = user2.location[0];
+//   let lon2=user2.location[1];
+//   if ((lat1 == lat2) && (lon1 == lon2)) {
+//     return 0;
+//   }
+//   else {
+//     var radlat1 = Math.PI * lat1/180;
+//     var radlat2 = Math.PI * lat2/180;
+//     var theta = lon1-lon2;
+//     var radtheta = Math.PI * theta/180;
+//     var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+//     if (dist > 1) {
+//       dist = 1;
+//     }
+//     dist = Math.acos(dist);
+//     dist = dist * 180/Math.PI;
+//     dist = dist * 60 * 1.1515;
+//     return dist;
+//   }
+ 
+// }

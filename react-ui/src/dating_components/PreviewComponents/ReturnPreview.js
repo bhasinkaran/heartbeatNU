@@ -13,7 +13,7 @@ const ReturnPreview = ({increaseIndex, person }) => {
         const {user,users}= useContext(InfoContext)
         function updateLike(){
                 dbUsers.child(user.id).child('seen').push(person['id']);
-                if(users[person['id']]['interested'].includes(user.id)){
+                if(Object.values(users[person['id']]['interested']).includes(user.id)){
                         dbUsers.child(user.id).child('matched').push(person['id']);
                 }
                 else{
