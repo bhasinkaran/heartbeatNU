@@ -25,6 +25,7 @@ import DatingLogin from './dating_components/DatingLogin'
 import PageHeaderDating from './dating_components/pageheaderdating';
 import NoMatchModal from './dating_components/EdgeCaseModals/NoMatchModal';
 import NoMessagesModal from './dating_components/EdgeCaseModals/NoMessageModal';
+import ChatsHomepage from './dating_components/ChatsHomepage';
 
 const s = new Spotify();
 
@@ -235,6 +236,7 @@ function App() {
         {/* DATING ROUTES */}
         <Route exact path="/dating/home/:id/:access_token/:refresh_token" render={()=>withMenuDating(<DatingHomePageFeed />)} />
         <Route exact path="/dating" render={()=><DatingLogin />} />
+        <Route exact path="/dating/messages" render={()=><ChatsHomepage />} />
 
 
       </InfoContext.Provider>
