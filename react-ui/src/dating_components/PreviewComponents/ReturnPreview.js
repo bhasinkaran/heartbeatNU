@@ -6,12 +6,11 @@ import { Container, Card,Button, Segment, Header, Search, Image, Icon, Grid, Lab
 import {InfoContext} from '../../App'
 import {dbUsers} from '../../firebase/firebase'
 
-import SongsPreview from './songspreview'
 
 const ReturnPreview = ({increaseIndex, person }) => {
         const [number, setNumber] = useState(0);
         const [change, setChange] = useState(true);
-        const {user}= useContext(InfoContext)
+        const {user,users}= useContext(InfoContext)
         function updateLike(){
                 dbUsers.child(user.id).child('seen').push(person['id']);
                 if(users[person['id']]['interested'].includes(user.id)){

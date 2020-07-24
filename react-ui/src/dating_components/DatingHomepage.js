@@ -27,7 +27,7 @@ const DatingHomePageFeed = () => {
   useEffect(initializeCheck, [user,users,orderedAttracted]);
   function initializeCheck() {
     if(users&&!users[user.id]){
-      const data={id:user.id, seen:"None"}
+      const data={id:user.id, seen:"None", matched:"none"}
       dbUsers.child(id).update(data);
     }
   };
