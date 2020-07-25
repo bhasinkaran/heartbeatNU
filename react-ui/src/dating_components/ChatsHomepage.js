@@ -52,7 +52,7 @@ const ChatsHomepage = () => {
                                                 </Grid.Column>
                                                 <Grid.Column width={13}>
                                                        
-                                                        <Segment fluid>
+                                                        <Segment style={{maxHeight:"600px"}} fluid>
                                                                 {chats[activeItem]['chats'] ? 
                                                                                  <ReturnChats chatid={activeItem}/> 
                                                                                 : 

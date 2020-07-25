@@ -18,7 +18,6 @@ const ReturnStartChat = ({chatid})=>
                 }
                 else{
                         setRelevant(allusers.find( doc=>doc.id==chats[chatid]['person1']))
-
                 }
                 
         }, [allusers,chats,chatid]);

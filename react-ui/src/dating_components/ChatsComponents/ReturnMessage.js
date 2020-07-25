@@ -6,14 +6,16 @@ import { Router, useParams, Link } from 'react-router-dom';
 import { Icon, Menu, Segment, Sidebar } from 'semantic-ui-react'
 import { InfoContext } from '../../App'
 
-const ReturnMessage= React.memo(({messageid}) =>{
-        const {user,messages} = React.useContext(InfoContext);
+const ReturnMessage = React.memo(({ messageid }) => {
+        const { user, messages } = React.useContext(InfoContext);
         let item = messages[messageid];
-        return(
-                <Label floating={item.sender==user.id ? 'left' : 'right'} basic color={item.sender==user.id ?'red' : 'blue'} pointing={item.sender==user.id ? 'left' : 'right'}>
-                {item.content}
-              </Label>
+        return (
+                <Grid.Row>
+                        <Segment inverted floating={item.sender == user.id ? 'left' : 'right'} rounded basic color={item.sender == user.id ? 'red' : 'blue'} pointing={item.sender == user.id ? 'left' : 'right'}>
+                                        {item.content}
+                        </Segment>
+                </Grid.Row>
         )
-        
+
 });
 export default ReturnMessage;

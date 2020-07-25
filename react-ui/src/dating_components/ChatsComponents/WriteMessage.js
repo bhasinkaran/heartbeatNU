@@ -43,7 +43,7 @@ const  WriteMessage =({chatid})=> {
       
         return(
                     
-        <div>
+        <div fluid>
                 <TextArea onKeyUp={(e) => eventhandler(e)} ref={refKey} id="textareareply" value={value} onChange={(e)=>{
                   setValue(e.target.value);
                   console.log(e.target.value);

@@ -9,10 +9,30 @@ import ReturnMessage from './ReturnMessage'
 
 const ReturnChats = ({ chatid }) => {
         const { chats } = React.useContext(InfoContext);
-        let rel_messages = Object.values(chats[chatid]['chats']);
+        let rel_messages = Object.values(chats[chatid]['chats']).slice(-5);
 
-        return (rel_messages.map(index =>
-                                <ReturnMessage messageid={index} >
-                                </ReturnMessage>));
+        return (
+                <Container>
+                        <Grid padded >
+                                <Grid.Column>
+
+
+                                        <Grid padded>
+                                                <Grid.Column>
+
+                                                        <Grid padded>
+                                                                {rel_messages.map(index =>
+                                                                        <ReturnMessage messageid={index} >
+                                                                        </ReturnMessage>)}
+                                                        </Grid>
+                                                </Grid.Column>
+                                        </Grid>
+                                </Grid.Column>
+                                {/* <Grid.Column> */}
+
+                                {/* </Grid.Column> */}
+                        </Grid>
+                </Container>
+        )
 }
 export default ReturnChats;
