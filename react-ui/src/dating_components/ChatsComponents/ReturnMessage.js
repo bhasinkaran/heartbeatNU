@@ -10,7 +10,7 @@ const ReturnMessage= React.memo(({messageid}) =>{
         const {user,messages} = React.useContext(InfoContext);
         let item = messages[messageid];
         return(
-                <Label basic color='red' pointing={item.sender==user.id ? 'left' : 'right'}>
+                <Label floating={item.sender==user.id ? 'left' : 'right'} basic color={item.sender==user.id ?'red' : 'blue'} pointing={item.sender==user.id ? 'left' : 'right'}>
                 {item.content}
               </Label>
         )
