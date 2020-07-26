@@ -26,13 +26,13 @@ const ReturnPreview = ({increaseIndex, person }) => {
                 increaseIndex();
                 console.log("IN SIDE")
         }
-        useEffect(() => {
-                setNumber((number + 1) % 3)
-                setTimeout(() => {
-                        setChange(!change);
-                        // console.log(change);
-                }, 2000)
-        }, [change])
+        // useEffect(() => {
+        //         setNumber((number + 1) % 3)
+        //         setTimeout(() => {
+        //                 setChange(!change);
+        //                 // console.log(change);
+        //         }, 2000)
+        // }, [change])
 
         return (
                 <Segment raised>
