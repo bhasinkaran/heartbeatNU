@@ -11,7 +11,10 @@ const ReturnMessage = React.memo(({ otherpersonid, chatid, lastMine, lastTheirs,
         let item = messages[messageid];
         let length = item.content.length;
         let theirid = otherpersonid;
-        console.log(item.senderid == user.id)
+        console.log(otherpersonid);
+        console.log(lastMine);
+        console.log(lastTheirs);
+        // console.log(item.senderid == user.id)
 
         if (user!=null && messages!=null && chats!=null && allusers!=null)
                 return (

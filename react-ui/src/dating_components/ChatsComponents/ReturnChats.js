@@ -21,7 +21,7 @@ const ReturnChats = ({ otherpersonid,chatid }) => {
                         if(messages[rel_messages[i]]['senderid']==chats[chatid]['person1']  && !person1){
                                 if(chats[chatid]['person1']==user.id){
                                         setLastMine(rel_messages[i]);
-        
+                                        
                                 }
                                 else{
                                         setLastTheirs(rel_messages[i]);
@@ -38,7 +38,7 @@ const ReturnChats = ({ otherpersonid,chatid }) => {
                                 person2=true;
                         }
                 }
-        },[rel_messages, chats] )
+        },[rel_messages, chats, messages] )
         
 
 
@@ -48,10 +48,8 @@ const ReturnChats = ({ otherpersonid,chatid }) => {
                                         
                                                         {rel_messages.map(index =>
                                                                 <Grid.Row>
-                                                                        
-                                                                        <ReturnMessage key={index} mine={lastMine} chatid={chatid} otherpersonid={otherpersonid} lastTheirs={lastTheirs} messageid={index} >
+                                                                        <ReturnMessage key={index} lastMine={lastMine} chatid={chatid} otherpersonid={otherpersonid} lastTheirs={lastTheirs} messageid={index} >
                                                                         </ReturnMessage>
-                                                               
                                                                 </Grid.Row>
                                                                 
                                                                 )}

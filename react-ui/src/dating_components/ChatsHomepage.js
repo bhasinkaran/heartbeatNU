@@ -27,11 +27,18 @@ const ChatsHomepage = () => {
         }, [relevantChats])
         useEffect(()=>{
                 if(chats[activeItem]){
-                        var otherid = chats[activeItem]['person2'] == user.id ? chats[activeItem]['person1'] : chats[activeItem]['person2'];
-                        setOtherId(otherid);
+                        if(chats[activeItem]['person2'] == user.id ) {
+                                setOtherId(chats[activeItem]['person1'])
+                                console.log(chats[activeItem]['person1'])
+                        }
+                        else{
+                                setOtherId(chats[activeItem]['person2']);
+                                console.log(chats[activeItem]['person2']);
+                                } 
+                        
                 }
                
-        },[activeItem])
+        },[chats,activeItem])
        
         if (user && users && chats && allusers&&activeItem)
                 return (
