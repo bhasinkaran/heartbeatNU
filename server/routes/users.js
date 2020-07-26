@@ -224,7 +224,11 @@ router.route('/signup/:id/').post((req,res)=>{
     doc.ans1=req.query.ans1;
     doc.ans2=req.query.ans2;
     doc.ans3=req.query.ans3;
-
+    console.log("This is the query");
+    console.log(req.query.q1);
+    doc.q1=req.query.q1;
+    doc.q2=req.query.q2;
+    doc.q3=req.query.q3;
 
     console.log(req.query.lname);
     console.log(req.query.fname);

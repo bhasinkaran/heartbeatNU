@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const UploadButtons = ({setter})=> {
+const ImageUpload = ({setter})=> {
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -35,7 +35,7 @@ const UploadButtons = ({setter})=> {
           Upload
         </Button>
       </label>
-      <input accept="image/*" className={classes.input} id="icon-button-file" type="file" />
+      {/* <input accept="image/*" className={classes.input} id="icon-button-file" type="file" /> */}
       {/* <label htmlFor="icon-button-file">
         <IconButton color="primary" aria-label="upload picture" component="span">
           <PhotoCamera />
@@ -44,4 +44,4 @@ const UploadButtons = ({setter})=> {
     </div>
   );
 }
-export default UploadButtons;
+export default ImageUpload;

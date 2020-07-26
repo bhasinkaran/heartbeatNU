@@ -8,10 +8,10 @@ import Select from '@material-ui/core/Select';
 const useStyles = makeStyles((theme) => ({
   button: {
     display: 'block',
-    marginTop: theme.spacing(2),
+    marginTop: "10px",
   },
   formControl: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(0),
     minWidth: 120,
   },
 }));
@@ -38,7 +38,7 @@ const ChooseQuestion = ({availableQuestions,chosen, setter}) => {
   return (
     <div>
       <FormControl className={classes.formControl}>
-        <InputLabel id="demo-controlled-open-select-label">Question 1</InputLabel>
+        <InputLabel id="demo-controlled-open-select-label">Question</InputLabel>
         <Select
           labelId="demo-controlled-open-select-label"
           id="demo-controlled-open-select"

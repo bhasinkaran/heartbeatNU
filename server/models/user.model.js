@@ -73,7 +73,17 @@ const userSchema=new Schema({
     },
     ans3:{
         type:String
+    },
+    q1: {
+        type: Number
+    },
+    q2:{
+        type: Number
+    },
+    q3:{
+        type: Number
     }
+
 },
 {
     timestamps: true,

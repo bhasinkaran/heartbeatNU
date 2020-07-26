@@ -15,11 +15,8 @@ const ReturnChats = ({ chatid }) => {
                 <Container>
                         <Grid padded >
                                 <Grid.Column>
-
-
                                         <Grid padded>
                                                 <Grid.Column>
-
                                                         <Grid padded>
                                                                 {rel_messages.map(index =>
                                                                         <ReturnMessage messageid={index} >

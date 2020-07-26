@@ -2,6 +2,7 @@ import React, { useState, useContext, createRef, useEffect } from 'react';
 import { Redirect } from 'react-router-dom'
 // import { Header, Checkbox, Container, Segment, Sticky, Grid, Input, Transition, Divider, Loader } from 'semantic-ui-react';
 // import { Button, Form, Icon, Message, Progress, Image } from 'semantic-ui-react';
+import {Divider} from 'semantic-ui-react'
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -21,6 +22,7 @@ import 'semantic-ui-css/semantic.min.css';
 import axios from 'axios'
 import storage from '../firebase/firebase'
 import ChooseQuestion from './SignUpComponents./ChooseQuestion';
+import ImageUpload from './SignUpComponents./ImageUpload'
 var querystring = require('querystring');
 
 const useStyles = makeStyles((theme) => ({
@@ -104,7 +106,7 @@ console.log(questions);
     CheckPass();
     if (redirect && location !== null) {
       var backendroute = process.env.NODE_ENV === 'production' ? `https://pure-harbor-26317.herokuapp.com/users/signup/${id}?` : `http://localhost:8888/users/signup/${id}?`;
-
+      
       const uploadCute = storage.ref(`users/${id}/cute`).put(fileImage1);
       uploadCute.on(
         "state_changed",
@@ -128,65 +130,68 @@ console.log(questions);
             });
         }
       );
-      const uploadFlirt = storage.ref(`users/${id}/flirt`).put(fileImage2);
-      uploadFlirt.on(
-        "state_changed",
-        snapshot => {
-          const progress = Math.round(
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-          );
-          // setProgress(progress);
-        },
-        error => {
-          console.log(error);
-        },
-        () => {
-          storage
-            .ref("users")
-            .child(id)
-            .child('flirt')
-            .getDownloadURL()
-            .then(url => {
-              setImage2(url);
-            });
-        }
-      );
-      const uploadCandid = storage.ref(`users/${id}/candid`).put(fileImage3);
-      uploadCandid.on(
-        "state_changed",
-        snapshot => {
-          const progress = Math.round(
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-          );
-          // setProgress(progress);
-        },
-        error => {
-          console.log(error);
-        },
-        () => {
-          storage
-            .ref("users")
-            .child(id)
-            .child('candid')
-            .getDownloadURL()
-            .then(url => {
-              setImage3(url);
-            });
-        }
-      );
+      // const uploadFlirt = storage.ref(`users/${id}/flirt`).put(fileImage2);
+      // uploadFlirt.on(
+      //   "state_changed",
+      //   snapshot => {
+      //     const progress = Math.round(
+      //       (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+      //     );
+      //     // setProgress(progress);
+      //   },
+      //   error => {
+      //     console.log(error);
+      //   },
+      //   () => {
+      //     storage
+      //       .ref("users")
+      //       .child(id)
+      //       .child('flirt')
+      //       .getDownloadURL()
+      //       .then(url => {
+      //         setImage2(url);
+      //       });
+      //   }
+      // );
+      // const uploadCandid = storage.ref(`users/${id}/candid`).put(fileImage3);
+      // uploadCandid.on(
+      //   "state_changed",
+      //   snapshot => {
+      //     const progress = Math.round(
+      //       (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+      //     );
+      //     // setProgress(progress);
+      //   },
+      //   error => {
+      //     console.log(error);
+      //   },
+      //   () => {
+      //     storage
+      //       .ref("users")
+      //       .child(id)
+      //       .child('candid')
+      //       .getDownloadURL()
+      //       .then(url => {
+      //         setImage3(url);
+      //       });
+      //   }
+      // );
 
-
+console.log(allquestions.indexOf(ques1));
+var q1ind = allquestions.indexOf(ques1).toString();
+var q2ind = allquestions.indexOf(ques2).toString();
+var q3ind = allquestions.indexOf(ques3).toString();
+        console.log(q1ind);
       axios.post(backendroute + querystring.stringify({
         gender: gender,
-        // type: type,
         phone: phone,
         location: location,
         fname: fname,
         lname: lname,
         bio: bio,
-        q1: ques1,
-        q2: ques2,
-        q3: ques3,
+        q1: q1ind,
+        q2: q2ind,
+        q3: q3ind,
         ans1: ans1,
         ans2: ans2,
         ans3: ans3
@@ -207,9 +212,9 @@ console.log(questions);
   useEffect(() => {
     var backendroute_image = process.env.NODE_ENV === 'production' ? `https://pure-harbor-26317.herokuapp.com/users/signup/${id}/2?` : `http://localhost:8888/users/signup/${id}/2?`;
 
-    if (image1 && image2 && image3) {
+    if (image1 ) {
       axios.post(backendroute_image + querystring.stringify({
-        datingimages: [image1, image2, image3],
+        datingimages: [image1],
       }))
         .then(response => {
           console.log(response);
@@ -222,7 +227,7 @@ console.log(questions);
 
   }, [image1, image2, image3]);
   useEffect(() => {
-    
+    //toadd
   }, [ques1, ques2, ques3]);
 
 
@@ -233,10 +238,13 @@ console.log(questions);
 
   }
   function CheckPass() {
-    if (gender != "" && !isNaN(Number(phone))) {
+    if (fileImage1) {
+      // gender != ""
       // type !=""
+      // && !isNaN(Number(phone)
       var temp = process.env.NODE_ENV === 'production' ? `https://pure-harbor-26317.herokuapp.com/dating/home/${id}/${access_token}/${refresh_token}` : `http://localhost:3000/dating/home/${id}/${access_token}/${refresh_token}`;
-
+      console.log(typeof fileImage1);
+    
       setRedirectableLogin(temp);
       setRedirect(true);
     }
@@ -245,6 +253,9 @@ console.log(questions);
     }
 
   };
+
+  useEffect(()=>
+  console.log(image1), [image1])
 
   return (
     <div ref={contextRef}>
@@ -303,14 +314,16 @@ console.log(questions);
                 }}
               />
             </Grid>
+            <Grid item xs={12} >
             <ChooseQuestion availableQuestions={questions} chosen={ques1} setter={setQues1} />
-            <Grid item xs={12} sm={6}>
+            </Grid>
+            <Grid item xs={12} >
               <TextField
                 variant="outlined"
                 required
                 fullWidth
                 name="ques1"
-                label="Question 1"
+                label="Question 1 Answer"
                 id="ques1"
                 // autoComplete="current-password"
                 onChange = {(event, newVal) => {
@@ -318,14 +331,17 @@ console.log(questions);
                 }}
               />
             </Grid>
+            <Grid item xs={12} >
+
             <ChooseQuestion availableQuestions={questions} chosen={ques2} setter={setQues2} />
-            <Grid item xs={12} sm={6}>
+            </Grid>
+            <Grid item xs={12} >
               <TextField
                 variant="outlined"
                 required
                 fullWidth
                 name="ques2"
-                label="Question 2"
+                label="Question 2 Answer"
                 id="ques2"
                 // autoComplete="current-password"
                 onChange = {(event, newVal) => {
@@ -333,14 +349,16 @@ console.log(questions);
                 }}
               />
             </Grid>
+            <Grid marginTop="0px" item xs={12}>
             <ChooseQuestion availableQuestions={questions} chosen={ques3} setter={setQues3} />
-            <Grid item xs={12} sm={6}>
+            </Grid>
+            <Grid item xs={12} >
               <TextField
                 variant="outlined"
                 required
                 fullWidth
                 name="ques3"
-                label="Question 3"
+                label="Question 3 Answer"
                 id="ques3"
                 // autoComplete="current-password"
                 onChange = {(event, newVal) => {
@@ -348,9 +366,20 @@ console.log(questions);
                 }}
               />
             </Grid>
+            <Grid item xs={12} >
+              <ImageUpload setter={setFileImage} />
+            </Grid>
+            {/* <Divider />
+            <Grid item xs={12} >
+              <ImageUpload setter={setFileImage2} />
+            </Grid>
+            <Divider />
+            <Grid item xs={12}>
+              <ImageUpload setter={setFileImage3} />
+            </Grid> */}
           </Grid>
           <Button
-            type="submit"
+            // type="submit"
             fullWidth
             variant="contained"
             color="primary"
