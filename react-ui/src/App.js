@@ -79,6 +79,7 @@ function App() {
   const [users, setUsers]=useState("");
   const [nomatchmodal, setNoMatchModal]=useState(false);
   const [nomessagemodal, setNoMessagesModal]=useState(false);
+  const [activeItem, setActiveItem] = useState('home');
 
   // useEffect(()=>console.log(nomatchmodal), [nomatchmodal]);
   React.useEffect(()=>{
@@ -211,7 +212,7 @@ function App() {
  
   return(
     <BrowserRouter>
-      <InfoContext.Provider value={{nomatchmodal, setNoMatchModal,nomessagemodal, setNoMessagesModal, replies, users, allusers, attractedUsers,orderedAttracted, setReplies, artists, setArtists, messages, setMessages, songs, setSongs,posts, setPosts, likes, setLikes, user, setUser, chats,visible, setVisible, accesstoken, setAccesToken, refreshtoken, setRefreshToken}}>
+      <InfoContext.Provider value={{activeItem, setActiveItem, nomatchmodal, setNoMatchModal,nomessagemodal, setNoMessagesModal, replies, users, allusers, attractedUsers,orderedAttracted, setReplies, artists, setArtists, messages, setMessages, songs, setSongs,posts, setPosts, likes, setLikes, user, setUser, chats,visible, setVisible, accesstoken, setAccesToken, refreshtoken, setRefreshToken}}>
         {/* NEARIFY ROUTES */}
         <Route exact path="/signup/:id/:access_token/:refresh_token" render={()=> <Signup />} />
         {/* <Route exact path="/" render={()=><Login />} /> */}
@@ -236,7 +237,7 @@ function App() {
         {/* DATING ROUTES */}
         <Route exact path="/dating/home/:id/:access_token/:refresh_token" render={()=>withMenuDating(<DatingHomePageFeed />)} />
         <Route exact path="/dating" render={()=><DatingLogin />} />
-        <Route exact path="/dating/messages" render={()=><ChatsHomepage />} />
+        <Route exact path="/dating/messages" render={()=>withMenuDating(<ChatsHomepage />)} />
 
 
       </InfoContext.Provider>

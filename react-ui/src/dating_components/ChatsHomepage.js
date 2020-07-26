@@ -28,6 +28,7 @@ const ChatsHomepage = () => {
         if (user && users && chats && allusers&&activeItem)
                 return (
                         <div>
+                                
                                 <Segment >
                                         {/* style={{ overflow: 'auto', maxHeight: 200 }} */}
                                         <Grid columns={2}>

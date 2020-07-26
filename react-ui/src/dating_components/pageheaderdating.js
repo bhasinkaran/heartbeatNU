@@ -11,8 +11,7 @@ import { Button, Dropdown, Menu } from 'semantic-ui-react'
 
 
 const PageHeaderDating = () => {
-  const {users, user,  accesstoken, refreshtoken, setNoMatchModal, setNoMessagesModal } = React.useContext(InfoContext);
-  const [activeItem, setActiveItem] = useState('home');
+  const {users, user,  accesstoken, activeItem, setActiveItem, refreshtoken, setNoMatchModal, setNoMessagesModal } = React.useContext(InfoContext);
   const [value, setValue] = useState("");
   const [results, setResults] = useState([]);
   const [isLoading, setisLoading] = useState(false);
@@ -29,6 +28,7 @@ const PageHeaderDating = () => {
       setNoMatchModal(true);
     }
     setActiveItem('home');
+    console.log(user && users&& users[user.id]['chats'])
     return(<Redirect to={`/dating/home/${user.id}/${accesstoken}/${refreshtoken}`} push={true} />)
   }
 
@@ -41,7 +41,7 @@ const PageHeaderDating = () => {
           <Grid.Column width='16'>
             <Menu inverted color={'purple'} size='large' widths={4} >
               <Menu.Item
-                name='Up Next LOGO'
+                name='HeartBeat'
                 
               />
               <Menu.Item
@@ -52,7 +52,9 @@ const PageHeaderDating = () => {
               <Menu.Item
                 name='messages'
                 active={activeItem === 'messages'}
-                onClick={() => setActiveItem('messages')}
+                onClick={() => {
+                  setActiveItem('messages')
+                }}
               />
               <Menu.Item
                 name='Matches'
@@ -70,9 +72,9 @@ const PageHeaderDating = () => {
       { redirectLogout ? <Redirect to={`/`} push={true} /> : "" }
   { redirectSettings ? <Redirect to={`/settings`} push={true} /> : "" }
   { activeItem === 'home' && user && accesstoken && refreshtoken? <Redirect to={`/dating/home/${user.id}/${accesstoken}/${refreshtoken}`} push={true} /> : "" }
-  { activeItem === 'messages' &&  user && users[user.id]['chats']? <Redirect to={`/dating/messages`} push={true} /> : 
+  { activeItem === 'messages' &&  user && users&& users[user.id]['chats']? <Redirect to={`/dating/messages`} push={true} /> : 
    activeItem === 'messages' ? switchActive() : "" }
-   { activeItem === 'matches' &&  user && users[user.id]['matches']? <Redirect to={`/dating/matches`} push={true} /> : 
+   { activeItem === 'matches' &&  user &&users && users[user.id]['matches']? <Redirect to={`/dating/matches`} push={true} /> : 
    activeItem === 'matches' ? 
    switchActive()
     : "" }
