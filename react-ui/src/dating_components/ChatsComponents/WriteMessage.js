@@ -13,12 +13,12 @@ const  WriteMessage =({chatid})=> {
         const [value,setValue]=useState("");
         const refKey = useRef();
                 function eventhandler(e) {
-                  console.log(e);
+                  // console.log(e);
                 if (e.key === 'Enter') {
                  handleSubmitMessage();
                  
                }
-               console.log("Works outside");
+              //  console.log("Works outside");
             }
 
         function handleSubmitMessage(){
@@ -46,7 +46,7 @@ const  WriteMessage =({chatid})=> {
         <div fluid>
                 <TextArea onKeyUp={(e) => eventhandler(e)} ref={refKey} id="textareareply" value={value} onChange={(e)=>{
                   setValue(e.target.value);
-                  console.log(e.target.value);
+                  // console.log(e.target.value);
                 }} rows={2} placeholder='Write a message...' /> 
                 {/* <Form.Button fluid positive onClick = {()=>handleSubmitReply()} style={{marginTop:"10px"}}>Reply</Form.Button>  */}
        </div>

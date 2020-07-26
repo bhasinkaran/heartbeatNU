@@ -9,16 +9,35 @@ import { InfoContext } from '../../App'
 const ReturnMessage = React.memo(({ messageid }) => {
         const { user, messages } = React.useContext(InfoContext);
         let item = messages[messageid];
-        let length=item.content.length;
-
+        let length = item.content.length;
+        console.log(item.senderid == user.id)
         return (
-                <Grid.Row>
-                        <Segment  style={{"border-radius": "25px", "max-width": "300px",
-  "word-wrap": "break-word",
-  "background-color": "pink",}} inverted floating={item.sender == user.id ? 'left' : 'right'} rounded basic color={item.sender == user.id ? 'red' : 'blue'} pointing={item.sender == user.id ? 'left' : 'right'}>
-                                        {item.content}
+               
+                       
+                <Grid.Column width={5} floated={item.senderid == user.id ? 'right' : 'left'}>
+                        <Segment 
+                                style={{
+                                        "border-radius": "25px", 
+                                        "max-width": "300px",
+                                        "word-wrap": "break-word",
+                                }}
+                                inverted 
+                                rounded basic color={item.senderid == user.id ? 'red' : 'blue'} >
+                                <Header>{item.content}</Header>
                         </Segment>
-                        {/* <div style={{background: "#4CAF50",
+                        </Grid.Column>
+                        
+                        
+                      
+                       
+
+                
+        )
+
+});
+export default ReturnMessage;
+
+ {/* <div style={{background: "#4CAF50",
   color: "white",
   padding: "15px",
   width: "50%",
@@ -27,9 +46,3 @@ const ReturnMessage = React.memo(({ messageid }) => {
   "overflow-wrap": "break-word",
   border: "1px solid #ccc"
   }}>{item.content}</div> */}
-  
-                </Grid.Row>
-        )
-
-});
-export default ReturnMessage;

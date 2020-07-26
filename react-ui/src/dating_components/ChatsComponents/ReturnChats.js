@@ -14,20 +14,17 @@ const ReturnChats = ({ chatid }) => {
         return (
                 <Container>
                         <Grid padded >
-                                <Grid.Column>
-                                        <Grid padded>
-                                                <Grid.Column>
-                                                        <Grid padded>
-                                                                {rel_messages.map(index =>
-                                                                        <ReturnMessage messageid={index} >
-                                                                        </ReturnMessage>)}
-                                                        </Grid>
-                                                </Grid.Column>
-                                        </Grid>
-                                </Grid.Column>
-                                {/* <Grid.Column> */}
+                                        
+                                                        {rel_messages.map(index =>
+                                                        <Grid.Row>
 
-                                {/* </Grid.Column> */}
+                                                                <ReturnMessage messageid={index} >
+                                                                </ReturnMessage>
+                                                               
+                                                                </Grid.Row>
+                                                                
+                                                                )}
+                                        
                         </Grid>
                 </Container>
         )

@@ -199,6 +199,7 @@ function App() {
           }
           // console.log(attractedUsers);
           var copyUsers = allusers;
+          console.log(allusers);
           if(allusers&&users&&user&&users[user.id]){
             // console.log(allusers);
             // console.log(user);
