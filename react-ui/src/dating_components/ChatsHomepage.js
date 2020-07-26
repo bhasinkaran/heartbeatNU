@@ -14,6 +14,7 @@ const ChatsHomepage = () => {
         const { user, users, allusers, chats, messages } = React.useContext(InfoContext);
         const [activeItem, setActiveItem] = useState("");
         const [relevantChats, setRelevantChats] = useState([]);
+        const[otherpersonid, setOtherId]= useState("");
         useEffect(() => {
                 if (user && users) {
                         setRelevantChats(Object.values(users[user.id]['chats']));
@@ -24,6 +25,13 @@ const ChatsHomepage = () => {
                         setActiveItem(relevantChats[0]);
                 }
         }, [relevantChats])
+        useEffect(()=>{
+                if(chats[activeItem]){
+                        var otherid = chats[activeItem]['person2'] == user.id ? chats[activeItem]['person1'] : chats[activeItem]['person2'];
+                        setOtherId(otherid);
+                }
+               
+        },[activeItem])
        
         if (user && users && chats && allusers&&activeItem)
                 return (
@@ -38,6 +46,7 @@ const ChatsHomepage = () => {
                                                         console.log(allusers)
                                                         var otherid = chats[chatid]['person2'] == user.id ? chats[chatid]['person1'] : chats[chatid]['person2'];
                                                         var obj = allusers.find(item => item.id = otherid)
+                                                        console.log(obj);
                                                         // console.log(obj);
                                                         // console.log(otherid);
 
@@ -55,7 +64,7 @@ const ChatsHomepage = () => {
                                                        
                                                         <Segment style={{maxHeight:"600px"}} fluid>
                                                                 {chats[activeItem]['chats'] ? 
-                                                                                 <ReturnChats chatid={activeItem}/> 
+                                                                                 <ReturnChats otherpersonid={otherpersonid} chatid={activeItem}/> 
                                                                                 : 
                                                                                 <ReturnStartChat chatid={activeItem} />}
                                                                 
