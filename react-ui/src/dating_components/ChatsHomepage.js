@@ -15,6 +15,7 @@ const ChatsHomepage = () => {
         const [activeItem, setActiveItem] = useState("");
         const [relevantChats, setRelevantChats] = useState([]);
         const[otherpersonid, setOtherId]= useState("");
+
         useEffect(() => {
                 if (user && users) {
                         setRelevantChats(Object.values(users[user.id]['chats']));
@@ -52,12 +53,14 @@ const ChatsHomepage = () => {
                                                 {relevantChats.map(chatid => {
                                                         console.log(allusers)
                                                         var otherid = chats[chatid]['person2'] == user.id ? chats[chatid]['person1'] : chats[chatid]['person2'];
-                                                        var obj = allusers.find(item => item.id = otherid)
+                                                        console.log(otherid);
+                                                        var obj = allusers.find(item => item.id == otherid)
                                                         console.log(obj);
                                                         // console.log(obj);
                                                         // console.log(otherid);
 
-                                                        return (<Menu.Item
+                                                        return (
+                                                        <Menu.Item
                                                                 name={obj['fname']}
                                                                 active={activeItem === chatid}
                                                                 onClick={() => setActiveItem(chatid)}

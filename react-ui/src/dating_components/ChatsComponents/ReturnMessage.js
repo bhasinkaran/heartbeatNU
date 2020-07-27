@@ -11,9 +11,9 @@ const ReturnMessage = React.memo(({ otherpersonid, chatid, lastMine, lastTheirs,
         let item = messages[messageid];
         let length = item.content.length;
         let theirid = otherpersonid;
-        console.log(otherpersonid);
-        console.log(lastMine);
-        console.log(lastTheirs);
+        // console.log(otherpersonid);
+        // console.log(lastMine);
+        // console.log(lastTheirs);
         if(allusers && theirid){
                 // console.log(allusers.find(item => item.id == theirid).datingimages[0])
                 console.log(allusers.find(item => item.id == theirid))
