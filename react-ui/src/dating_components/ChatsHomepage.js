@@ -9,6 +9,7 @@ import ReturnChats from './ChatsComponents/ReturnChats'
 import ReturnStartChat from  './ChatsComponents/ReturnStartChat'
 import { dbChats, dbMessages } from '../firebase/firebase';
 import WriteMessage from './ChatsComponents/WriteMessage';
+import $ from 'jquery'
 
 const ChatsHomepage = () => {
         const { user, users, allusers, chats, messages } = React.useContext(InfoContext);
@@ -43,12 +44,19 @@ const ChatsHomepage = () => {
         
         useEffect(()=>{
                 var element = document.getElementById("myDivID");
+
                 if(element){
+                        console.log("NO ELEMENT")
                         window.scrollTo(0,element.offsetHeight);
 
                 }
+                // $('html, body').animate({
+                //         scrollTop: parseInt($("#myDivID").offset().top
+                //     }, 2000);
+                    $('#myDivID').scrollTop($('#myDivID').scrollHeight);
+
         },[])
-       
+
 
         if (user && users && chats && allusers&&activeItem)
                 return (
