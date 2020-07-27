@@ -14,12 +14,23 @@ const ReturnMessage = React.memo(({ otherpersonid, chatid, lastMine, lastTheirs,
         console.log(otherpersonid);
         console.log(lastMine);
         console.log(lastTheirs);
+        if(allusers && theirid){
+                // console.log(allusers.find(item => item.id == theirid).datingimages[0])
+                console.log(allusers.find(item => item.id == theirid))
+                console.log(user.datingimages[0])
+        }
+        
+
         // console.log(item.senderid == user.id)
 
         if (user!=null && messages!=null && chats!=null && allusers!=null)
                 return (
                         <Grid.Column width={5} floated={item.senderid == user.id ? 'right' : 'left'}>
-                                <Segment
+                                 {/* {messageid == lastMine ? <Image floated='right' size='mini' avatar src={user.datingimages[0]} /> : ""}
+                                {messageid == lastTheirs && theirid!=""? <Image floated='mini'  size='small' avatar src={allusers.find(item => item.id == theirid).datingimages[0]} /> : ""}
+                                 */}
+                                 <Segment
+                                 
                                         style={{
                                                 "border-radius": "25px",
                                                 "max-width": "300px",
@@ -27,10 +38,8 @@ const ReturnMessage = React.memo(({ otherpersonid, chatid, lastMine, lastTheirs,
                                         }}
                                         inverted
                                         rounded basic color={item.senderid == user.id ? 'red' : 'blue'} >
-                                        {messageid == lastMine ? <Image src={user.datingimages[0]} /> : ""}
-                                        {messageid == lastTheirs && theirid!=""? <Image src={allusers.find(item => item.id = theirid).datingimages[0]} /> : ""}
-
-                                        <Header>{item.content}</Header>
+                                      
+                                        <Header as='h5' style={{float: `${item.senderid == user.id ? 'right' : 'left'}`, "marginTop":"-10px"}} >{item.content}</Header>
                                 </Segment>
                         </Grid.Column>
 

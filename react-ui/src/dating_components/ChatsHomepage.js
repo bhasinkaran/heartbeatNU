@@ -68,8 +68,11 @@ const ChatsHomepage = () => {
 
                                                 </Grid.Column>
                                                 <Grid.Column width={13}>
-                                                       
-                                                        <Segment style={{maxHeight:"600px"}} fluid>
+                                                <Segment fluid>
+                                        {allusers && otherpersonid? <Image avatar size='small' src={allusers.find(item => item.id == otherpersonid).datingimages[0]} /> : ""}
+                                        {allusers && otherpersonid? <span style={{'marginLeft':"10px", fontSize:"15"}}>{allusers.find(item => item.id == otherpersonid).fname}</span> : ""}
+                                </Segment>
+                                                        <Segment attached='top' style={{maxHeight:"450px", "overflow-y":"auto"}} fluid>
                                                                 {chats[activeItem]['chats'] ? 
                                                                                  <ReturnChats otherpersonid={otherpersonid} chatid={activeItem}/> 
                                                                                 : 

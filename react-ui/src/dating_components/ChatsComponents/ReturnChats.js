@@ -8,8 +8,8 @@ import { InfoContext } from '../../App'
 import ReturnMessage from './ReturnMessage'
 
 const ReturnChats = ({ otherpersonid,chatid }) => {
-        const { chats,messages ,user} = React.useContext(InfoContext);
-        let rel_messages = Object.values(chats[chatid]['chats']).slice(-5);
+        const { chats,messages,allusers ,user} = React.useContext(InfoContext);
+        let rel_messages = Object.values(chats[chatid]['chats']);
         const[lastMine, setLastMine]=useState("");
         const[lastTheirs, setLastTheirs]=useState("");
         let person1=false; 
@@ -44,10 +44,10 @@ const ReturnChats = ({ otherpersonid,chatid }) => {
 
         return (
                 <Container>
-                        <Grid padded >
+                        <Grid >
                                         
                                                         {rel_messages.map(index =>
-                                                                <Grid.Row>
+                                                                <Grid.Row style={{marginTop:"1px", "padding":"1px"}}>
                                                                         <ReturnMessage key={index} lastMine={lastMine} chatid={chatid} otherpersonid={otherpersonid} lastTheirs={lastTheirs} messageid={index} >
                                                                         </ReturnMessage>
                                                                 </Grid.Row>
