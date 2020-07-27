@@ -38,8 +38,8 @@ const ReturnMessage = React.memo(({ otherpersonid, chatid, lastMine, lastTheirs,
                                         }}
                                         inverted
                                         rounded basic color={item.senderid == user.id ? 'red' : 'blue'} >
-                                      
-                                        <Header as='h5' style={{float: `${item.senderid == user.id ? 'right' : 'left'}`, "marginTop":"-10px"}} >{item.content}</Header>
+                                      {/*float: `${item.senderid == user.id ? 'right' : 'left'}`  */}
+                                        <Header as='h5' style={{ "marginTop":"-10px"}} >{item.content}</Header>
                                 </Segment>
                         </Grid.Column>
 
