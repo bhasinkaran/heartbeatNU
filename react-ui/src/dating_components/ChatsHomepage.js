@@ -40,7 +40,16 @@ const ChatsHomepage = () => {
                 }
                
         },[chats,activeItem])
+        
+        useEffect(()=>{
+                var element = document.getElementById("myDivID");
+                if(element){
+                        window.scrollTo(0,element.offsetHeight);
+
+                }
+        },[])
        
+
         if (user && users && chats && allusers&&activeItem)
                 return (
                         <div>
@@ -75,7 +84,8 @@ const ChatsHomepage = () => {
                                         {allusers && otherpersonid? <Image avatar size='small' src={allusers.find(item => item.id == otherpersonid).datingimages[0]} /> : ""}
                                         {allusers && otherpersonid? <span style={{'marginLeft':"10px", fontSize:"15"}}>{allusers.find(item => item.id == otherpersonid).fname}</span> : ""}
                                 </Segment>
-                                                        <Segment attached='top' style={{minHeight:"450px",maxHeight:"450px", "overflow-y":"auto"}} fluid>
+                                                        <Segment  id="myDivID" style={{minHeight:"450px",maxHeight:"450px", "overflow-y":"auto", "scrollTop":"450px"}} >
+                                                                {/* fluid */}
                                                                 {chats[activeItem]['chats'] ? 
                                                                                  <ReturnChats otherpersonid={otherpersonid} chatid={activeItem}/> 
                                                                                 : 
