@@ -34,14 +34,14 @@ const ReturnPreview = ({ increaseIndex, person }) => {
         //         }, 2000)
         // }, [change])
         const allquestions = ["What's the last song that was stuck in your head?",
-        "Who's music taste has been most influential in your life?",
-        "Who's the first person you send new music to?",
-        "What do you miss most about being at a concert?",
-        "What does music mean to you?",
-        "What's a genre of music you haven't explored enough but want to revisit?",
-        "An artist you’d like to meet?",
-        "Your favorite throwback jams?"
-      ]
+                "Who's music taste has been most influential in your life?",
+                "Who's the first person you send new music to?",
+                "What do you miss most about being at a concert?",
+                "What does music mean to you?",
+                "What's a genre of music you haven't explored enough but want to revisit?",
+                "An artist you’d like to meet?",
+                "Your favorite throwback jams?"
+        ]
         return (
                 <Segment raised>
                         <Header size='huge' textAlign='center' >{person['name']}</Header>
@@ -76,11 +76,11 @@ const ReturnPreview = ({ increaseIndex, person }) => {
                                         </Grid.Column>
                                 </Grid.Row>
                                 <Grid.Row>
-                               <Grid.Column>
-                                        <Header textAlign='center' as='h1' >{person['bio']}</Header>
+                                        <Grid.Column>
+                                                <Header textAlign='center' as='h1' >{person['bio']}</Header>
                                         </Grid.Column>
                                 </Grid.Row>
-                                <Grid.Row>
+                                <Grid.Row style={{marginTop:"-10px"}}>
                                         <Grid.Column width={2}>
 
                                         </Grid.Column>
@@ -88,61 +88,74 @@ const ReturnPreview = ({ increaseIndex, person }) => {
                                                 <Grid.Row>
 
 
-                                                <Header as='h3'>
-                                                        {allquestions[person['q1']]}
-                                                </Header>
-                                                </Grid.Row>
-                                                <Grid.Row>
-                                                        <Divider></Divider>
-                                                </Grid.Row>
-                                                <Grid.Row>
+                                                        <Segment fluid raised>
 
-                                               
-                                                <Header as='h2'>
-                                                        {person['ans1']}
-                                                </Header>
-                                                </Grid.Row>
-                                        </Grid.Column>
-                                        <Grid.Column width={4}>
-                                                <Grid.Row>
-                                        <Header as='h3'>
-                                                        {allquestions[person['q2']]}
-                                                </Header>
-                                                </Grid.Row>
-                                                <Grid.Row>
-                                                        <Divider></Divider>
-                                                </Grid.Row>
-                                                <Grid.Row>
 
-                                               
-                                                <Header as='h2'>
-                                                        {person['ans2']}
-                                                </Header>
+                                                                <Header as='h3'>
+                                                                        {allquestions[person['q1']]}
+                                                                </Header>
+                                                        </Segment>
                                                 </Grid.Row>
+                                                
 
                                         </Grid.Column>
                                         <Grid.Column width={4}>
-                                        <Grid.Row>
-                                        <Header as='h4'>
-                                                        {allquestions[person['q3']]}
-                                                </Header>
-                                                </Grid.Row>
                                                 <Grid.Row>
-                                                        <Divider></Divider>
-                                                </Grid.Row>
-                                                <Grid.Row>
+                                                        <Segment compact raised>
 
+
+                                                                <Header as='h3'>
+                                                                        {allquestions[person['q2']]}
+                                                                </Header>
+                                                        </Segment>
+                                                </Grid.Row>
+                                                
+                                        </Grid.Column>
+                                        <Grid.Column width={4}>
+                                                <Grid.Row>
+                                                        <Segment compact raised>
+
+
+                                                                <Header as='h3'>
+                                                                        {allquestions[person['q3']]}
+                                                                </Header>
+                                                        </Segment>
+                                                </Grid.Row>
                                                
-                                                <Header as='h2'>
-                                                        {person['ans3']}
-                                                </Header>
-                                                </Grid.Row>
-
                                         </Grid.Column>
                                         <Grid.Column width={2}>
 
                                         </Grid.Column>
 
+                                </Grid.Row>
+
+                                <Grid.Row style={{marginTop:"-20px"}}>
+                                        <Grid.Column width={2} />
+                                        <Grid.Column width={4}>
+                                                <Segment textAlign='center' centered  raised>
+
+                                                        <Header as='h2'>
+                                                                {person['ans1']}
+                                                        </Header>
+                                                </Segment>
+                                        </Grid.Column>
+                                        <Grid.Column width={4}>
+                                                <Segment centered raised>
+
+                                                        <Header as='h2'>
+                                                                {person['ans2']}
+                                                        </Header>
+                                                </Segment>
+                                        </Grid.Column>
+                                        <Grid.Column width={4}>
+                                                <Segment centered raised>
+
+                                                        <Header as='h2'>
+                                                                {person['ans3']}
+                                                        </Header>
+                                                </Segment>
+                                        </Grid.Column>
+                                        <Grid.Column width={2} />
                                 </Grid.Row>
 
                         </Grid>
