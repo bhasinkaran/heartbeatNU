@@ -26,6 +26,7 @@ const  WriteMessage =({chatid})=> {
                 const messageref=dbMessages.push({
                         'content':value,
                         'senderid': user.id,
+                        'chatid':chatid,
                         "createdAt": {'.sv': 'timestamp'}
                       });
                 const messageKey=messageref.getKey();
