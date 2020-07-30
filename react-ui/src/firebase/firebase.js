@@ -1,7 +1,9 @@
-import firebase from 'firebase/app';
+import firebase, { messaging } from 'firebase/app';
 import 'firebase/database';
 import apiKey from './api-Key';
 import 'firebase/storage'
+import 'firebase/messaging'
+
 
 const firebaseConfig = {
         apiKey: apiKey,
@@ -14,9 +16,20 @@ const firebaseConfig = {
         measurementId: "G-HV3MDELM9K"
 };
 
-
 firebase.initializeApp(firebaseConfig);
 const storage = firebase.storage();
+const messages = firebase.messaging();
+messages.requestPermission()
+.then(function() {
+        console.log('have permission');
+        return messages.getToken();
+})
+.then(function(token){
+        console.log(token);
+})
+.catch(function(err){
+        console.log(err);
+})
 export default storage;
 export const dbArtists = firebase.database().ref().child('artists');
 export const dbUsers = firebase.database().ref().child('users');
