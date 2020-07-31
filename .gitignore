@@ -4,6 +4,8 @@ npm-debug.log
 # /server/configure.js
 
 /react-ui/src/firebase/api-Key
+/react-ui/public/configure
+
 # Local development
 *.env
 *.dev

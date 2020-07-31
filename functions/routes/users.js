@@ -5,8 +5,8 @@ let User = require('../models/user.model');
 let Spotify =require('spotify-web-api-node');
 var spotifyApi = new Spotify({
     clientId:'75dfedc5f2d847e7bfad7f2da2f9c611',
-    clientSecret: process.env.NODE_ENV == 'production' ? process.env.SECRETKEY :configg,
-    redirectUri: process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/users/callback` : `http://localhost:8888/users/callback`
+    clientSecret: process.env.NODE_ENV === 'production' ? process.env.SECRETKEY :configg,
+    redirectUri: process.env.NODE_ENV === 'production' ? `https://pure-harbor-26317.herokuapp.com/users/callback` : `http://localhost:8888/users/callback`
 });
 
 // route to display all users.
@@ -49,7 +49,7 @@ router.route('/add').get((req,res)=>{
               console.log("came here")
               console.log(user)
               console.log(err)
-            var url =  process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/home/${id}/${req.query.access_token}/${req.query.refresh_token}`: `http://localhost:3000/home/${id}/${req.query.access_token}/${req.query.refresh_token}`;
+            var url =  process.env.NODE_ENV === 'production' ? `https://pure-harbor-26317.herokuapp.com/home/${id}/${req.query.access_token}/${req.query.refresh_token}`: `http://localhost:3000/home/${id}/${req.query.access_token}/${req.query.refresh_token}`;
             res.redirect(url);
            
           }
@@ -81,8 +81,8 @@ router.route('/add').get((req,res)=>{
                               const newUser=new User({"name": displayname,"favoriteartists": ids, "favoritesongs": topsongs, "id":id, "email":email, "image":image, "url": externalurl, "postsfollowing": [] });
                               newUser.save()
                               .then(()=>{
-                                var url =  process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/home/${id}/${req.query.access_token}/${req.query.refresh_token}`: `http://localhost:3000/home/${id}/${req.query.access_token}/${req.query.refresh_token}`;
-                                    res.redirect(url);
+                                var url =  process.env.NODE_ENV === 'production' ? `https://pure-harbor-26317.herokuapp.com/home/${id}/${req.query.access_token}/${req.query.refresh_token}`: `http://localhost:3000/home/${id}/${req.query.access_token}/${req.query.refresh_token}`;
+                                    return res.redirect(url);
            
                                 // var url =  process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/signup/${id}/${req.query.access_token}`: `http://localhost:3000/signup/${id}/${req.query.access_token}`;
                                 // res.status(200).redirect(url);
@@ -143,7 +143,7 @@ router.route('/dating/add').get((req,res)=>{
             console.log("came here")
             console.log(user)
             console.log(err)
-          var url =  process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/dating/home/${id}/${req.query.access_token}/${req.query.refresh_token}`: `http://localhost:3000/dating/home/${id}/${req.query.access_token}/${req.query.refresh_token}`;
+          var url =  process.env.NODE_ENV === 'production' ? `https://pure-harbor-26317.herokuapp.com/dating/home/${id}/${req.query.access_token}/${req.query.refresh_token}`: `http://localhost:3000/dating/home/${id}/${req.query.access_token}/${req.query.refresh_token}`;
           res.redirect(url);
          
         }
@@ -178,8 +178,8 @@ router.route('/dating/add').get((req,res)=>{
                               // var url =  process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/dating/home/${id}/${req.query.access_token}/${req.query.refresh_token}`: `http://localhost:3000/dating/home/${id}/${req.query.access_token}/${req.query.refresh_token}`;
                               //     res.redirect(url);
          
-                              var url =  process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/signup/${id}/${req.query.access_token}/${req.query.refresh_token}`: `http://localhost:3000/signup/${id}/${req.query.access_token}/${req.query.refresh_token}`;
-                              res.status(200).redirect(url);
+                              var url =  process.env.NODE_ENV === 'production' ? `https://pure-harbor-26317.herokuapp.com/signup/${id}/${req.query.access_token}/${req.query.refresh_token}`: `http://localhost:3000/signup/${id}/${req.query.access_token}/${req.query.refresh_token}`;
+                              return res.status(200).redirect(url);
 
                             })
                             .catch(err=>{
@@ -214,6 +214,9 @@ router.route('/:id').get((req,res)=>{
 
 router.route('/signup/:id/').post((req,res)=>{
   User.findOne({ id: req.params.id }, function (err, doc){
+    if(err){
+      console.log(err);
+    }
     doc.gender = req.query.gender;
     // doc.type = req.query.type;
     doc.phone=req.query.phone;
@@ -239,19 +242,23 @@ router.route('/signup/:id/').post((req,res)=>{
     //  temp.push(req.query.image2);
     //  temp.push(req.query.image3);
     //  doc.datingimages=req.query.datingimages;
-    doc.save();
+    doc.save()
   }).then(user=>console.log(json(user))).catch(err=>res.status(400).json("Error: "+err));
-  ;
 });
 router.route('/signup/:id/2/').post((req,res)=>{
   User.findOne({ id: req.params.id }, function (err, doc){
+    if(err){
+      console.log(err);
+    }
      doc.datingimages=req.query.datingimages;
-    doc.save();
+    doc.save()
   }).then(user=>console.log(json(user))).catch(err=>res.status(400).json("Error: "+err));
-  ;
 });
 router.route('/addartist/:id/:artistid').post((req,res)=>{
   User.findOne({id:req.params.id}, function(err, doc){
+    if(err){
+      console.log(err);
+    }
     var temp = doc.favoriteartists;
     temp.push(req.params.artistid);
     doc.favoriteartists=temp;
@@ -262,6 +269,9 @@ router.route('/addartist/:id/:artistid').post((req,res)=>{
 });
 router.route('/addsong/:id/:songid').post((req,res)=>{
   User.findOne({id:req.params.id}, function(err, doc){
+    if(err){
+      console.log(err);
+    }
     var temp = doc.favoritesongs;
     temp.push(req.params.songid);
     doc.favoritesongs=temp;
@@ -272,6 +282,9 @@ router.route('/addsong/:id/:songid').post((req,res)=>{
 });
 router.route('/addpost/:id/:postid').post((req,res)=>{
   User.findOne({id:req.params.id}, function(err, doc){
+    if(err){
+      console.log(err);
+    }
     console.log('before');
 
     console.log(doc.postsfollowing);  
@@ -279,7 +292,7 @@ router.route('/addpost/:id/:postid').post((req,res)=>{
 
     var temp = doc.postsfollowing.addToSet(req.params.postid);
     
-    doc.save();
+    doc.save()
 
     // if(!(temp.length==0)){
       //   temp=[req.params.postid];
@@ -298,6 +311,9 @@ router.route('/addpost/:id/:postid').post((req,res)=>{
 });
 router.route('/addpost/:id/:image_url').post((req,res)=>{
   User.findOne({id:req.params.id}, function(err, doc){
+    if(err){
+      console.log(err);
+    }
     console.log('before');
     console.log(doc.postsfollowing);  
     console.log('after');
