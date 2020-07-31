@@ -1,0 +1,34 @@
+[debug] [2020-07-31T07:16:56.895Z] ----------------------------------------------------------------------
+[debug] [2020-07-31T07:16:56.897Z] Command:       /Users/karanbhasin/.nvm/versions/node/v13.9.0/bin/node /Users/karanbhasin/.nvm/versions/node/v13.9.0/bin/firebase deploy --only hosting
+[debug] [2020-07-31T07:16:56.897Z] CLI Version:   7.0.2
+[debug] [2020-07-31T07:16:56.897Z] Platform:      darwin
+[debug] [2020-07-31T07:16:56.897Z] Node Version:  v13.9.0
+[debug] [2020-07-31T07:16:56.899Z] Time:          Fri Jul 31 2020 12:46:56 GMT+0530 (India Standard Time)
+[debug] [2020-07-31T07:16:56.899Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2020-07-31T07:16:56.909Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-07-31T07:16:56.910Z] > authorizing via signed-in user
+[debug] [2020-07-31T07:16:56.910Z] [iam] checking project nearify-f2a4a for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2020-07-31T07:16:56.911Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/nearify-f2a4a:testIamPermissions  
+
+[debug] [2020-07-31T07:16:58.395Z] <<< HTTP RESPONSE 200
+[debug] [2020-07-31T07:16:58.396Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/nearify-f2a4a  
+ 
+[debug] [2020-07-31T07:16:58.853Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'nearify-f2a4a'...
+[info] 
+[info] i  deploying hosting
+[debug] [2020-07-31T07:17:01.711Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/nearify-f2a4a/versions  
+
+[debug] [2020-07-31T07:17:04.829Z] <<< HTTP RESPONSE 200
+[info] i  hosting[nearify-f2a4a]: beginning deploy...
+[info] i  hosting[nearify-f2a4a]: found 1 files in build
+[debug] [2020-07-31T07:17:04.838Z] [hosting] hash cache [YnVpbGQ] not populated
+[debug] [2020-07-31T07:17:04.848Z] [hosting] hash cache [YnVpbGQ] stored for 1 files
+[debug] [2020-07-31T07:17:04.848Z] [hosting][hash queue][FINAL]
+[debug] [2020-07-31T07:17:04.848Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/nearify-f2a4a/versions/4fa4ed7f04b30416:populateFiles  
+ <request body omitted>
+[debug] [2020-07-31T07:17:06.572Z] <<< HTTP RESPONSE 200
+[debug] [2020-07-31T07:17:06.576Z] [hosting][populate queue][FINAL]
+[debug] [2020-07-31T07:17:06.576Z] [hosting] uploads queued: 1

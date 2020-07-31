@@ -10,5 +10,23 @@
   },
   "storage": {
     "rules": "storage.rules"
+  },
+  "hosting": {
+    "public": "build",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {	
+        "source": "/backend",	
+        "function": "expressapp"	
+      },	
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
   }
 }
