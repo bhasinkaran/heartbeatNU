@@ -128,7 +128,7 @@ const DatingHomePageFeed = () => {
     );
   }
   else{
-    return(window.location.assign(`https://nearify-f2a4a.firebaseapp.com/signup/${user.id}`));
+    return(window.location.assign(`https://nearify-f2a4a.firebaseapp.com/signup/${user.id}/${access_token}/${refresh_token}`));
   }
   
 }
