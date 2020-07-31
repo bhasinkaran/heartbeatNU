@@ -1,6 +1,7 @@
 importScripts('https://www.gstatic.com/firebasejs/3.4.0/firebase-app.js');
 importScripts('https://www.gstatic.com/firebasejs/3.4.0/firebase-messaging.js');
 import apiKey from '../src/firebase/firebase'
+
 const firebaseConfig = {
         apiKey: apiKey,
         authDomain: "nearify-f2a4a.firebaseapp.com",

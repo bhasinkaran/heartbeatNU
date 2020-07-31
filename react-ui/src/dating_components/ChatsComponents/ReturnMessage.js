@@ -16,8 +16,8 @@ const ReturnMessage = React.memo(({ otherpersonid, chatid, lastMine, lastTheirs,
         // console.log(lastTheirs);
         if(allusers && theirid){
                 // console.log(allusers.find(item => item.id == theirid).datingimages[0])
-                console.log(allusers.find(item => item.id == theirid))
-                console.log(user.datingimages[0])
+                // console.log(allusers.find(item => item.id == theirid))
+                // console.log(user.datingimages[0])
         }
         
 

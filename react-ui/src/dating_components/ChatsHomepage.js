@@ -68,11 +68,11 @@ const ChatsHomepage = () => {
                                                 <Grid.Column width={3}>
                                                 <Menu pointing vertical>
                                                 {relevantChats.map(chatid => {
-                                                        console.log(allusers)
+                                                        // console.log(allusers)
                                                         var otherid = chats[chatid]['person2'] == user.id ? chats[chatid]['person1'] : chats[chatid]['person2'];
-                                                        console.log(otherid);
+                                                        // console.log(otherid);
                                                         var obj = allusers.find(item => item.id == otherid)
-                                                        console.log(obj);
+                                                        // console.log(obj);
                                                         // console.log(obj);
                                                         // console.log(otherid);
 
