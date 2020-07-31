@@ -94,7 +94,7 @@ const DatingHomePageFeed = () => {
     setTime(true);
   }, 3000);
 
-  if(!timeout || users&&user&&users[user.id]['token']){
+  // if(!timeout || users&&user&&users[user.id]['token']){
     return (
       <div className="App">
         <div style={{ marginLeft: "30px", marginRight: "30px" }}>
@@ -126,10 +126,10 @@ const DatingHomePageFeed = () => {
   
       </div>
     );
-  }
-  else{
-    return(window.location.assign(`https://nearify-f2a4a.firebaseapp.com/signup/${user.id}/${access_token}/${refresh_token}`));
-  }
+  // }
+  // else{
+  //   return(window.location.assign(`https://nearify-f2a4a.firebaseapp.com/signup/${user.id}/${access_token}/${refresh_token}`));
+  // }
   
 }
 
