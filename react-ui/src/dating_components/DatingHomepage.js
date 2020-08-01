@@ -94,42 +94,55 @@ const DatingHomePageFeed = () => {
     setTime(true);
   }, 3000);
 
-  // if(!timeout || users&&user&&users[user.id]['token']){
-    return (
-      <div className="App">
-        <div style={{ marginLeft: "30px", marginRight: "30px" }}>
-          <Grid padded >
-            <Grid.Row stretched>
-              <Grid.Column width={3}>
-                {user['favoritesongs'] && orderedAttracted && orderedAttracted.length > index ? <OverLapSongs person={orderedAttracted[index]} /> : ""}
-  
-              </Grid.Column>
-  
-  
-              <Grid.Column width={10}>
-                {user && user['location'] && user['location'].length > 0 && orderedAttracted && orderedAttracted.length > index ? <ReturnPreview increaseIndex={() => setIndex(index + 1)} person={orderedAttracted[index]} /> :
-                  user && user['location'] && user['location'].length > 0 ? "No matches yet."
-                    :
-                    <Button as={Link} to={`/signup/${user['id']}/${accesstoken}/${refreshtoken}`} > Complete your dating profile signup process! </Button>}
-              </Grid.Column>
-  
-  
-              <Grid.Column width={3}>
-                {user['favoriteartists'] && orderedAttracted && orderedAttracted.length > index ? <OverLapArtists person={orderedAttracted[index]} /> : ""}
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
+  if(users&&user){
+    if(users[user.id]['token']){
+      return (
+        <div className="App">
+          <div style={{ marginLeft: "30px", marginRight: "30px" }}>
+            <Grid padded >
+              <Grid.Row stretched>
+                <Grid.Column width={3}>
+                  {user['favoritesongs'] && orderedAttracted && orderedAttracted.length > index ? <OverLapSongs person={orderedAttracted[index]} /> : ""}
+    
+                </Grid.Column>
+    
+    
+                <Grid.Column width={10}>
+                  {user && user['location'] && user['location'].length > 0 && orderedAttracted && orderedAttracted.length > index ? <ReturnPreview increaseIndex={() => setIndex(index + 1)} person={orderedAttracted[index]} /> :
+                    user && user['location'] && user['location'].length > 0 ? "No matches yet."
+                      :
+                      <Button as={Link} to={`/signup/${user['id']}/${accesstoken}/${refreshtoken}`} > Complete your dating profile signup process! </Button>}
+                </Grid.Column>
+    
+    
+                <Grid.Column width={3}>
+                  {user['favoriteartists'] && orderedAttracted && orderedAttracted.length > index ? <OverLapArtists person={orderedAttracted[index]} /> : ""}
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+          </div>
+          {redirectArtist ? <Redirect to={`/artist/${result.id}`} push={true} /> : ""}
+          {redirectTrack ? <Redirect to={`/track/${result.id}`} push={true} /> : ""}
+    
+    
         </div>
-        {redirectArtist ? <Redirect to={`/artist/${result.id}`} push={true} /> : ""}
-        {redirectTrack ? <Redirect to={`/track/${result.id}`} push={true} /> : ""}
+      );
+    }
+    else{
+      console.log(users);
+    console.log(user);
+    // console.log(users[user.id]['token']);
+    return(window.location.assign(`https://nearify-f2a4a.firebaseapp.com/signup/${user.id}/${access_token}/${refresh_token}`));
   
-  
-      </div>
-    );
-  // }
-  // else{
-  //   return(window.location.assign(`https://nearify-f2a4a.firebaseapp.com/signup/${user.id}/${access_token}/${refresh_token}`));
-  // }
+    }
+    
+  }
+  else{
+    console.log(users);
+    console.log(user);
+    // console.log(users[user.id]['token']);
+    return("Loading");
+  }
   
 }
 
