@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
   },
   image: {
-    'background-image': 'url(/heartbeatlogo)',
+    backgroundImage: 'url(/heartbeatlogo.png)',
     backgroundRepeat: 'no-repeat',
     backgroundColor:
       theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
