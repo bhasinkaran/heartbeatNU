@@ -132,7 +132,7 @@ const DatingHomePageFeed = () => {
       console.log(users);
     console.log(user);
     // console.log(users[user.id]['token']);
-    return(window.location.assign(`https://nearify-f2a4a.firebaseapp.com/signup/${user.id}/${access_token}/${refresh_token}`));
+    return(window.location.assign(`https://heartbeatnotifications.web.app/signup/${user.id}/${access_token}/${refresh_token}`));
   
     }
     
