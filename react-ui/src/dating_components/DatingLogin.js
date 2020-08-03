@@ -65,7 +65,7 @@ export default function SignInSide() {
         <div className={classes.paper} style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '85vh'}}>
           
           <Avatar className={classes.dark}>
-            <LockIcon style={{ color: 'green'}} />
+            <LockIcon style={{ color: 'red'}} />
           </Avatar>
          
     {/* {!nonSpotify ?  */}
