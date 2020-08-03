@@ -203,7 +203,7 @@ var q3ind = allquestions.indexOf(ques3).toString();
         .catch(function (error) {
           console.log(error);
         });
-      // window.location.assign(redirectableLogin);
+      window.location.assign(redirectableLogin);
     }
     console.log(redirect)
     console.log(location)
@@ -257,145 +257,149 @@ var q3ind = allquestions.indexOf(ques3).toString();
   useEffect(()=>
   console.log(image1), [image1])
 
-  return (
-    <div ref={contextRef}>
- <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign up
-        </Typography>
-        <form className={classes.form} noValidate>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="fname"
-                name="firstName"
-                variant="outlined"
-                required
-                fullWidth
-                id="firstName"
-                label="First Name"
-                autoFocus
-                value={fname}
-                onChange = {(event) => {
-                  setFName(event.target.value)
-                }}
-              />
+  {
+    return (
+      <div ref={contextRef}>
+   <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign up
+          </Typography>
+          <form className={classes.form} noValidate>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  autoComplete="fname"
+                  name="firstName"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="firstName"
+                  label="First Name"
+                  autoFocus
+                  value={fname}
+                  onChange = {(event) => {
+                    setFName(event.target.value)
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="lastName"
+                  label="Last Name"
+                  name="lastName"
+                  autoComplete="lname"
+                  onChange = {(event) => {
+                    setLName(event.target.value)
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Bio"
+                  name="email"
+                  autoComplete="email"
+                  onChange = {(event) => {
+                    setBio(event.target.value)
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} >
+              <ChooseQuestion availableQuestions={questions} chosen={ques1} setter={setQues1} />
+              </Grid>
+              <Grid item xs={12} >
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="ques1"
+                  label="Question 1 Answer"
+                  id="ques1"
+                  // autoComplete="current-password"
+                  onChange = {(event, newVal) => {
+                    setAns1(event.target.value)
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} >
+  
+              <ChooseQuestion availableQuestions={questions} chosen={ques2} setter={setQues2} />
+              </Grid>
+              <Grid item xs={12} >
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="ques2"
+                  label="Question 2 Answer"
+                  id="ques2"
+                  // autoComplete="current-password"
+                  onChange = {(event, newVal) => {
+                    setAns2(event.target.value)
+                  }}
+                />
+              </Grid>
+              <Grid marginTop="0px" item xs={12}>
+              <ChooseQuestion availableQuestions={questions} chosen={ques3} setter={setQues3} />
+              </Grid>
+              <Grid item xs={12} >
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="ques3"
+                  label="Question 3 Answer"
+                  id="ques3"
+                  // autoComplete="current-password"
+                  onChange = {(event, newVal) => {
+                    setAns3(event.target.value)
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} >
+                <ImageUpload setter={setFileImage} />
+              </Grid>
+              {/* <Divider />
+              <Grid item xs={12} >
+                <ImageUpload setter={setFileImage2} />
+              </Grid>
+              <Divider />
+              <Grid item xs={12}>
+                <ImageUpload setter={setFileImage3} />
+              </Grid> */}
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
-                onChange = {(event) => {
-                  setLName(event.target.value)
-                }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
-                label="Bio"
-                name="email"
-                autoComplete="email"
-                onChange = {(event) => {
-                  setBio(event.target.value)
-                }}
-              />
-            </Grid>
-            <Grid item xs={12} >
-            <ChooseQuestion availableQuestions={questions} chosen={ques1} setter={setQues1} />
-            </Grid>
-            <Grid item xs={12} >
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="ques1"
-                label="Question 1 Answer"
-                id="ques1"
-                // autoComplete="current-password"
-                onChange = {(event, newVal) => {
-                  setAns1(event.target.value)
-                }}
-              />
-            </Grid>
-            <Grid item xs={12} >
-
-            <ChooseQuestion availableQuestions={questions} chosen={ques2} setter={setQues2} />
-            </Grid>
-            <Grid item xs={12} >
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="ques2"
-                label="Question 2 Answer"
-                id="ques2"
-                // autoComplete="current-password"
-                onChange = {(event, newVal) => {
-                  setAns2(event.target.value)
-                }}
-              />
-            </Grid>
-            <Grid marginTop="0px" item xs={12}>
-            <ChooseQuestion availableQuestions={questions} chosen={ques3} setter={setQues3} />
-            </Grid>
-            <Grid item xs={12} >
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="ques3"
-                label="Question 3 Answer"
-                id="ques3"
-                // autoComplete="current-password"
-                onChange = {(event, newVal) => {
-                  setAns3(event.target.value)
-                }}
-              />
-            </Grid>
-            <Grid item xs={12} >
-              <ImageUpload setter={setFileImage} />
-            </Grid>
-            {/* <Divider />
-            <Grid item xs={12} >
-              <ImageUpload setter={setFileImage2} />
-            </Grid>
-            <Divider />
-            <Grid item xs={12}>
-              <ImageUpload setter={setFileImage3} />
-            </Grid> */}
-          </Grid>
-          <Button
-            // type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            onClick={() => CheckLocation()}
-          >
-            Sign Up
-          </Button>
-        </form>
-        </div>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
-    </Container>
-    </div>
-  );
+            <Button
+              // type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={() => CheckLocation()}
+            >
+              Sign Up
+            </Button>
+          </form>
+          </div>
+        <Box mt={5}>
+          <Copyright />
+        </Box>
+      </Container>
+      </div>
+    );
+  } 
+  
+  
 };
 
 export default Signup;
