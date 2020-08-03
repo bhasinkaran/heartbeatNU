@@ -24,7 +24,9 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
   },
   image: {
-    backgroundImage: 'url(/heartbeatlogo.png)',
+    // backgroundImage: 'url(/heartbeatlogo.png)',
+    backgroundImage: 'url(https://i.ibb.co/pQBpgMz/streaks-black-stripes-green-lines-3840x2160-c2-000000-32cd32-l2-113-113-a-135-f-1.jpg)',
+
     backgroundRepeat: 'no-repeat',
     backgroundColor:
       theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
