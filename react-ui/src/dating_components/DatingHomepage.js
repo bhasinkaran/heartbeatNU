@@ -94,7 +94,7 @@ const DatingHomePageFeed = () => {
     setTime(true);
   }, 3000);
 
-  if(users&&user){
+  if(users&&user&&users[user.id]){
     if(users[user.id]['token']){
       return (
         <div className="App">
