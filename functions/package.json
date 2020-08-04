@@ -13,11 +13,16 @@
     "node": "10"
   },
   "dependencies": {
+    "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "firebase-admin": "^8.10.0",
     "firebase-functions": "^3.6.1",
-    "mongoose": "^5.9.26"
+    "mongoose": "^5.9.26",
+    "path": "^0.12.7",
+    "querystring": "^0.2.0",
+    "request": "^2.88.2"
   },
   "devDependencies": {
     "eslint": "^5.12.0",
