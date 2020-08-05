@@ -7,12 +7,33 @@ var request= require ('request');
 var cors =  require('cors');
 var querystring = require('querystring');
 var cookieParser=require('cookie-parser');
+const admin = require('firebase-admin')
+const appOptions = JSON.parse(process.env.FIREBASE_CONFIG);
+const firebaseapp = admin.initializeApp(appOptions);
 // const cluster = require('cluster');
 // const numCPUs = require('os').cpus().length;
 const mongoose = require('mongoose')
 require('dotenv').config();
 // const isDev = process.env.NODE_ENV !== 'production';
 const port = process.env.PORT || 8888;
+let User = require('./models/user.model');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 var client_id = '75dfedc5f2d847e7bfad7f2da2f9c611'; // Your client id
 var client_secret =  process.env.NODE_ENV === 'production' ? process.env.SECRETKEY : configg;
@@ -251,6 +272,15 @@ app.get('/refresh_token', function(req, res) {
     res.send('{"message":"Hello from the custom server!"}');
   });
 
+  const userRouter=require('./routes/users');
+  // const chatRouter=require('./routes/chats');
+  // var bodyParser = require('body-parser')
+  // app.use(bodyParser.urlencoded({
+  //   extended: false
+  //   }))
+  // app.use(bodyParser.json())
+  app.use('/users', userRouter);
+  // app.use('/chats',chatRouter);
 
 //   const userRouter=require('./routes/users');
 //   const chatRouter=require('./routes/chats');
@@ -273,9 +303,9 @@ app.get('/refresh_token', function(req, res) {
   // .use(cors())
   // .use(cookieParser());
 
-  app.listen(port, function () {
-    console.error(`listening on port ${port}`);
-  });  
+  // app.listen(port, function () {
+  //   console.error(`listening on port ${port}`);
+  // });  
 exports.app = functions.https.onRequest(app);
 
 // const appOptions = JSON.parse(process.env.FIREBASE_CONFIG);

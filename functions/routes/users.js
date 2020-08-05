@@ -2,12 +2,12 @@ const router = require('express').Router();
 const configg=require('../configure.js')
 const request = require('request')
 let User = require('../models/user.model');
-let Spotify =require('spotify-web-api-node');
-var spotifyApi = new Spotify({
-    clientId:'75dfedc5f2d847e7bfad7f2da2f9c611',
-    clientSecret: process.env.NODE_ENV === 'production' ? process.env.SECRETKEY :configg,
-    redirectUri: process.env.NODE_ENV === 'production' ? `https://pure-harbor-26317.herokuapp.com/users/callback` : `http://localhost:8888/users/callback`
-});
+// let Spotify =require('spotify-web-api-node');
+// var spotifyApi = new Spotify({
+//     clientId:'75dfedc5f2d847e7bfad7f2da2f9c611',
+//     clientSecret: process.env.NODE_ENV === 'production' ? process.env.SECRETKEY :configg,
+//     redirectUri: process.env.NODE_ENV === 'production' ? `https://pure-harbor-26317.herokuapp.com/users/callback` : `http://localhost:8888/users/callback`
+// });
 
 // route to display all users.
 
