@@ -30,21 +30,37 @@ import ChatsHomepage from './dating_components/ChatsHomepage';
 const s = new Spotify();
 
 export const InfoContext = React.createContext();
+
+/**
+ * Driver Function to create app.
+ * @returns Complete React App to be rendered
+ */
 function App() {
+  /**
+   * Adds menu features (namely, a header and sidebar) to a given page
+   * @param {ReactElement} page, to be modified
+   * @returns parameter page with added header and sidebar 
+   */
   function withMenu(page){
     return(
       <div>
         <PageHeader accesstoken={accesstoken} id={user.id}/>
         <Sidebar.Pushable as={Segment}>
-        <SideBar />
-        <Sidebar.Pusher>
-          {page}
-        </Sidebar.Pusher>
-      </Sidebar.Pushable>
+          <SideBar />
+          <Sidebar.Pusher>
+            {page}
+          </Sidebar.Pusher>
+        </Sidebar.Pushable>
 
       </div>
     )
   }
+
+  /**
+   * Adds dating-specific menu features (namely, a header and sidebar) to a given page
+   * @param {ReactElement} page, to be modified
+   * @returns parameter page with added header and sidebar 
+   */
   function withMenuDating(page){
     return(
       <div>
@@ -61,7 +77,76 @@ function App() {
       </div>
     )
   }
-  
+
+  /**
+   * Function to rank how attracted to this user would be to other user
+   * @return void. Sets orderedAttracted to list
+   */
+  function rankAttractedTo(){
+    /**
+     * Function is currently not implemented properly.
+     * For future use. Will determine distance between two users
+     * @param {User} a 
+     * @param {User} b
+     * @returns distance between a and b
+     */
+    function comparedistance(a,b){
+      let lat1=user.location[0];
+      let lon1=user.location[1];
+      let score1=matchMusic(a,user);
+      let score2=matchMusic(b,user);
+      // let distance1=distance(lat1,lon1,a);
+      // let distance2=distance(lat1,lon1,b);
+
+      // distance2/
+      // distance1/
+      // find a way to use distance eventually once off campus etc.
+      return Math.min(score2,1)-Math.min(score1,1);
+    }
+    
+    /**
+     * Function to quantify how similar two people music are
+     * @param {User} a 
+     * @param {User} b 
+     * @returns The length of the union of a and b's top artists and top songs
+     */
+    function matchMusic(a,b){
+      let score=0;
+      let arr1=a['favoritesongs'];
+      let arr2=b['favoritesongs'];
+      let arr3=a['favoriteartists'];
+      let arr4=b['favoriteartists'];
+      let intersection1=arr1.filter(x=>arr2.includes(x));
+      let intersection2=arr3.filter(x=>arr4.includes(x));
+      return intersection1.length+intersection2.length;
+    }
+
+    var copyUsers = allusers;
+    console.log(allusers);
+
+    if(allusers&&users&&user&&users[user.id]){
+      console.log(copyUsers.filter(partner=>((!Object.values(users[user.id]['seen']).includes(partner.id))) && ((partner.id!=user.id))));
+      var toset=copyUsers.filter(partner=>((!Object.values(users[user.id]['seen']).includes(partner.id))) && ((partner.id!=user.id))).sort(comparedistance);
+      console.log(toset);
+      setOrderedAttracted(toset);
+    }
+  }
+
+  /*
+    function attractedTo(){
+      if(allusers!="" && user){
+        // console.log(allusers);
+        // console.log(user);
+        setAttracted(allusers.filter(item => item.gender == user.type && item.id!=user.id));
+      }
+    };
+   */
+
+
+  /**
+   * Initializing data with blanks values, to be updated later. 
+   * Using React state hooks.
+   */
   const [chats, setChats]=useState("")
   const [artists, setArtists]=useState("")
   const [messages, setMessages]=useState("")
@@ -81,20 +166,29 @@ function App() {
   const [nomessagemodal, setNoMessagesModal]=useState(false);
   const [activeItem, setActiveItem] = useState('home');
 
-  // useEffect(()=>console.log(nomatchmodal), [nomatchmodal]);
-  React.useEffect(()=>{
+
+  /************************* Documented *************************/
+
+
+  /**
+   * Setting variables to be updated when changed.
+   * Using react effect hooks.
+   */
+  useEffect(()=>{
     if(user){
       localStorage.setItem('user', JSON.stringify(user));
     }
    
   }, [user]);
-  React.useEffect(()=>{
+
+  useEffect(()=>{
     const data = localStorage.getItem('user');
     if(data){
       setUser(JSON.parse(data));
     }
     
   }, []);
+  
   var redirectUri= process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/users/` : `http://localhost:8888/users/`
   useEffect( handleData, [user]);
   function handleData(){
@@ -106,14 +200,9 @@ function App() {
         console.log(error);
       });
     };
-// useEffect(attractedTo, [user, allusers]);
-//   function attractedTo(){
-//       if(allusers!="" && user){
-//         // console.log(allusers);
-//         // console.log(user);
-//         setAttracted(allusers.filter(item => item.gender == user.type && item.id!=user.id));
-//       }
-//     };
+
+  // useEffect(attractedTo, [user, allusers]);
+
     useEffect(() => {
       const handleData = snap => {
         if (snap.val()) setUsers(snap.val());
@@ -121,6 +210,7 @@ function App() {
       dbUsers.on('value', handleData, error => alert(error));
       return () => { dbUsers.off('value', handleData); };
     }, []);
+
   useEffect(() => {
     const handleData = snap => {
       if (snap.val()) setArtists(snap.val());
@@ -128,6 +218,7 @@ function App() {
     dbArtists.on('value', handleData, error => alert(error));
     return () => { dbArtists.off('value', handleData); };
   }, []);
+
   useEffect(() => {
     const handleData = snap => {
       if (snap.val()) setLikes(snap.val());
@@ -135,6 +226,7 @@ function App() {
     dbLikes.on('value', handleData, error => alert(error));
     return () => { dbLikes.off('value', handleData); };
   }, []);
+
   useEffect(() => {
     const handleData = snap => {
       if (snap.val()) setMessages(snap.val());
@@ -142,6 +234,7 @@ function App() {
     dbMessages.on('value', handleData, error => alert(error));
     return () => { dbMessages.off('value', handleData); };
   }, []);
+
   useEffect(() => {
     const handleData = snap => {
       if (snap.val()) setChats(snap.val());
@@ -149,6 +242,7 @@ function App() {
     dbChats.on('value', handleData, error => alert(error));
     return () => { dbChats.off('value', handleData); };
   }, []);
+
   useEffect(() => {
     const handleData = snap => {
       if (snap.val()) setReplies(snap.val());
@@ -156,6 +250,7 @@ function App() {
     dbReplies.on('value', handleData, error => alert(error));
     return () => { dbReplies.off('value', handleData); };
   }, []);
+
   useEffect(() => {
     const handleData = snap => 
     {
@@ -164,6 +259,7 @@ function App() {
     dbSongs.on('value', handleData, error => alert(error));
     return () => { dbSongs.off('value', handleData); };
   }, []);
+
   useEffect(() => {
     const handleData = snap => {
       if (snap.val()) setPosts(snap.val());
@@ -171,45 +267,9 @@ function App() {
     dbPosts.on('value', handleData, error => alert(error));
     return () => { dbPosts.off('value', handleData); };
   }, []);
+
   useEffect(rankAttractedTo, [user, users,allusers]);
-        function rankAttractedTo(){
-          function comparedistance(a,b){
-            let lat1=user.location[0];
-            let lon1=user.location[1];
-            let score1=matchMusic(a,user);
-            let score2=matchMusic(b,user);
-            // let distance1=distance(lat1,lon1,a);
-            // let distance2=distance(lat1,lon1,b);
 
-            // distance2/
-            // distance1/
-            // find a way to use distance eventually once off campus etc.
-            return Math.min(score2,1)-Math.min(score1,1);
-          }
-          
-          function matchMusic(a,b){
-            let score=0;
-            let arr1=a['favoritesongs'];
-            let arr2=b['favoritesongs'];
-            let arr3=a['favoriteartists'];
-            let arr4=b['favoriteartists'];
-            let intersection1=arr1.filter(x=>arr2.includes(x));
-            let intersection2=arr3.filter(x=>arr4.includes(x));
-            return intersection1.length+intersection2.length;
-          }
-          // console.log(attractedUsers);
-          var copyUsers = allusers;
-          console.log(allusers);
-          if(allusers&&users&&user&&users[user.id]){
-            // console.log(allusers);
-            // console.log(user);
-
-            console.log(copyUsers.filter(partner=>((!Object.values(users[user.id]['seen']).includes(partner.id))) && ((partner.id!=user.id))));
-            var toset=copyUsers.filter(partner=>((!Object.values(users[user.id]['seen']).includes(partner.id))) && ((partner.id!=user.id))).sort(comparedistance);
-            console.log(toset);
-            setOrderedAttracted(toset);
-          }
-        }
  
   return(
     <BrowserRouter>
