@@ -232,6 +232,7 @@ function App() {
         {/* <Route exact path="/artist/:artistid/:bool"  render = {()=> <ArtistPage ></ArtistPage>} /> */}
 
         <Route exact path="/map" render={()=><MapLeaflet />} />
+        {/* <Route exact path="/signup/:userid/:access_token/:refresh_token" render={()=> <RegisterNotification />} /> */}
 
 
 

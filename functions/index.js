@@ -1,5 +1,5 @@
 const express = require('express');
-const functions = require('firebase-functions');
+const functions = require('firebase-functions'); //don't copy
 const credentials=functions.config()
 const path = require('path');
 const configg =require('./configure.js')
@@ -7,7 +7,7 @@ var request= require ('request');
 var cors =  require('cors');
 var querystring = require('querystring');
 var cookieParser=require('cookie-parser');
-const admin = require('firebase-admin')
+const admin = require('firebase-admin') // don't copy
 const appOptions = JSON.parse(process.env.FIREBASE_CONFIG);
 const firebaseapp = admin.initializeApp(appOptions);
 // const cluster = require('cluster');
@@ -299,9 +299,9 @@ app.get('/refresh_token', function(req, res) {
     response.sendFile(path.resolve(__dirname, '../react-ui/build', 'index.html'));
   });
 
-  // app.use(express.static(path.resolve(__dirname, '../react-ui/build')))
-  // .use(cors())
-  // .use(cookieParser());
+  app.use(express.static(path.resolve(__dirname, '../react-ui/build')))
+  .use(cors())
+  .use(cookieParser());
 
   // app.listen(port, function () {
   //   console.error(`listening on port ${port}`);

@@ -95,7 +95,7 @@ const DatingHomePageFeed = () => {
   }, 3000);
 
   if(users&&user&&users[user.id]){
-    if(users[user.id]['token']){
+    if(users[user.id]['token'] || !messaging){
       return (
         <div className="App">
           <div style={{ marginLeft: "30px", marginRight: "30px" }}>

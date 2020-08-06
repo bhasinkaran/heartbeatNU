@@ -18,7 +18,8 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 const storage = firebase.storage();
-const messages = firebase.messaging();
+
+const messages = firebase.messaging.isSupported() ? firebase.messaging() : null;
 // messages.requestPermission()
 // .then(function() {
 //         console.log('have permission');
