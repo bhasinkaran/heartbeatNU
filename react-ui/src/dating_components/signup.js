@@ -213,9 +213,9 @@ var q3ind = allquestions.indexOf(ques3).toString();
     var backendroute_image = process.env.NODE_ENV === 'production' ? `https://pure-harbor-26317.herokuapp.com/users/signup/${id}/2?` : `http://localhost:8888/users/signup/${id}/2?`;
 
     if (image1 ) {
-      axios({method:'post', url:(backendroute_image + querystring.stringify({
+      axios({method:'post', url:backendroute_image + querystring.stringify({
         datingimages: [image1],
-      })), withCredentials: false})
+      }), withCredentials: false})
         .then(response => {
           console.log(response);
         })

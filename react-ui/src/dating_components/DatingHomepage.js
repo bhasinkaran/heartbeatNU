@@ -69,7 +69,7 @@ const DatingHomePageFeed = () => {
   
   useEffect(handleData, []);
   function handleData() {
-    axios({method:'get',url:(`${redirectUri}${id}`), withCredentials:false})
+    axios({method:'get',url:`${redirectUri}${id}`, withCredentials:false})
       .then(response => {
         setUser(response.data[0]);
       })
