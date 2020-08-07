@@ -103,8 +103,9 @@ console.log(questions);
   const contextRef = createRef();
 
   useEffect(() => {
-    CheckPass();
-    if (redirect && location !== null) {
+    // CheckPass();
+    // removed check && location !== null because on http:// safari doesn't allow it.
+    if (redirect) {
       var backendroute = process.env.NODE_ENV === 'production' ? `https://pure-harbor-26317.herokuapp.com/users/signup/${id}?` : `http://localhost:8888/users/signup/${id}?`;
       
       const uploadCute = storage.ref(`users/${id}/cute`).put(fileImage1);
@@ -182,7 +183,7 @@ var q1ind = allquestions.indexOf(ques1).toString();
 var q2ind = allquestions.indexOf(ques2).toString();
 var q3ind = allquestions.indexOf(ques3).toString();
         console.log(q1ind);
-      axios({method:"post",url:backendroute + querystring.stringify({
+      axios({method:'post',url:`${backendroute + querystring.stringify({
         gender: gender,
         phone: phone,
         location: location,
@@ -196,7 +197,7 @@ var q3ind = allquestions.indexOf(ques3).toString();
         ans2: ans2,
         ans3: ans3
         // datingimages: [image1, image2, image3],
-      }),withCredentials:false})
+      })}`,withCredentials:false})
         .then(response => {
           console.log(response);
         })
@@ -218,12 +219,11 @@ var q3ind = allquestions.indexOf(ques3).toString();
       }), withCredentials: false})
         .then(response => {
           console.log(response);
-          window.location.assign(redirectableLogin);
         })
         .catch(function (error) {
           console.log(error);
         });
-      // window.location.assign(redirectableLogin);
+      window.location.assign(redirectableLogin);
     }
 
   }, [image1, image2, image3]);
@@ -233,6 +233,7 @@ var q3ind = allquestions.indexOf(ques3).toString();
 
 
   function CheckLocation() {
+    if(navigator.geolocation)
     navigator.geolocation.getCurrentPosition((position) => {
       setLocation([position.coords.latitude, position.coords.longitude]);
     })
@@ -245,7 +246,6 @@ var q3ind = allquestions.indexOf(ques3).toString();
       // && !isNaN(Number(phone)
       var temp = process.env.NODE_ENV === 'production' ? `https://pure-harbor-26317.herokuapp.com/dating/home/${id}/${access_token}/${refresh_token}` : `http://localhost:3000/dating/home/${id}/${access_token}/${refresh_token}`;
       console.log(typeof fileImage1);
-    
       setRedirectableLogin(temp);
       setRedirect(true);
     }
@@ -386,7 +386,8 @@ var q3ind = allquestions.indexOf(ques3).toString();
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={() => CheckLocation()}
+              // onClick={() => CheckLocation()}
+              onClick = {()=>CheckPass()}
             >
               Sign Up
             </Button>
