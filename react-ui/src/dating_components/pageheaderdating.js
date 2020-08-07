@@ -41,7 +41,7 @@ const PageHeaderDating = () => {
           <Grid.Column width='16'>
             <Menu inverted color={'purple'} size='large' widths={4} >
               <Menu.Item
-                name='HeartBeat'
+                name='Heartbeat'
                 
               />
               <Menu.Item
