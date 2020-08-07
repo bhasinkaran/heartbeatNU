@@ -50,7 +50,7 @@ router.route('/add').get((req,res)=>{
               console.log(user)
               console.log(err)
             var url =  process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/home/${id}/${req.query.access_token}/${req.query.refresh_token}`: `http://localhost:3000/home/${id}/${req.query.access_token}/${req.query.refresh_token}`;
-            res.redirect(url);
+            res.status(200).redirect(url);
            
           }
         
@@ -246,6 +246,8 @@ router.route('/signup/:id/').post((req,res)=>{
 router.route('/signup/:id/2/').post((req,res)=>{
   User.findOne({ id: req.params.id }, function (err, doc){
      doc.datingimages=req.query.datingimages;
+     console.log("This is the IMAGE QUERY");
+     console.log(req.query.datingimages);
     doc.save();
   }).then(user=>console.log(json(user))).catch(err=>res.status(400).json("Error: "+err));
   ;

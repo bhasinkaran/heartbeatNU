@@ -182,7 +182,7 @@ var q1ind = allquestions.indexOf(ques1).toString();
 var q2ind = allquestions.indexOf(ques2).toString();
 var q3ind = allquestions.indexOf(ques3).toString();
         console.log(q1ind);
-      axios.post(backendroute + querystring.stringify({
+      axios({method:"post",url:backendroute + querystring.stringify({
         gender: gender,
         phone: phone,
         location: location,
@@ -196,33 +196,34 @@ var q3ind = allquestions.indexOf(ques3).toString();
         ans2: ans2,
         ans3: ans3
         // datingimages: [image1, image2, image3],
-      }))
+      }),withCredentials:false})
         .then(response => {
           console.log(response);
         })
         .catch(function (error) {
           console.log(error);
         });
-      window.location.assign(redirectableLogin);
+      // window.location.assign(redirectableLogin);
     }
-    console.log(redirect)
-    console.log(location)
-    console.log(location !== null)
+    // console.log(redirect)
+    // console.log(location)
+    // console.log(location !== null)
   }, [redirect, location]);
   useEffect(() => {
     var backendroute_image = process.env.NODE_ENV === 'production' ? `https://pure-harbor-26317.herokuapp.com/users/signup/${id}/2?` : `http://localhost:8888/users/signup/${id}/2?`;
-
+    console.log(image1);
     if (image1 ) {
       axios({method:'post', url:backendroute_image + querystring.stringify({
         datingimages: [image1],
       }), withCredentials: false})
         .then(response => {
           console.log(response);
+          window.location.assign(redirectableLogin);
         })
         .catch(function (error) {
           console.log(error);
         });
-      window.location.assign(redirectableLogin);
+      // window.location.assign(redirectableLogin);
     }
 
   }, [image1, image2, image3]);
