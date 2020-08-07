@@ -192,14 +192,23 @@ function App() {
   var redirectUri= process.env.NODE_ENV == 'production' ? `https://pure-harbor-26317.herokuapp.com/users/` : `http://localhost:8888/users/`
   useEffect( handleData, [user]);
   function handleData(){
-  axios.get(`${redirectUri}`)
-      .then(response => {
-       setAllusers(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-    };
+  // axios.get(`${redirectUri}`)
+  //     .then(response => {
+  //      setAllusers(response.data);
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     });
+  //   };
+  axios({method:'get', url:`${redirectUri}`,  withCredentials: false})
+  .then(response => {
+   setAllusers(response.data);
+   console.log(response.data);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+};
 
   // useEffect(attractedTo, [user, allusers]);
 
@@ -331,5 +340,4 @@ export default App;
 //     dist = dist * 60 * 1.1515;
 //     return dist;
 //   }
- 
 // }
