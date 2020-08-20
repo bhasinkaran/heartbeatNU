@@ -1,0 +1,33 @@
+.sent,
+.received {
+    display: flex;;
+    flex-direction: column;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+.sent {
+    background-color: purple;
+    margin-right: 10px;
+    float: right;
+    margin-left: auto;
+}
+
+.received {
+    background-color: lightgrey;
+    margin-left: 10px;
+    float: left;
+    margin-right: auto;
+}
+
+.sent > .messageText {
+    color: white;
+}
+
+.received > .messageText {
+    color: black;
+}
+
+.messageText {
+    font-weight: 400;
+}
