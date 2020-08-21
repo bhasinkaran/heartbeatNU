@@ -8,6 +8,7 @@ Sent and Recevied Messages
     flex-direction: column;
     padding: 10px;
     border-radius: 15px;
+    max-width: 50%;
 }
 
 .sent {
@@ -51,6 +52,8 @@ Writing message box
     border: none;
     background:rgb(236, 234, 234);
     border-radius: 15px;
+    max-width: 100%;
+    overflow: ;
 }
 
 .writeMessageInput:focus{
