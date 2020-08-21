@@ -21,8 +21,8 @@ import { useParams } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css';
 import axios from 'axios'
 import storage from '../firebase/firebase'
-import ChooseQuestion from './SignUpComponents./ChooseQuestion';
-import ImageUpload from './SignUpComponents./ImageUpload'
+import ChooseQuestion from './SignUpComponents/ChooseQuestion';
+import ImageUpload from './SignUpComponents/ImageUpload'
 var querystring = require('querystring');
 
 const useStyles = makeStyles((theme) => ({

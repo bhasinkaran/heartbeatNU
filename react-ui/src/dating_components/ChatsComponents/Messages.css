@@ -1,0 +1,69 @@
+/**************************
+Sent and Recevied Messages
+**************************/
+
+.sent,
+.received {
+    display: flex;;
+    flex-direction: column;
+    padding: 10px;
+    border-radius: 15px;
+    max-width: 50%;
+}
+
+.sent {
+    background-color: purple;
+    margin-right: 10px;
+    float: right;
+    margin-left: auto;
+}
+
+.received {
+    background-color: lightgrey;
+    margin-left: 10px;
+    float: left;
+    margin-right: auto;
+}
+
+.sent > .messageText {
+    color: white;
+}
+
+.received > .messageText {
+    color: black;
+}
+
+.messageText {
+    font-weight: 400;
+}
+
+/**************************
+Writing message box
+**************************/
+
+.writeMessage {
+    display: flex;
+    width: 100%;
+}
+
+.writeMessageInput {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background:rgb(236, 234, 234);
+    border-radius: 15px;
+    max-width: 100%;
+    overflow: ;
+}
+
+.writeMessageInput:focus{
+    outline: none;
+}
+
+.writeMessageButton {
+    border: none;
+    margin-right: 20px;
+    background-color: white;
+    font-weight: bolder;
+    color: purple;
+}
