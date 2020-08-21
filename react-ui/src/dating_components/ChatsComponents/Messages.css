@@ -43,14 +43,18 @@ Writing message box
 .writeMessage {
     display: flex;
     width: 100%;
-    margin: 5px;
-    padding: 5px;
 }
 
 .writeMessageInput {
     flex: 1;
     padding: 10px;
     border: none;
+    background:rgb(236, 234, 234);
+    border-radius: 15px;
+}
+
+.writeMessageInput:focus{
+    outline: none;
 }
 
 .writeMessageButton {

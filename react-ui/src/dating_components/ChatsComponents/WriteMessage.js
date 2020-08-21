@@ -8,17 +8,14 @@ const WriteMessage = ({ chatid }) => {
     const { chats, user } = React.useContext(InfoContext);
     const [value, setValue] = useState("");
     const refKey = useRef();
+
     function eventhandler(e) {
-        // console.log(e);
         if (e.key === 'Enter') {
             handleSubmitMessage();
-
         }
-        //  console.log("Works outside");
     }
 
     function handleSubmitMessage() {
-        // console.log(document.getElementById("textareareply").value);
         const messageref = dbMessages.push({
             'content': value,
             'senderid': user.id,
@@ -26,13 +23,10 @@ const WriteMessage = ({ chatid }) => {
             "createdAt": { '.sv': 'timestamp' }
         });
         const messageKey = messageref.getKey();
-        // console.log("Likes key is ", likeskey);
 
         dbChats.child(chatid).child('chats').push(messageKey);
         setValue("")
     }
-
-
 
     return (
         <form className="writeMessage">
@@ -51,14 +45,6 @@ const WriteMessage = ({ chatid }) => {
                     Send
             </button>
         </form>
-
-        //   <div fluid>
-        //           <TextArea fluid onKeyUp={(e) => eventhandler(e)} ref={refKey} id="textareareply" value={value} onChange={(e)=>{
-        //             setValue(e.target.value);
-        //             // console.log(e.target.value);
-        //           }} rows={2} placeholder='Write a message...' /> 
-        //           {/* <Form.Button fluid positive onClick = {()=>handleSubmitReply()} style={{marginTop:"10px"}}>Reply</Form.Button>  */}
-        //  </div>
     )
 }
 
