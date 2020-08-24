@@ -1,11 +1,13 @@
 import SeeFavSongs from './SeeFavSongs';
+import SearchbarSongs from './SearchbarSongs'
+import React from 'react'
+const EditTopSongs = () => {
 
-const EditTopSongs = ()=>{
-
-        return(
+        
+        return (
                 <div>
-                        <SearchbarSongs/>
-                        <SeeFavSongs/>
+                        <SearchbarSongs />
+                        <SeeFavSongs />
                 </div>
         )
 }

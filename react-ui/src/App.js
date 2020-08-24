@@ -26,6 +26,7 @@ import PageHeaderDating from './dating_components/pageheaderdating';
 import NoMatchModal from './dating_components/EdgeCaseModals/NoMatchModal';
 import NoMessagesModal from './dating_components/EdgeCaseModals/NoMessageModal';
 import ChatsHomepage from './dating_components/ChatsHomepage';
+import EditTopSongs from './dating_components/SignUpComponents/EditTopSongs';
 
 const s = new Spotify();
 
@@ -285,6 +286,8 @@ function App() {
       <InfoContext.Provider value={{activeItem, setActiveItem, nomatchmodal, setNoMatchModal,nomessagemodal, setNoMessagesModal, replies, users, allusers, attractedUsers,orderedAttracted, setReplies, artists, setArtists, messages, setMessages, songs, setSongs,posts, setPosts, likes, setLikes, user, setUser, chats,visible, setVisible, accesstoken, setAccesToken, refreshtoken, setRefreshToken}}>
         {/* NEARIFY ROUTES */}
         <Route exact path="/signup/:id/:access_token/:refresh_token" render={()=> <Signup />} />
+        <Route exact path="/signup/edittopsongs" render={()=> <EditTopSongs />} />
+
         {/* <Route exact path="/" render={()=><Login />} /> */}
         <Route exact path="/" render={()=><Redirect to='/dating' />} />
 
