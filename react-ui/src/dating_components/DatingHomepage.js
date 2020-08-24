@@ -94,7 +94,7 @@ const DatingHomePageFeed = () => {
     setTime(true);
   }, 3000);
 
-  if(users&&user&&users[user.id]){
+  if(users&&user&&users[user.id]&&user.confirmSongs){
     if(users[user.id]['token'] || !messaging){
       return (
         <div className="App">
@@ -133,9 +133,11 @@ const DatingHomePageFeed = () => {
     console.log(user);
     // console.log(users[user.id]['token']);
     return(window.location.assign(`https://heartbeatnotifications.web.app/signup/${user.id}/${access_token}/${refresh_token}`));
-  
     }
     
+  }
+  else if(!user.confirmSongs){
+    return(<Redirect push={true} to={`/signup/edittopsongs`} />)
   }
   else{
     console.log(users);

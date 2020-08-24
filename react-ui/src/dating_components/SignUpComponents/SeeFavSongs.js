@@ -1,20 +1,23 @@
 
 import React, { useState, useEffect, isValidElement, useContext } from 'react';
 import Spotify from 'spotify-web-api-js';
-import { Grid, Image, Header, Search, Button, Container } from 'semantic-ui-react'
+import { Grid, Image, Header, Search, Button, Container, Divider } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-
+import {InfoContext} from '../../App'
+import SearchbarSongs from './SearchbarSongs';
 const mongoose = require('mongoose');
 const s = new Spotify();
-const SeeFavSongs = ({ accesstoken, user }) => {
+const SeeFavSongs = () => {
+        const { user, accesstoken} = React.useContext(InfoContext);
+
         // const { accesstoken, user } = useContext(InfoContext);
         const [songnames, setNames] = useState([]);
         const [songimages, setImages] = useState([]);
         const [orderedSongs, setOrderedSongs] = useState([]);
         var array = [...Array(20).keys()];
         const [indexarray, setIndex] = useState(array);
-
+        console.log(accesstoken);
         s.setAccessToken(accesstoken);
         useEffect(initializeState, [user]);
         var temp = [];
@@ -53,7 +56,7 @@ const SeeFavSongs = ({ accesstoken, user }) => {
                 if (imageurl) {
                         //      console.log(imageurl);
                         return (
-                                <Grid.Column key={id.toString()} mobile={16} tablet={8} computer={8} id={id}>
+                                <Grid.Column key={id.toString()} mobile={16} tablet={8} computer={4} id={id}>
                                         {/* <Link to={`/track/${orderedSongs[id]}`} > */}
                                                 <Image size='huge' rounded verticalAlign='middle' src={imageurl} />
                                                 <Header size='huge'>{songName}</Header>
@@ -113,12 +116,17 @@ const SeeFavSongs = ({ accesstoken, user }) => {
         //      console.log(artistnames)
         return (
                 <div className="FavoriteArtists ">
+                <Container>
+                        <Divider hidden></Divider>
+                        <Header  textAlign='center' size='huge'>Your Top Songs</Header>
+                        <Header textAlign='center' style={{marginTop:"-15px"}} size='large'>Search To Add Songs</Header>
 
+                        <SearchbarSongs />
+                        <Divider></Divider>
 
+                        <Grid>
 
-                        <Header size='huge'>Your Top Songs</Header>
-
-                        <Grid.Row >
+                        {/* <Grid.Row >
                                 {songimages.length > 15 ? indexarray.slice(0, 2).map(id => <ReturnFavSong key={id.toString()} id={id} />) : ""}
                         </Grid.Row>
 
@@ -132,17 +140,17 @@ const SeeFavSongs = ({ accesstoken, user }) => {
 
                         <Grid.Row>
                                 {songimages.length > 15 ? indexarray.slice(6, 10).map(id => returnSecondFavSong(id)) : ""}
-                        </Grid.Row>
+                        </Grid.Row> */}
 
                         <Grid.Row>
-                                {songimages.length > 19 ? indexarray.slice(10, 14).map(id => returnSecondFavSong(id)) : ""}
+                                {indexarray.map(id => returnSecondFavSong(id))}
                         </Grid.Row>
 
-                        <Grid.Row>
+                        {/* <Grid.Row>
                                 {songimages.length > 19 ? indexarray.slice(14, 21).map(id => returnThirdFavSong(id)) : ""}
-                        </Grid.Row>
-
-
+                        </Grid.Row> */}
+                        </Grid>
+                        </Container>
                 </div>
         )
 }

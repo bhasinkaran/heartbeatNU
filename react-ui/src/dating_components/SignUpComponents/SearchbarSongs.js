@@ -1,15 +1,17 @@
-import { Header, Segment, Grid, Icon, Button, Search } from 'semantic-ui-react';
+import { Header,Container, Segment, Grid, Icon, Button, Search } from 'semantic-ui-react';
 import React, { useState, useEffect, useContext } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import _ from 'lodash'
 import axios from 'axios'
-import InfoContext from '../../App'
+import {InfoContext} from '../../App'
 const SearchbarSongs = () => {
         const { user, accesstoken} = React.useContext(InfoContext);
-
         useEffect(()=>{
                 var urlPost = process.env.NODE_ENV === 'production' ? `https://pure-harbor-26317.herokuapp.com/users/addsong/${user.id}/${result.id}` : `http://localhost:8888/users/addsong/${user.id}/${result.id}`;
+                console.log("INSIDE");
+                console.log(result);
                 if(result){
+                        console.log(result);
                         axios({method:'post', url:urlPost, withCredentials: false})
                                 .then(response => {
                                   console.log(response);
@@ -18,7 +20,7 @@ const SearchbarSongs = () => {
                                   console.log(error);
                                 });
                 }
-        },[result])
+        },[result]);
         const [value, setValue] = useState("");
         const [results, setResults] = useState([]);
         const [isLoading, setisLoading] = useState(false);
@@ -74,16 +76,18 @@ const SearchbarSongs = () => {
         }
 
         return (
+
                 <div>
+                        <Container>
+
+                       
                         <Search
                                 loading={isLoading}
                                 onResultSelect={(e, { result }) => {
                                         setResult(result);
-                                        
-                                        console.log(result);
+                                        // setResult(result)
+                                        // console.log(result);
                                         // setRedirect(true);
-
-
                                 }}
                                 onSearchChange={_.debounce((e, { value }) => handleSearchChange(value), 500, {
                                         leading: true,
@@ -94,6 +98,7 @@ const SearchbarSongs = () => {
                                 input={{ fluid: true }}
                         //     {...this.props}
                         />
+                         </Container>
                 </div>)
 }
 export default SearchbarSongs;
