@@ -15,7 +15,7 @@ import { InfoContext } from '../App'
 import { dbUsers } from '../firebase/firebase';
 import firebase from '../firebase/firebase'
 // import firebase, { messaging } from 'firebase/app';
-import {messaging} from '../firebase/firebase'
+import { messaging } from '../firebase/firebase'
 import 'firebase/database';
 import apiKey from '../firebase/api-Key';
 import 'firebase/storage'
@@ -58,18 +58,18 @@ const DatingHomePageFeed = () => {
   //     .catch(function (err) {
   //       console.log(err);
   //     })
-  
+
   //     messaging.onMessage(function (payload) {
   //     console.log('onmessage', payload);
   //   })
   //   }
-    
+
   // }
 
-  
+
   useEffect(handleData, []);
   function handleData() {
-    axios({method:'get',url:`${redirectUri}${id}`, withCredentials:false})
+    axios({ method: 'get', url: `${redirectUri}${id}`, withCredentials: false })
       .then(response => {
         setUser(response.data[0]);
       })
@@ -94,8 +94,8 @@ const DatingHomePageFeed = () => {
     setTime(true);
   }, 3000);
 
-  if(users&&user&&users[user.id]&&users[user.id]['confirmSongs']||!timeout){
-    if(users&&user&&users[user.id]['token'] || !messaging){
+  if (users && user && users[user.id] && users[user.id]['confirmSongs'] || !timeout) {
+    if (users && user && users[user.id]['token'] || !messaging) {
       return (
         <div className="App">
           <div style={{ marginLeft: "30px", marginRight: "30px" }}>
@@ -103,18 +103,18 @@ const DatingHomePageFeed = () => {
               <Grid.Row stretched>
                 <Grid.Column width={3}>
                   {user['favoritesongs'] && orderedAttracted && orderedAttracted.length > index ? <OverLapSongs person={orderedAttracted[index]} /> : ""}
-    
+
                 </Grid.Column>
-    
-    
+
+
                 <Grid.Column width={10}>
                   {user && user['location'] && user['location'].length > 0 && orderedAttracted && orderedAttracted.length > index ? <ReturnPreview increaseIndex={() => setIndex(index + 1)} person={orderedAttracted[index]} /> :
                     user && user['location'] && user['location'].length > 0 ? "No matches yet."
                       :
                       <Button as={Link} to={`/signup/${user['id']}/${accesstoken}/${refreshtoken}`} > Complete your dating profile signup process! </Button>}
                 </Grid.Column>
-    
-    
+
+
                 <Grid.Column width={3}>
                   {user['favoriteartists'] && orderedAttracted && orderedAttracted.length > index ? <OverLapArtists person={orderedAttracted[index]} /> : ""}
                 </Grid.Column>
@@ -123,31 +123,34 @@ const DatingHomePageFeed = () => {
           </div>
           {redirectArtist ? <Redirect to={`/artist/${result.id}`} push={true} /> : ""}
           {redirectTrack ? <Redirect to={`/track/${result.id}`} push={true} /> : ""}
-    
-    
+
+
         </div>
       );
     }
-    else if (!users.confirmSongs) {
-      return(<Redirect push={true} to={`/signup/edittopsongs`} />)
+    else if(!timeout){
+      return ("Loading")
     }
-    else{
+    else {
       console.log(users);
-    console.log(user);
-    // console.log(users[user.id]['token']);
-    return(window.location.assign(`https://heartbeatnotifications.web.app/signup/${user.id}/${access_token}/${refresh_token}`));
+      console.log(user);
+      // console.log(users[user.id]['token']);
+      return (window.location.assign(`https://heartbeatnotifications.web.app/signup/${user.id}/${access_token}/${refresh_token}`));
     }
-    
-  
-  
-}
-  else{
-    console.log(users);
-    console.log(user);
-    // console.log(users[user.id]['token']);
-    return("Loading");
+    // else {
+      // console.log(users);
+      // console.log(user);
+      // console.log(users[user.id]['token']);
+      // return ("Loading");
+    // }
   }
-  
+
+
+  else {
+    return (<Redirect push={true} to={`/signup/edittopsongs`} />)
+  }
+
+
 }
 
 export default DatingHomePageFeed;
