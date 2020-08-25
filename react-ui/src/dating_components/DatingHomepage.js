@@ -10,7 +10,7 @@ import OverLapSongs from './PreviewComponents/OverLapSongs'
 // import HomePagePosts from '../components/HomePagePosts'
 import MatchedPeople from './matchedpeople'
 import ReturnPreview from './PreviewComponents/ReturnPreview'
-import { Button } from 'semantic-ui-react'
+import { Button, Icon } from 'semantic-ui-react'
 import { InfoContext } from '../App'
 import { dbUsers } from '../firebase/firebase';
 import firebase from '../firebase/firebase'
@@ -94,8 +94,8 @@ const DatingHomePageFeed = () => {
     setTime(true);
   }, 3000);
 
-  if(users&&user&&users[user.id]&&user.confirmSongs){
-    if(users[user.id]['token'] || !messaging){
+  if(users&&user&&users[user.id]&&users[user.id]['confirmSongs']||!timeout){
+    if(users&&user&&users[user.id]['token'] || !messaging){
       return (
         <div className="App">
           <div style={{ marginLeft: "30px", marginRight: "30px" }}>
@@ -128,6 +128,9 @@ const DatingHomePageFeed = () => {
         </div>
       );
     }
+    else if (!users.confirmSongs) {
+      return(<Redirect push={true} to={`/signup/edittopsongs`} />)
+    }
     else{
       console.log(users);
     console.log(user);
@@ -135,10 +138,9 @@ const DatingHomePageFeed = () => {
     return(window.location.assign(`https://heartbeatnotifications.web.app/signup/${user.id}/${access_token}/${refresh_token}`));
     }
     
-  }
-  else if(!user.confirmSongs){
-    return(<Redirect push={true} to={`/signup/edittopsongs`} />)
-  }
+  
+  
+}
   else{
     console.log(users);
     console.log(user);

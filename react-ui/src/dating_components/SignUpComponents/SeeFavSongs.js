@@ -1,20 +1,25 @@
 
 import React, { useState, useEffect, isValidElement, useContext } from 'react';
 import Spotify from 'spotify-web-api-js';
-import { Grid, Image, Header, Search, Button, Container, Divider } from 'semantic-ui-react'
-import { Link } from 'react-router-dom'
+import { Icon, Grid, Image, Header, Search, Button, Container, Divider } from 'semantic-ui-react'
+import { Link, Redirect } from 'react-router-dom'
 import axios from 'axios'
-import {InfoContext} from '../../App'
+import { InfoContext } from '../../App'
 import SearchbarSongs from './SearchbarSongs';
+import { dbUsers } from '../../firebase/firebase';
 const mongoose = require('mongoose');
 const s = new Spotify();
 const SeeFavSongs = () => {
-        const { user, accesstoken} = React.useContext(InfoContext);
-
-        // const { accesstoken, user } = useContext(InfoContext);
+        const { users, user, accesstoken, refreshtoken } = React.useContext(InfoContext);
         const [songnames, setNames] = useState([]);
         const [songimages, setImages] = useState([]);
         const [orderedSongs, setOrderedSongs] = useState([]);
+        const [time, setTime] = useState(false);
+
+        // const [newArtist]
+        setTimeout(() => {
+                setTime(true);
+        }, 3000);
         var array = [...Array(user['favoritesongs'].length).keys()];
         const [indexarray, setIndex] = useState(array);
         console.log(accesstoken);
@@ -25,7 +30,7 @@ const SeeFavSongs = () => {
         var temp3 = [];
         function initializeState() {
                 console.log(user);
-                if (user&&user['favoritesongs']) {
+                if (user && user['favoritesongs']) {
                         for (let i = 0; i < user['favoritesongs'].length; i++) {
                                 //     console.log("This is songs",songs)
                                 s.getTrack(user['favoritesongs'][i]).then(
@@ -48,7 +53,7 @@ const SeeFavSongs = () => {
 
         }
 
-        
+
         function returnSecondFavSong(id) {
                 var songName = songnames[id];
                 var imageurl = songimages[id];
@@ -59,8 +64,8 @@ const SeeFavSongs = () => {
                         return (
                                 <Grid.Column key={id.toString()} mobile={16} tablet={8} computer={4} id={id}>
                                         {/* <Link to={`/track/${orderedSongs[id]}`} > */}
-                                                <Image rounded src={imageurl} verticalAlign='middle' />
-                                                <Header size='huge'>{songName}</Header>
+                                        <Image rounded src={imageurl} verticalAlign='middle' />
+                                        <Header size='huge'>{songName}</Header>
                                         {/* </Link> */}
                                         <br></br>
                                 </Grid.Column>);
@@ -70,33 +75,43 @@ const SeeFavSongs = () => {
                         return "null";
                 }
         }
-        
-        
+
+
 
         //      console.log(artistnames)
-        return (
-                <div className="FavoriteArtists ">
-                <Container>
-                        <Divider hidden></Divider>
-                        <Header  textAlign='center' size='huge'>Your Top Songs</Header>
-                        <Header textAlign='center' style={{marginTop:"-15px"}} size='large'>Search To Add Songs</Header>
+        if (users && user && !users[user.id]['confirmSongs'] || !time) {
+                return (
+                        <div className="FavoriteArtists ">
+                                <Container>
+                                        <Divider hidden></Divider>
+                                        <Header textAlign='center' size='huge'>Your Top Songs</Header>
+                                        <Header textAlign='center' style={{ marginTop: "-15px" }} size='large'>Search To Add Songs</Header>
+                                        <Button fluids icon labelPosition='right' onClick={() => {
+                                                dbUsers.child(user.id).child("confirmSongs").set(true);
+                                        }}>
+                                                Confirm
+                                                <Icon name='right arrow' />
+                                        </Button>
+                                        <SearchbarSongs />
+                                        <Divider></Divider>
 
-                        <SearchbarSongs />
-                        <Divider></Divider>
+                                        <Grid>
 
-                        <Grid>
 
-                        
 
-                        <Grid.Row>
-                                {indexarray.map(id => returnSecondFavSong(id))}
-                        </Grid.Row>
+                                                <Grid.Row>
+                                                        {indexarray.map(id => returnSecondFavSong(id))}
+                                                </Grid.Row>
 
-                        
-                        </Grid>
-                        </Container>
-                </div>
-        )
+
+                                        </Grid>
+                                </Container>
+                        </div>
+                )
+        }
+        else {
+                return <Redirect push={true} to={`/dating/home/${user.id}/${accesstoken}/${refreshtoken}`} />
+        }
 }
 
 export default SeeFavSongs;

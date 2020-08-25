@@ -5,13 +5,14 @@ import _ from 'lodash'
 import axios from 'axios'
 import {InfoContext} from '../../App'
 const SearchbarSongs = () => {
-        const { user, accesstoken} = React.useContext(InfoContext);
+        const { user, accesstoken, setUser} = React.useContext(InfoContext);
         
         const [value, setValue] = useState("");
         const [results, setResults] = useState([]);
         const [isLoading, setisLoading] = useState(false);
         const [result, setResult] = useState("");
         const [resultid, setResultID]=useState("");
+        const [success, setSuccess]=useState(false);
         useEffect(()=>{
                 var urlPost = process.env.NODE_ENV === 'production' ? `https://pure-harbor-26317.herokuapp.com/users/addsong/${user.id}/${resultid}` : `http://localhost:8888/users/addsong/${user.id}/${resultid}`;
                 console.log("INSIDE");
@@ -21,6 +22,7 @@ const SearchbarSongs = () => {
                         axios({method:'post', url:urlPost, withCredentials: false})
                                 .then(response => {
                                   console.log(response);
+                                  setSuccess(true);
                                 })
                                 .catch(function (error) {
                                   console.log(error);
@@ -88,6 +90,9 @@ const SearchbarSongs = () => {
                                 onResultSelect={(e, { result }) => {
                                         setResult(result);
                                         setResultID(result.id)
+                                        var tempUser=user;
+                                        tempUser.push(0,result.id);
+                                        setUser(tempUser);
                                         console.log(result);
 
                                 }}
