@@ -6,11 +6,17 @@ import axios from 'axios'
 import {InfoContext} from '../../App'
 const SearchbarSongs = () => {
         const { user, accesstoken} = React.useContext(InfoContext);
+        
+        const [value, setValue] = useState("");
+        const [results, setResults] = useState([]);
+        const [isLoading, setisLoading] = useState(false);
+        const [result, setResult] = useState("");
+        const [resultid, setResultID]=useState("");
         useEffect(()=>{
-                var urlPost = process.env.NODE_ENV === 'production' ? `https://pure-harbor-26317.herokuapp.com/users/addsong/${user.id}/${result.id}` : `http://localhost:8888/users/addsong/${user.id}/${result.id}`;
+                var urlPost = process.env.NODE_ENV === 'production' ? `https://pure-harbor-26317.herokuapp.com/users/addsong/${user.id}/${resultid}` : `http://localhost:8888/users/addsong/${user.id}/${resultid}`;
                 console.log("INSIDE");
                 console.log(result);
-                if(result){
+                if(resultid!=""){
                         console.log(result);
                         axios({method:'post', url:urlPost, withCredentials: false})
                                 .then(response => {
@@ -20,11 +26,7 @@ const SearchbarSongs = () => {
                                   console.log(error);
                                 });
                 }
-        },[result]);
-        const [value, setValue] = useState("");
-        const [results, setResults] = useState([]);
-        const [isLoading, setisLoading] = useState(false);
-        const [result, setResult] = useState("");
+        },[resultid]);
         async function handleSearchChange(valuee) {
                 setisLoading(true);
                 setValue(valuee);
@@ -85,9 +87,9 @@ const SearchbarSongs = () => {
                                 loading={isLoading}
                                 onResultSelect={(e, { result }) => {
                                         setResult(result);
-                                        // setResult(result)
-                                        // console.log(result);
-                                        // setRedirect(true);
+                                        setResultID(result.id)
+                                        console.log(result);
+
                                 }}
                                 onSearchChange={_.debounce((e, { value }) => handleSearchChange(value), 500, {
                                         leading: true,

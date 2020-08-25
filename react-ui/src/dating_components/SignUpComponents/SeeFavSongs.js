@@ -15,7 +15,7 @@ const SeeFavSongs = () => {
         const [songnames, setNames] = useState([]);
         const [songimages, setImages] = useState([]);
         const [orderedSongs, setOrderedSongs] = useState([]);
-        var array = [...Array(20).keys()];
+        var array = [...Array(user['favoritesongs'].length).keys()];
         const [indexarray, setIndex] = useState(array);
         console.log(accesstoken);
         s.setAccessToken(accesstoken);
@@ -25,7 +25,7 @@ const SeeFavSongs = () => {
         var temp3 = [];
         function initializeState() {
                 console.log(user);
-                if (user) {
+                if (user&&user['favoritesongs']) {
                         for (let i = 0; i < user['favoritesongs'].length; i++) {
                                 //     console.log("This is songs",songs)
                                 s.getTrack(user['favoritesongs'][i]).then(
@@ -48,28 +48,7 @@ const SeeFavSongs = () => {
 
         }
 
-        const ReturnFavSong = ({ id }) => {
-                var songName = songnames[id];
-                var imageurl = songimages[id];
-                // console.log(indexarray);
-                // console.log(artistimages)
-                if (imageurl) {
-                        //      console.log(imageurl);
-                        return (
-                                <Grid.Column key={id.toString()} mobile={16} tablet={8} computer={4} id={id}>
-                                        {/* <Link to={`/track/${orderedSongs[id]}`} > */}
-                                                <Image size='huge' rounded verticalAlign='middle' src={imageurl} />
-                                                <Header size='huge'>{songName}</Header>
-                                        {/* </Link> */}
-
-                                        <br></br>
-                                </Grid.Column>);
-                }
-                else {
-                        // console.log(imageurl)
-                        return "null";
-                }
-        }
+        
         function returnSecondFavSong(id) {
                 var songName = songnames[id];
                 var imageurl = songimages[id];
@@ -91,27 +70,8 @@ const SeeFavSongs = () => {
                         return "null";
                 }
         }
-        function returnThirdFavSong(id) {
-                var songName = songnames[id];
-                var imageurl = songimages[id];
-                // console.log(indexarray);
-                // console.log(artistimages)
-                if (imageurl) {
-                        //      console.log(imageurl);
-                        return (
-                                <Grid.Column key={id.toString()} mobile={16} tablet={8} computer={4} id={id}>
-                                        {/* <Link to={`/track/${orderedSongs[id]}`} > */}
-                                                <Image rounded src={imageurl} verticalAlign='middle' />
-                                                <Header size='large'>{songName}</Header>
-                                        {/* </Link> */}
-                                        <br></br>
-                                </Grid.Column>);
-                }
-                else {
-                        // console.log(imageurl)
-                        return "null";
-                }
-        }
+        
+        
 
         //      console.log(artistnames)
         return (
@@ -126,29 +86,13 @@ const SeeFavSongs = () => {
 
                         <Grid>
 
-                        {/* <Grid.Row >
-                                {songimages.length > 15 ? indexarray.slice(0, 2).map(id => <ReturnFavSong key={id.toString()} id={id} />) : ""}
-                        </Grid.Row>
-
-                        <Grid.Row >
-                                {songimages.length > 15 ? indexarray.slice(2, 4).map(id => <ReturnFavSong key={id.toString()} id={id} />) : ""}
-                        </Grid.Row>
-
-                        <Grid.Row >
-                                {songimages.length > 15 ? indexarray.slice(4, 6).map(id => <ReturnFavSong key={id.toString()} id={id} />) : ""}
-                        </Grid.Row>
-
-                        <Grid.Row>
-                                {songimages.length > 15 ? indexarray.slice(6, 10).map(id => returnSecondFavSong(id)) : ""}
-                        </Grid.Row> */}
+                        
 
                         <Grid.Row>
                                 {indexarray.map(id => returnSecondFavSong(id))}
                         </Grid.Row>
 
-                        {/* <Grid.Row>
-                                {songimages.length > 19 ? indexarray.slice(14, 21).map(id => returnThirdFavSong(id)) : ""}
-                        </Grid.Row> */}
+                        
                         </Grid>
                         </Container>
                 </div>
