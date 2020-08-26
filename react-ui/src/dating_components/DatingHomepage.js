@@ -20,6 +20,7 @@ import 'firebase/database';
 import apiKey from '../firebase/api-Key';
 import 'firebase/storage'
 import 'firebase/messaging'
+import MessageSnackbar from './ChatsComponents/message-snackbar';
 
 const mongoose = require('mongoose');
 const s = new Spotify();
@@ -124,7 +125,7 @@ const DatingHomePageFeed = () => {
           {redirectArtist ? <Redirect to={`/artist/${result.id}`} push={true} /> : ""}
           {redirectTrack ? <Redirect to={`/track/${result.id}`} push={true} /> : ""}
 
-
+        <MessageSnackbar/>
         </div>
       );
     }
